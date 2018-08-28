@@ -1,7 +1,9 @@
 import { Discover } from "../src/discover";
+import { Color } from "../src/models/color";
 import { IDevice } from "../src/models/device";
 import { StartFlowAction } from "../src/models/enums";
 import { FlowState } from "../src/models/flow-state";
+import { CfScene, ColorScene, CtScene, HsvScene } from "../src/models/scene";
 import { Yeeligt } from "../src/yeelight";
 import * as logger from "./../src/logger";
 
@@ -11,13 +13,21 @@ discover.once("deviceAdded", (device: IDevice) => {
     const yeelight = new Yeeligt({ lightIp: device.host, lightPort: device.port });
 
     yeelight.on("connected", () => {
-        yeelight.startColorFlow([
-            new FlowState(2000, 2, 2700, 100),
-            new FlowState(2000, 1, 255, 50),
-            new FlowState(2000, 7, 1500, 30),
-            new FlowState(2000, 2, 5000, 45),
-            new FlowState(2000, 2, 3000, 25),
-        ], StartFlowAction.LED_STAY);
+        yeelight.setScene(new ColorScene(new Color(233, 66, 123), 50));
+        setTimeout(() => {
+            yeelight.setScene(new HsvScene(279, 80, 100));
+        }, 2000);
+
+        setTimeout(() => {
+            yeelight.setScene(new CtScene(4000, 88));
+        }, 4000);
+
+        setTimeout(() => {
+            yeelight.setScene(new CfScene(StartFlowAction.LED_STAY, [
+                new FlowState(500, 1, 255, 100),
+                new FlowState(1000, 1, 16776960, 70)
+            ], 5));
+        }, 6000);
     });
     yeelight.connect();
 });
