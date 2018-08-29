@@ -1,5 +1,7 @@
 # yeelight
 The node api to control yeelight devices using wifi network TCP/UDP
+
+[![Build Status](https://travis-ci.org/samuraitruong/yeelight.svg?branch=develop)](https://travis-ci.org/samuraitruong/yeelight)
 # Installation
 ```bash 
 
