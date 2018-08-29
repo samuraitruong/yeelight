@@ -7,7 +7,7 @@ export function parseDeviceInfo(message: string): IDevice {
         return null;
     }
     const getString = (key: string, defaultValue: string = "") => {
-        const regex = new RegExp(`${key}: ([^\r\n]*)`)
+        const regex = new RegExp(`${key}: ([^\r\n]*)`);
         const m = message.match(regex);
         if (m && m.length > 0) {
             return m[1];

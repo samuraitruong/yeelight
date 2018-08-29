@@ -9,6 +9,7 @@
         "sample:toggle": "ts-node samples/toggle.ts",
         "sample:flow": "ts-node samples/color-flow.ts",
         "build": "tsc --project tsconfig.json",
+        "lint": "tslint --project . --fix",
         "dev": "tsc --watch --project tsconfig.json",
         "prepublish": "npm run build"
     },

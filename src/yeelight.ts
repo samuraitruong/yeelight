@@ -218,11 +218,11 @@ export class Yeeligt extends EventEmitter {
     }
     /**
      * This method is used to adjust the brightness by specified percentage within specified duration.
-     * @param percentage the percentage to be adjusted. The range is: -100 ~ 100
-     * @param duration the milisecond of animation
+     * @param {number} percentage the percentage to be adjusted. The range is: -100 ~ 100
+     * @param {number} duration the milisecond of animation
      */
     public adjust(type: CommandType.ADJUST_BRIGHT | CommandType.ADJUST_COLOR | CommandType.ADJUST_CT,
-        percentage: number, duration: number) {
+                  percentage: number, duration: number) {
         this.sendCommand(new Command(1, type, [percentage, duration]));
     }
     public sendCommand(command: Command) {
@@ -232,7 +232,7 @@ export class Yeeligt extends EventEmitter {
         console.log(command.getString());
         this.client.write(command.getString() + "\r\n", () => {
             me.emit(command.method);
-        })
+        });
     }
 
 }

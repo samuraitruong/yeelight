@@ -8,14 +8,15 @@ before_script:
   - npm install -g typescript
 install:
   - npm install
-script: 
-  - npm run build
+script:
+  - npm run lint
   - npm run test
+  - npm run build
 deploy:
   provider: npm
   email: "samuraitruong@hotmail.com"
   api_key: $NPM_AUTH_CODE
   skip_cleanup: true
   on:
-    tags: true
-    branch: master
+    tags: false
+    branch: develop
