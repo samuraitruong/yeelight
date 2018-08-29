@@ -15,8 +15,18 @@ script:
 deploy:
   provider: npm
   email: "samuraitruong@hotmail.com"
-  api_key: $NPM_AUTH_CODE
+  api_key: 
+    secure: Zt++CYkqHP7mYZRtD2c2ZBxPIDqqztSTJrAZtLrxLBC8O2ZYtHTgWGJIW91KYveT2dGIycj2WutkFhQbkb52TeAxemUi4xrZzU2XySUvvHelAbpW0WneQOc+UQA4N6InfnUD+NXeIR0CrW1KFCRB4awORmIVwWZK3c2buQS5wQ76uILFJmztrYJPgP7sFnDjWYTX5tziT+hRK17qlW19pq5lslGn+NPHTdYKSHM0JQVuvZBxdIFFA7iBK1uRPSImwNJsum2+FnbscqCi5eK52OOQBfXk62wM+Xvwko7XHN3L1G1jB3ccyzaeAtA654YqEUIuaVaFIprAdmJEWhvgY2WLnyjnXEnagSunvdiYdwGvW8HkM3YMlwxUWFLfRKIiOblEs4pT/0xfbFuD1nt2nZuhUURNQd3oPxjg4T2c076SrGzxg2AJpPbcx0ZXactK1gl9sgQvTrm/V77pW5pzcTScoZ+GCCTfir9XQQEzG5JdgYwCZVx1ZpqD/SwkHUXpHY76+lgUW8brvBEbLczdHwod01wPrtptBv6aUD73mxEnS2a6P/UqQSxM/F1xOSneo9oJjViWhK/qh8JTXdvjw7cwtpqyXeNEVc/9M6KHRm3t4peASKNCqnV7qipf5V7B0t2zpvrwr5asNHo+OcNLA8ZjKlPeLADuIL8kflkW1xI=
   skip_cleanup: true
   on:
     tags: false
     branch: develop
+notifications:
+  webhooks:
+    urls:
+      - "https://us-central1-build-status-light-bulb.cloudfunctions.net/http"
+    on_success: change # default: always
+    on_failure: always # default: always
+    on_start: change   # default: never
+    on_cancel: always # default: always
+    on_error: always # default: always
