@@ -22,6 +22,12 @@ export enum CommandType {
     CRON_ADD = "cron_add",
     CRON_GET = "cron_get",
     CRON_DEL = "cron_del",
+    SET_ADJUST = "set_adjust",
+    SET_MUSIC = "set_music",
+    SET_NAME = "set_name",
+    ADJUST_BRIGHT = "adjust_bright",
+    ADJUST_CT = "adjust_ct",
+    ADJUST_COLOR = "adjust_color",
 }
 /**
  * the action taken after the flow is stopped.
@@ -73,4 +79,12 @@ export enum SceneType {
     CT = "ct",
     CF = "cf",
     AUTO_DELAY_OFF = "auto_delay_off",
+}
+/**
+ * Adjust type
+ */
+export enum AdjustType {
+    INCREASE = "increase",
+    DECREASE = "decrease",
+    CIRCLE = "circle",
 }

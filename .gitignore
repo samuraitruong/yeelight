@@ -1,3 +1,4 @@
 node_modules/
 lib
 mochawesome-report
+*.log

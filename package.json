@@ -1,21 +1,23 @@
 {
-    "name": "my-yeelight",
+    "name": "yeelight-awesome",
     "version": "1.0.0",
     "description": "",
-    "main": "index.js",
+    "main": "lib/index.js",
+    "publisher": "Truong Nguyen",
     "scripts": {
         "test": "mocha -r ts-node/register test/*.test.ts --timeout 120000 --reporter mochawesome",
         "sample:toggle": "ts-node samples/toggle.ts",
         "sample:flow": "ts-node samples/color-flow.ts",
         "build": "tsc --project tsconfig.json",
-        "dev": "tsc --watch --project tsconfig.json"
+        "dev": "tsc --watch --project tsconfig.json",
+        "prepublish": "npm run build"
     },
-    "author": "",
+    "author": "samuraitruong@hotmail.com",
     "license": "ISC",
     "devDependencies": {
         "@types/chai": "^4.1.4",
         "@types/mocha": "^5.2.5",
-        "@types/node": "^10.9.2",
+        "@types/node": "^10.9.3",
         "@types/winston": "^2.4.4",
         "chai": "^4.1.2",
         "mocha": "^5.2.0",
@@ -27,5 +29,14 @@
     "dependencies": {
         "ip": "^1.1.5",
         "winston": "^3.0.0"
-    }
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/samuraitruong/yeelight.git"
+    },
+    "keywords": [
+        "IoT",
+        "Smart Light",
+        "Yeelight"
+    ]
 }

@@ -1,11 +1,11 @@
 import { EventEmitter } from "events";
 import { Socket, SocketConnectOpts } from "net";
+import { Color } from "./models/color";
 import { Command } from "./models/command";
 import { IConfig } from "./models/config";
-import { CommandType, StartFlowAction, DevicePropery } from "./models/enums";
+import { AdjustType, CommandType, DevicePropery, StartFlowAction } from "./models/enums";
 import { FlowState } from "./models/flow-state";
 import { Scene } from "./models/scene";
-import { Color } from "./models/color";
 export class Yeeligt extends EventEmitter {
     private client: Socket;
     private connected: boolean;
@@ -53,6 +53,13 @@ export class Yeeligt extends EventEmitter {
      */
     public cronGet(type: number) {
         this.sendCommand(new Command(1, CommandType.CRON_GET, [type]));
+    }
+    /**
+     * This method is used to retrieve the setting of the current cron job of the specified type.
+     * @param type currently can only be 0. (means power off)
+     */
+    public cronDelete(type: number) {
+        this.sendCommand(new Command(1, CommandType.CRON_DEL, [type]));
     }
     /**
      * This method is used to toggle the smart LED.
@@ -164,7 +171,60 @@ export class Yeeligt extends EventEmitter {
     public setBright(brightness: number, effect: "smooth" | "sudden", duration: number) {
         this.sendCommand(new Command(1, CommandType.SET_BRIGHT, [brightness, effect, duration]));
     }
+    /**
+     * @param command This method is used to change brightness, CT or color of a smart LED without
+     * knowing the current value, it's main used by controllers.
+     * @param {adjustType} adjustType the direction of the adjustment. The valid value can be:
+     * “increase": increase the specified property
+     *  “decrease": decrease the specified property
+     * “circle": increase the specified property, after it reaches the max value back to minimum value
+     * @param {string} prop  the property to adjust. The valid value can be:
+     * “bright": adjust brightness.
+     * “ct": adjust color temperature.
+     * “color": adjust color.
+     * (When “prop" is “color", the “action" can only be “circle", otherwise, it will be deemed as invalid request.)
+     */
+    public setAdjust(adjustType: AdjustType, prop: "bright" | "color" | "ct") {
+        this.sendCommand(new Command(1, CommandType.SET_ADJUST, [adjustType, prop]));
+    }
+    /**
+     * This method is used to start or stop music mode on a device.
+     * Under music mode, no property will be reported and no message quota is checked.
+     * @param action the action of set_music command. The valid value can be:
+     * 0: turn off music mode.
+     * 1: turn on music mode.
+     * @param {string} host the IP address of the music server.
+     * @param {number} port  the TCP port music application is listening on.
+     * When control device wants to start music mode, it needs start a TCP server firstly and then call “set_music”
+     * command to let the device know the IP and Port of the TCP listen socket. After received the command,
+     * LED device will try to connect the specified peer address. If the TCP connection can be established successfully,
+     * then control device could send all supported commands through this channel without limit to simulate any music
+     * effect. The control device can stop music mode by explicitly send a stop command or just by closing the socket.
+     */
+    public setMusic(action: 0 | 1, host: "string", port: number) {
+        this.sendCommand(new Command(1, CommandType.SET_MUSIC, [host, port]));
+    }
 
+    /**
+     * This method is used to name the device.
+     * The name will be stored on the device and reported in discovering response.
+     * User can also read the name through “get_prop” method
+     * @param {string} name  the name of the device.
+     * When using Yeelight official App, the device name is stored on cloud.
+     * This method instead store the name on persistent memory of the device, so the two names could be different.
+     */
+    public setName(name: string) {
+        this.sendCommand(new Command(1, CommandType.SET_NAME, [name]));
+    }
+    /**
+     * This method is used to adjust the brightness by specified percentage within specified duration.
+     * @param percentage the percentage to be adjusted. The range is: -100 ~ 100
+     * @param duration the milisecond of animation
+     */
+    public adjust(type: CommandType.ADJUST_BRIGHT | CommandType.ADJUST_COLOR | CommandType.ADJUST_CT,
+        percentage: number, duration: number) {
+        this.sendCommand(new Command(1, type, [percentage, duration]));
+    }
     public sendCommand(command: Command) {
         const me = this;
         command.id = (this.sentCommands.length + 1);
