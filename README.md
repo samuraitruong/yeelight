@@ -37,3 +37,5 @@ To control the light, you need to know the IP of the light, if not sure, using t
 
 # Samples
 Please refer to [https://github.com/samuraitruong/yeelight/tree/master/samples] (https://github.com/samuraitruong/yeelight/tree/master/samples)
+
+# API
