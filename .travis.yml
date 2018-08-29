@@ -11,3 +11,11 @@ install:
 script: 
   - npm run build
   - npm run test
+deploy:
+  provider: npm
+  email: "samuraitruong@hotmail.com"
+  api_key: $NPM_AUTH_CODE
+  skip_cleanup: true
+  on:
+    tags: true
+    branch: master
