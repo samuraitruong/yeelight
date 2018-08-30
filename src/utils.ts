@@ -7,7 +7,7 @@ export function parseDeviceInfo(message: string): IDevice {
         return null;
     }
     const getString = (key: string, defaultValue: string = "") => {
-        const regex = new RegExp(`${key}: ([^\r\n]*)`)
+        const regex = new RegExp(`${key}: ([^\r\n]*)`);
         const m = message.match(regex);
         if (m && m.length > 0) {
             return m[1];
@@ -33,7 +33,18 @@ export function parseDeviceInfo(message: string): IDevice {
     device.host = host.split(":")[0];
     return device as IDevice;
 }
+export function hexToNumber(hex: string) {
+    const hexString = hex.toUpperCase();
+    let result = 0;
+    for (let i = 1; i <= hexString.length; i++) {
+        let valueNumber = hexString.charCodeAt(i - 1);
+        valueNumber -= (valueNumber >= 65) ? 55 : 48;
+        result += valueNumber * Math.pow(16, hex.length - i);
+    }
+    return result;
+}
 
 export const Utils = {
+    hexToNumber,
     parseDeviceInfo,
 };

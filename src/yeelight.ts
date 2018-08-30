@@ -1,9 +1,11 @@
 import { EventEmitter } from "events";
 import { Socket, SocketConnectOpts } from "net";
+import { Color } from "./models/color";
 import { Command } from "./models/command";
 import { IConfig } from "./models/config";
-import { CommandType, StartFlowAction } from "./models/enums";
+import { AdjustType, CommandType, DevicePropery, StartFlowAction } from "./models/enums";
 import { FlowState } from "./models/flow-state";
+import { Scene } from "./models/scene";
 export class Yeeligt extends EventEmitter {
     private client: Socket;
     private connected: boolean;
@@ -23,11 +25,41 @@ export class Yeeligt extends EventEmitter {
         });
     }
     /*
-        This method is used to switch on or off the smart LED (software managed on/off)
-        @param turnOn:boolean set status true is turn on, false is turn off
+     * This method is used to switch on or off the smart LED (software managed on/off)
+     * @param turnOn:boolean set status true is turn on, false is turn off
+     * @param {"smooth"| "sudden"} effect  support two values: "sudden" and "smooth". If effect is "sudden",
+     * then the color temperature will be changed directly to target value,
+     * under this case, the third parameter "duration" is ignored. If effect is "smooth",
+     * then the color temperature will be changed to target value in a gradual fashion, under this case,
+     * the total time of gradual change is specified in third parameter "duration".
+     * @param {number} duration  specifies the total time of the gradual changing. The unit is milliseconds.
+     * The minimum support duration is 30 milliseconds.
     */
-    public setPower(turnOn: boolean = true, effect: string = "smooth", duration: number = 500) {
+    public setPower(turnOn: boolean = true, effect: "smooth" | "sudden", duration: number = 500) {
         this.sendCommand(new Command(1, CommandType.SET_POWER, [(turnOn ? "on" : "off"), effect, duration]));
+    }
+    /**
+     * This method is used to start a timer job on the smart LED.
+     * Only accepted if the smart LED is currently in "on" state
+     * @param type currently can only be 0. (means power off)
+     * @param time the length of the timer (in minutes). Request
+     */
+    public cronAdd(type: number, time: number) {
+        this.sendCommand(new Command(1, CommandType.CRON_ADD, [0, time]));
+    }
+    /**
+     * This method is used to retrieve the setting of the current cron job of the specified type.
+     * @param type currently can only be 0. (means power off)
+     */
+    public cronGet(type: number) {
+        this.sendCommand(new Command(1, CommandType.CRON_GET, [type]));
+    }
+    /**
+     * This method is used to retrieve the setting of the current cron job of the specified type.
+     * @param type currently can only be 0. (means power off)
+     */
+    public cronDelete(type: number) {
+        this.sendCommand(new Command(1, CommandType.CRON_DEL, [type]));
     }
     /**
      * This method is used to toggle the smart LED.
@@ -39,7 +71,10 @@ export class Yeeligt extends EventEmitter {
     /**
      *  This method is used to save current state of smart LED in persistent memory.
      *  So if user powers off and then powers on the smart LED again (hard power reset),
-     *  the smart LED will show last saved state. 
+     *  the smart LED will show last saved state.
+     * For example, if user likes the current color (red) and brightness (50%)
+     * and want to make this state as a default initial state (every time the smart LED is powered),
+     * then he can use set_default to do a snapshot.
      */
     public setDefault() {
         this.sendCommand(new Command(1, CommandType.SET_DEFAULT, []));
@@ -63,13 +98,141 @@ export class Yeeligt extends EventEmitter {
         const values = states.reduce((a, b) => [...a, ...b.getState()], []);
         this.sendCommand(new Command(1, CommandType.START_COLOR_FLOW, [states.length, action, values.join(",")]));
     }
+    /**
+     * This method is used to stop a running color flow.
+     */
+    public stopColorFlow() {
+        this.sendCommand(new Command(1, CommandType.STOP_COLOR_FLOW, []));
+    }
+    /**
+     * This method is used to set the smart LED directly to specified state.
+     * If the smart LED is off, then it will turn on the smart LED firstly and then apply the specified command
+     */
+    public setScene<T extends Scene>(scene: T) {
+        this.sendCommand(new Command(1, CommandType.SET_SCENE, scene.getData()));
+    }
+    /**
+     * This method is used to retrieve current property of smart LED.
+     * @param {string[]} params  The parameter is a list of property names and the response contains a
+     * list of corresponding property values.
+     * the requested property name is not recognized by smart LED, then a empty string value ("") will be returned.
+     * Request Example:     {"id":1,"method":"get_prop","params":["power", "not_exist", "bright"]}
+     * Example:  {"id":1, "result":["on", "", "100"]}
+     */
+    public getProperty(params: DevicePropery[]) {
+        this.sendCommand(new Command(1, CommandType.GET_PROPS, params));
+    }
+    /**
+     *  This method is used to change the color temperature of a smart LED.
+     * @param {number} ct the target color temperature. The type is integer and range is 1700 ~ 6500 (k).
+     * @param {"smooth"| "sudden"} effect  support two values: "sudden" and "smooth". If effect is "sudden",
+     * then the color temperature will be changed directly to target value,
+     * under this case, the third parameter "duration" is ignored. If effect is "smooth",
+     * then the color temperature will be changed to target value in a gradual fashion, under this case,
+     * the total time of gradual change is specified in third parameter "duration".
+     * @param {number} duration  specifies the total time of the gradual changing. The unit is milliseconds.
+     * The minimum support duration is 30 milliseconds.
+     */
+    public setCtAbx(ct: number, effect: "smooth" | "sudden", duration: number) {
+        this.sendCommand(new Command(1, CommandType.SET_CT_ABX, [ct, effect, duration]));
+    }
+    /**
+     * This method is used to change the color of a smart LED.
+     * Only accepted if the smart LED is currently in "on" state.
+     * @param color  the target color, whose type is integer.
+     * It should be expressed in decimal integer ranges from 0 to 16777215 (hex: 0xFFFFFF).
+     * can be initial by new Color(233,255,244)
+     * @param {"smooth"| "sudden"} effect  support two values: "sudden" and "smooth". If effect is "sudden",
+     * then the color temperature will be changed directly to target value,
+     * under this case, the third parameter "duration" is ignored. If effect is "smooth",
+     * then the color temperature will be changed to target value in a gradual fashion, under this case,
+     * the total time of gradual change is specified in third parameter "duration".
+     * @param {number} duration  specifies the total time of the gradual changing. The unit is milliseconds.
+     * The minimum support duration is 30 milliseconds.
+     */
+    public setRGB(color: Color, effect: "smooth" | "sudden", duration: number) {
+        this.sendCommand(new Command(1, CommandType.SET_RGB, [color.getValue(), effect, duration]));
+    }
+
+    /**
+     * This method is used to change the color of a smart LED.
+     * Only accepted if the smart LED is currently in "on" state.
+     * @param brightness  is the target brightness. The type is integer and ranges from 1 to 100.
+     * The brightness is a percentage instead of a absolute value.
+     * 100 means maximum brightness while 1 means the minimum brightness.
+     * @param {"smooth"| "sudden"} effect  support two values: "sudden" and "smooth". If effect is "sudden",
+     * then the color temperature will be changed directly to target value,
+     * under this case, the third parameter "duration" is ignored. If effect is "smooth",
+     * then the color temperature will be changed to target value in a gradual fashion, under this case,
+     * the total time of gradual change is specified in third parameter "duration".
+     * @param {number} duration  specifies the total time of the gradual changing. The unit is milliseconds.
+     * The minimum support duration is 30 milliseconds.
+     */
+    public setBright(brightness: number, effect: "smooth" | "sudden", duration: number) {
+        this.sendCommand(new Command(1, CommandType.SET_BRIGHT, [brightness, effect, duration]));
+    }
+    /**
+     * @param command This method is used to change brightness, CT or color of a smart LED without
+     * knowing the current value, it's main used by controllers.
+     * @param {adjustType} adjustType the direction of the adjustment. The valid value can be:
+     * “increase": increase the specified property
+     *  “decrease": decrease the specified property
+     * “circle": increase the specified property, after it reaches the max value back to minimum value
+     * @param {string} prop  the property to adjust. The valid value can be:
+     * “bright": adjust brightness.
+     * “ct": adjust color temperature.
+     * “color": adjust color.
+     * (When “prop" is “color", the “action" can only be “circle", otherwise, it will be deemed as invalid request.)
+     */
+    public setAdjust(adjustType: AdjustType, prop: "bright" | "color" | "ct") {
+        this.sendCommand(new Command(1, CommandType.SET_ADJUST, [adjustType, prop]));
+    }
+    /**
+     * This method is used to start or stop music mode on a device.
+     * Under music mode, no property will be reported and no message quota is checked.
+     * @param action the action of set_music command. The valid value can be:
+     * 0: turn off music mode.
+     * 1: turn on music mode.
+     * @param {string} host the IP address of the music server.
+     * @param {number} port  the TCP port music application is listening on.
+     * When control device wants to start music mode, it needs start a TCP server firstly and then call “set_music”
+     * command to let the device know the IP and Port of the TCP listen socket. After received the command,
+     * LED device will try to connect the specified peer address. If the TCP connection can be established successfully,
+     * then control device could send all supported commands through this channel without limit to simulate any music
+     * effect. The control device can stop music mode by explicitly send a stop command or just by closing the socket.
+     */
+    public setMusic(action: 0 | 1, host: "string", port: number) {
+        this.sendCommand(new Command(1, CommandType.SET_MUSIC, [host, port]));
+    }
+
+    /**
+     * This method is used to name the device.
+     * The name will be stored on the device and reported in discovering response.
+     * User can also read the name through “get_prop” method
+     * @param {string} name  the name of the device.
+     * When using Yeelight official App, the device name is stored on cloud.
+     * This method instead store the name on persistent memory of the device, so the two names could be different.
+     */
+    public setName(name: string) {
+        this.sendCommand(new Command(1, CommandType.SET_NAME, [name]));
+    }
+    /**
+     * This method is used to adjust the brightness by specified percentage within specified duration.
+     * @param {number} percentage the percentage to be adjusted. The range is: -100 ~ 100
+     * @param {number} duration the milisecond of animation
+     */
+    public adjust(type: CommandType.ADJUST_BRIGHT | CommandType.ADJUST_COLOR | CommandType.ADJUST_CT,
+                  percentage: number, duration: number) {
+        this.sendCommand(new Command(1, type, [percentage, duration]));
+    }
     public sendCommand(command: Command) {
         const me = this;
         command.id = (this.sentCommands.length + 1);
         this.sentCommands.push(command);
+        console.log(command.getString());
         this.client.write(command.getString() + "\r\n", () => {
             me.emit(command.method);
-        })
+        });
     }
 
 }

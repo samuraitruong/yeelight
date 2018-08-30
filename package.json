@@ -1,25 +1,30 @@
 {
-    "name": "my-yeelight",
-    "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
+    "name": "yeelight-awesome",
+    "version": "1.0.1",
+    "description": "The node.js client api to control yeelight device over WIFI",
+    "main": "lib/index.js",
+    "publisher": "Truong Nguyen",
     "scripts": {
         "test": "mocha -r ts-node/register test/*.test.ts --timeout 120000 --reporter mochawesome",
         "sample:toggle": "ts-node samples/toggle.ts",
         "sample:flow": "ts-node samples/color-flow.ts",
         "build": "tsc --project tsconfig.json",
-        "dev": "tsc --watch --project tsconfig.json"
+        "lint": "tslint --project . --fix",
+        "dev": "tsc --watch --project tsconfig.json",
+        "cover": "nyc mocha test/*.test.ts --reporter mochawesome",
+        "prepublish": "npm run build"
     },
-    "author": "",
+    "author": "samuraitruong@hotmail.com",
     "license": "ISC",
     "devDependencies": {
         "@types/chai": "^4.1.4",
         "@types/mocha": "^5.2.5",
-        "@types/node": "^10.9.2",
+        "@types/node": "^10.9.3",
         "@types/winston": "^2.4.4",
         "chai": "^4.1.2",
         "mocha": "^5.2.0",
         "mochawesome": "^3.0.3",
+        "nyc": "^13.0.1",
         "ts-node": "^7.0.1",
         "tslint": "^5.11.0",
         "typescript": "^3.0.1"
@@ -27,5 +32,35 @@
     "dependencies": {
         "ip": "^1.1.5",
         "winston": "^3.0.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/samuraitruong/yeelight.git"
+    },
+    "keywords": [
+        "IoT",
+        "Smart Light",
+        "Yeelight"
+    ],
+    "nyc": {
+        "include": [
+            "src/**/*.ts"
+        ],
+        "extension": [
+            ".ts"
+        ],
+        "exclude": [
+            "**/*.d.ts"
+        ],
+        "require": [
+            "ts-node/register"
+        ],
+        "reporter": [
+            "lcov",
+            "text-summary",
+            "html"
+        ],
+        "sourceMap": true,
+        "instrument": true
     }
 }
