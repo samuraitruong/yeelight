@@ -10,7 +10,6 @@ install:
   - npm install
 script:
   - npm run lint
-  - npm run test
   - npm run cover
   - npm run build
 deploy:

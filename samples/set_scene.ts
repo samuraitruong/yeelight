@@ -5,7 +5,7 @@ import { StartFlowAction } from "../src/models/enums";
 import { FlowState } from "../src/models/flow-state";
 import { CfScene, ColorScene, CtScene, HsvScene } from "../src/models/scene";
 import { Yeeligt } from "../src/yeelight";
-import * as logger from "./../src/logger";
+import { logger } from "./../src/logger";
 
 const discover = new Discover({ port: 1982, host: "", asPromise: true, debug: true }, logger);
 discover.once("deviceAdded", (device: IDevice) => {

@@ -11,7 +11,7 @@
         "build": "tsc --project tsconfig.json",
         "lint": "tslint --project . --fix",
         "dev": "tsc --watch --project tsconfig.json",
-        "cover": "nyc mocha test/*.test.ts",
+        "cover": "nyc mocha test/*.test.ts --reporter mochawesome",
         "prepublish": "npm run build"
     },
     "author": "samuraitruong@hotmail.com",

@@ -2,7 +2,7 @@ import { Discover } from "../src/discover";
 import { IDevice } from "../src/models/device";
 import { DevicePropery } from "../src/models/enums";
 import { Yeeligt } from "../src/yeelight";
-import * as logger from "./../src/logger";
+import { logger } from "./../src/logger";
 
 const discover = new Discover({ port: 1982, host: "", asPromise: true, debug: true }, logger);
 discover.once("deviceAdded", (device: IDevice) => {
