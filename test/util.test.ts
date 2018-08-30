@@ -12,4 +12,14 @@ describe("Util Test", () => {
         expect(device).not.eq(null);
         expect(device).deep.eq(outputExpected);
     });
+    describe("hexToNumber() test", () => {
+        const json = require("./data/color.json");
+        // tslint:disable-next-line:forin
+        for (const key in json) {
+            it(`numberToHex(${key}) should equal to ${json[key]}`, () => {
+                const v = Utils.hexToNumber(key);
+                expect(v).to.eq(json[key]);
+            });
+        }
+    });
 });
