@@ -13,7 +13,7 @@
         "dev": "tsc --watch --project tsconfig.json",
         "cover": "nyc mocha test/*.test.ts --reporter mochawesome",
         "prepublish": "npm run build",
-        "doc-gen": "typedoc --out doc src/index.ts",
+        "doc-gen": "typedoc --out doc src/index.ts && touch doc/.nojekyll",
         "ghdeploy": "gh-pages -d doc -m 'CI generated'"
     },
     "author": "samuraitruong@hotmail.com",

@@ -35,8 +35,6 @@ deploy:
     keep-history: true
     on:
       branch: develop
-after_deploy:
-  - npm run ghdeploy
 notifications:
   webhooks:
     urls:
