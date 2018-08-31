@@ -1,0 +1,275 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>yeelight-awesome</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">yeelight-awesome</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1> yeelight-awesome</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<h1 id="yeelight">yeelight</h1>
+				<p>The node api to control yeelight devices using wifi network TCP/UDP</p>
+				<p><a href="https://travis-ci.org/samuraitruong/yeelight"><img src="https://travis-ci.org/samuraitruong/yeelight.svg?branch=develop" alt="Build Status"></a></p>
+				<h1 id="installation">Installation</h1>
+				<pre><code class="language-bash">
+npm install yeelight-awesome
+</code></pre>
+				<h1 id="get-started">Get Started</h1>
+				<h2 id="setup-your-light">Setup your light</h2>
+				<p>You need to enable &quot;LAN Control&quot; on the phone App make the light discoverable over LAN network. Open the phone app, go to the light setting and toggle LAN control on.</p>
+				<h2 id="discover-the-light">Discover the light</h2>
+				<p>Before you can control the light, you need to discover it unless you know the light&#39;s IP</p>
+				<pre><code class="language-js">    <span class="hljs-comment">// typescript</span>
+    <span class="hljs-keyword">import</span> { Discover ,IDevice } <span class="hljs-keyword">from</span> <span class="hljs-string">"yeelight-awesome"</span>;
+    <span class="hljs-keyword">const</span> discover = <span class="hljs-keyword">new</span> Discover({ <span class="hljs-attr">port</span>: <span class="hljs-number">1982</span>, <span class="hljs-attr">host</span>: <span class="hljs-string">""</span>,  <span class="hljs-attr">debug</span>: <span class="hljs-literal">true</span> }, logger);
+    discover.once(<span class="hljs-string">"deviceAdded"</span>, (device: IDevice) =&gt; {
+        <span class="hljs-comment">// using device action</span>
+    });
+    <span class="hljs-comment">// make sure you call this</span>
+    discover.start();
+</code></pre>
+				<pre><code class="language-js">    <span class="hljs-comment">// javascript</span>
+    <span class="hljs-keyword">const</span> y = <span class="hljs-built_in">require</span>(<span class="hljs-string">"yeelight-awesome"</span>);
+    <span class="hljs-keyword">const</span> discover = <span class="hljs-keyword">new</span> y.Discover({
+        <span class="hljs-attr">port</span>: <span class="hljs-number">1982</span>,
+        <span class="hljs-attr">host</span>: <span class="hljs-string">""</span>,
+        <span class="hljs-attr">debug</span>: <span class="hljs-literal">true</span>
+    });
+    discover.once(<span class="hljs-string">"deviceAdded"</span>, (device) =&gt; {
+        <span class="hljs-keyword">const</span> yeelight = <span class="hljs-keyword">new</span> y.Yeeligt({
+            <span class="hljs-attr">lightIp</span>: device.host,
+            <span class="hljs-attr">lightPort</span>: device.port
+        });
+
+        yeelight.on(<span class="hljs-string">"connected"</span>, () =&gt; {
+            yeelight.setRGB(<span class="hljs-keyword">new</span> y.Color(<span class="hljs-number">123</span>, <span class="hljs-number">99</span>, <span class="hljs-number">65</span>), <span class="hljs-string">"smooth"</span>, <span class="hljs-number">5000</span>);
+        });
+        yeelight.connect();
+    });
+
+    discover.start();
+</code></pre>
+				<h2 id="control-the-light">Control the light</h2>
+				<p>To control the light, you need to know the IP of the light, if not sure, using the discover above to find details, after you have details you can make connection to the light and control it</p>
+				<pre><code class="language-js">    <span class="hljs-keyword">import</span> { Yeelight, Color } <span class="hljs-keyword">from</span> <span class="hljs-string">"yeelight-awesome"</span>;
+
+    <span class="hljs-keyword">const</span> yeelight = <span class="hljs-keyword">new</span> Yeeligt({ <span class="hljs-attr">lightIp</span>: device.host, <span class="hljs-attr">lightPort</span>: device.port });
+    yeelight.on(<span class="hljs-string">"connected"</span>, () =&gt; {
+        yeelight.setRGB(<span class="hljs-keyword">new</span> Color(<span class="hljs-number">66</span>, <span class="hljs-number">87</span>, <span class="hljs-number">23</span>), <span class="hljs-string">"smooth"</span>, <span class="hljs-number">5000</span>);
+    });
+    yeelight.connect();
+</code></pre>
+				<h1 id="samples">Samples</h1>
+				<p>Here are a full sample of set color flow</p>
+				<pre><code class="language-js">    <span class="hljs-keyword">import</span> { Discover, IDevice,StartFlowAction , FlowState, Yeeligt, logger } <span class="hljs-keyword">from</span> <span class="hljs-string">"yeelight-awesome"</span>;
+
+    <span class="hljs-keyword">const</span> discover = <span class="hljs-keyword">new</span> Discover({ <span class="hljs-attr">port</span>: <span class="hljs-number">1982</span>, <span class="hljs-attr">host</span>: <span class="hljs-string">""</span>, <span class="hljs-attr">asPromise</span>: <span class="hljs-literal">true</span>, <span class="hljs-attr">debug</span>: <span class="hljs-literal">true</span> }, logger);
+    discover.once(<span class="hljs-string">"deviceAdded"</span>, (device: IDevice) =&gt; {
+        logger.info(<span class="hljs-string">"found device: "</span>, device);
+        <span class="hljs-keyword">const</span> yeelight = <span class="hljs-keyword">new</span> Yeeligt({ <span class="hljs-attr">lightIp</span>: device.host, <span class="hljs-attr">lightPort</span>: device.port });
+
+        yeelight.on(<span class="hljs-string">"connected"</span>, () =&gt; {
+            yeelight.startColorFlow([
+                <span class="hljs-keyword">new</span> FlowState(<span class="hljs-number">2000</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2700</span>, <span class="hljs-number">100</span>),
+                <span class="hljs-keyword">new</span> FlowState(<span class="hljs-number">2000</span>, <span class="hljs-number">1</span>, <span class="hljs-number">255</span>, <span class="hljs-number">50</span>),
+                <span class="hljs-keyword">new</span> FlowState(<span class="hljs-number">2000</span>, <span class="hljs-number">7</span>, <span class="hljs-number">1500</span>, <span class="hljs-number">30</span>),
+                <span class="hljs-keyword">new</span> FlowState(<span class="hljs-number">2000</span>, <span class="hljs-number">2</span>, <span class="hljs-number">5000</span>, <span class="hljs-number">45</span>),
+                <span class="hljs-keyword">new</span> FlowState(<span class="hljs-number">2000</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3000</span>, <span class="hljs-number">25</span>),
+            ], StartFlowAction.LED_STAY);
+        });
+        yeelight.connect();
+    });
+
+    discover.start();
+</code></pre>
+				<p>Please refer to [<a href="https://github.com/samuraitruong/yeelight/tree/master/samples%5D">https://github.com/samuraitruong/yeelight/tree/master/samples]</a> (<a href="https://github.com/samuraitruong/yeelight/tree/master/samples">https://github.com/samuraitruong/yeelight/tree/master/samples</a>)</p>
+				<h1 id="api">API</h1>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+					<li class="label tsd-is-external">
+						<span>Internals</span>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_index_.html">"index"</a>
+					</li>
+					<li class="label tsd-is-external">
+						<span>Externals</span>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_discover_.html">"discover"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_logger_.html">"logger"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_models_color_.html">"models/color"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_models_command_.html">"models/command"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_models_config_.html">"models/config"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_models_device_.html">"models/device"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_models_discover_config_.html">"models/discover-<wbr>config"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_models_enums_.html">"models/enums"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_models_flow_state_.html">"models/flow-<wbr>state"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_models_index_.html">"models/index"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_models_scene_.html">"models/scene"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_utils_.html">"utils"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_yeelight_.html">"yeelight"</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
+</body>
+</html>
