@@ -38,7 +38,12 @@ export function parseDeviceInfo(message: string): IDevice {
     device.host = host.split(":")[0];
     return device as IDevice;
 }
-export function hexToNumber(hex: string) {
+/**
+ * This function to convert the hex string to the decimal number. Ex AA=> 255
+ * @param {string} hex the input as heximal string ex: 12AF32CD
+ * @returns {number} the number value of hex string
+ */
+export function hexToNumber(hex: string): number {
     const hexString = hex.toUpperCase();
     let result = 0;
     for (let i = 1; i <= hexString.length; i++) {

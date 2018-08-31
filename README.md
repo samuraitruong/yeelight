@@ -94,3 +94,6 @@ Here are a full sample of set color flow
 Please refer to [https://github.com/samuraitruong/yeelight/tree/master/samples] (https://github.com/samuraitruong/yeelight/tree/master/samples)
 
 # API
+Yeelight awesome has implement all the support function for yeelight device, Just in case the device has new function that not covert by the API, you can use the sendCommands function with your own data structure to make a request to the light
+Please refer to [https://samuraitruong.github.io/yeelight/] (https://samuraitruong.github.io/yeelight/) for all details document
+

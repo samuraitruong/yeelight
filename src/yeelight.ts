@@ -222,14 +222,18 @@ export class Yeeligt extends EventEmitter {
      * @param {number} duration the milisecond of animation
      */
     public adjust(type: CommandType.ADJUST_BRIGHT | CommandType.ADJUST_COLOR | CommandType.ADJUST_CT,
-                  percentage: number, duration: number) {
+        percentage: number, duration: number) {
         this.sendCommand(new Command(1, type, [percentage, duration]));
     }
+    /**
+     * Use this function to send any command to the light,
+     * please refer to specification to know the structure of command data
+     * @param {Command} command The command to send to light via socket write
+     */
     public sendCommand(command: Command) {
         const me = this;
         command.id = (this.sentCommands.length + 1);
         this.sentCommands.push(command);
-        console.log(command.getString());
         this.client.write(command.getString() + "\r\n", () => {
             me.emit(command.method);
         });
