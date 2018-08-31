@@ -12,12 +12,12 @@ script:
   - npm run lint
   - npm run cover
   - npm run build
+  - npm run doc-gen
 before_deploy:
   # Set up git user name and tag this commit
   - git config --local user.name "TravisCI"
   - git config --local user.email "samuraitruong@hotmail.com"
   - git tag "$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)"
-  - npm run doc-gen
 deploy:
   - provider: npm
     email: "samuraitruong@hotmail.com"
