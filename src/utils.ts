@@ -3,7 +3,7 @@ import { ColorMode, DeviceStatus } from "./models/enums";
 /**
  * Parse the raw socket message to the device information
  * @param {string} message raw HTTP message read from socket when discover the light
- * @returns {IDevice} device info 
+ * @returns {IDevice} device info
  */
 export function parseDeviceInfo(message: string): IDevice {
 

@@ -222,7 +222,7 @@ export class Yeeligt extends EventEmitter {
      * @param {number} duration the milisecond of animation
      */
     public adjust(type: CommandType.ADJUST_BRIGHT | CommandType.ADJUST_COLOR | CommandType.ADJUST_CT,
-        percentage: number, duration: number) {
+                  percentage: number, duration: number) {
         this.sendCommand(new Command(1, type, [percentage, duration]));
     }
     /**

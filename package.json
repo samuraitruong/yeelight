@@ -16,6 +16,11 @@
         "doc-gen": "typedoc --out doc src/index.ts && touch doc/.nojekyll",
         "ghdeploy": "gh-pages -d doc -m 'CI generated'"
     },
+    "husky": {
+        "hooks": {
+            "pre-commit": "npm run lint"
+        }
+    },
     "author": "samuraitruong@hotmail.com",
     "license": "ISC",
     "devDependencies": {
@@ -25,6 +30,7 @@
         "@types/winston": "^2.4.4",
         "chai": "^4.1.2",
         "gh-pages": "^1.2.0",
+        "husky": "^1.0.0-rc.13",
         "mocha": "^5.2.0",
         "mochawesome": "^3.0.3",
         "nyc": "^13.0.1",
