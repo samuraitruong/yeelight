@@ -10,16 +10,43 @@ npm install yeelight-awesome
 ```
 
 # Get Started
+## Setup your light
+You need to enable "LAN Control" on the phone App make the light discoverable over LAN network. Open the phone app, go to the light setting and toggle LAN control on.
+
 ## Discover the light
 Before you can control the light, you need to discover it unless you know the light's IP
 ```js
-    // ES6, typescript
+    // typescript
     import { Discover ,IDevice } from "yeelight-awesome";
     const discover = new Discover({ port: 1982, host: "",  debug: true }, logger);
     discover.once("deviceAdded", (device: IDevice) => {
         // using device action
     });
     // make sure you call this
+    discover.start();
+
+```
+
+```js
+    // javascript
+    const y = require("yeelight-awesome");
+    const discover = new y.Discover({
+        port: 1982,
+        host: "",
+        debug: true
+    });
+    discover.once("deviceAdded", (device) => {
+        const yeelight = new y.Yeeligt({
+            lightIp: device.host,
+            lightPort: device.port
+        });
+
+        yeelight.on("connected", () => {
+            yeelight.setRGB(new y.Color(123, 99, 65), "smooth", 5000);
+        });
+        yeelight.connect();
+    });
+
     discover.start();
 
 ```
