@@ -1,0 +1,7 @@
+node_modules/
+lib
+mochawesome-report
+*.log
+.nyc_output/
+coverage/
+doc
