@@ -9,7 +9,7 @@ import { ILogger } from "./models/logger";
 /**
  * The client to connect and control the light
  */
-export class Yeeligt extends EventEmitter {
+export class Yeelight extends EventEmitter {
     private client: Socket;
     private connected: boolean;
     private sentCommands: Command[];
@@ -61,7 +61,7 @@ export class Yeeligt extends EventEmitter {
      * establish connection to light,
      * @returns return promise of the current instance
      */
-    public connect(): Promise<Yeeligt> {
+    public connect(): Promise<Yeelight> {
         const me = this;
         return new Promise((resolve) => {
             this.client.connect(me.options.lightPort, me.options.lightIp, () => {

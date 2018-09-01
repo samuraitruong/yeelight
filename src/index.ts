@@ -1,5 +1,5 @@
 export { Discover } from "./discover";
-export { Yeeligt } from "./yeelight";
+export { Yeelight } from "./yeelight";
 
 export * from "./models";
 export * from "./logger";

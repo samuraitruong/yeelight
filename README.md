@@ -35,7 +35,7 @@ Before you can control the light, you need to discover it unless you know the li
         debug: true
     });
     discover.once("deviceAdded", (device) => {
-        const yeelight = new y.Yeeligt({
+        const yeelight = new y.Yeelight({
             lightIp: device.host,
             lightPort: device.port
         });
@@ -55,7 +55,7 @@ To control the light, you need to know the IP of the light, if not sure, using t
 ```js
     import { Yeelight, Color } from "yeelight-awesome";
 
-    const yeelight = new Yeeligt({ lightIp: device.host, lightPort: device.port });
+    const yeelight = new Yeelight({ lightIp: device.host, lightPort: device.port });
     yeelight.on("connected", () => {
         yeelight.setRGB(new Color(66, 87, 23), "smooth", 5000);
     });
@@ -101,7 +101,7 @@ see below example
     discover.start().then((devices) => {
         const device = devices[0];
         logger.info("found device: ", devices);
-        const yeelight = new Yeeligt({ lightIp: device.host, lightPort: device.port });
+        const yeelight = new Yeelight({ lightIp: device.host, lightPort: device.port });
 
         yeelight.connect().then((l) => {
             l.toggle().then(() => {
@@ -121,7 +121,7 @@ All the method has promise support.
 example: 
 ```js
     // yeelight will always running on port 55443
-    const yeelight = new Yeeligt({ lightIp: "192.168.1.101", lightPort: 55443 });
+    const yeelight = new Yeelight({ lightIp: "192.168.1.101", lightPort: 55443 });
     yeelight.once(CommandType.SET_NAME, (data) => {
         logger.info("Can also capture the event data when it ran successful", data);
     });
@@ -162,12 +162,12 @@ Here are a full sample of set color flow
 
 ```js
     // Typescript
-    import { Discover, IDevice,StartFlowAction , FlowState, Yeeligt, logger } from "yeelight-awesome";
+    import { Discover, IDevice,StartFlowAction , FlowState, Yeelight, logger } from "yeelight-awesome";
 
     const discover = new Discover({ port: 1982, host: "", asPromise: true, debug: true }, logger);
     discover.once("deviceAdded", (device: IDevice) => {
         logger.info("found device: ", device);
-        const yeelight = new Yeeligt({ lightIp: device.host, lightPort: device.port });
+        const yeelight = new Yeelight({ lightIp: device.host, lightPort: device.port });
 
         yeelight.on("connected", () => {
             yeelight.startColorFlow([
@@ -190,7 +190,7 @@ Or javascript
     discover.start().then((devices) => {
         const device = devices[0];
         logger.info("found device: ", devices);
-        const yeelight = new Yeeligt({ lightIp: device.host, lightPort: device.port });
+        const yeelight = new Yeelight({ lightIp: device.host, lightPort: device.port }, logger);
 
         yeelight.connect().then((l) => {
             l.startColorFlow([

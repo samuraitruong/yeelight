@@ -2,13 +2,13 @@ import { Discover } from "../src/discover";
 import { IDevice } from "../src/models/device";
 import { StartFlowAction } from "../src/models/enums";
 import { FlowState } from "../src/models/flow-state";
-import { Yeeligt } from "../src/yeelight";
+import { Yeelight } from "../src/yeelight";
 import { logger } from "./logger";
 
 const discover = new Discover({ port: 1982, host: "", debug: true }, logger);
 discover.once("deviceAdded", (device: IDevice) => {
     logger.info("found device: ", device);
-    const yeelight = new Yeeligt({ lightIp: device.host, lightPort: device.port });
+    const yeelight = new Yeelight({ lightIp: device.host, lightPort: device.port });
 
     yeelight.on("connected", () => {
         yeelight.startColorFlow([
