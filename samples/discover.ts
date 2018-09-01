@@ -1,7 +1,7 @@
 import { Discover } from "../src/discover";
-import { logger } from "./../src/logger";
+import { logger } from "./logger";
 
-const discover = new Discover({ port: 1982, host: "", asPromise: true, debug: true }, logger);
+const discover = new Discover({ port: 1982, host: "", debug: true }, logger);
 discover.once("deviceAdded", (aa) => {
     console.log(aa);
 });
