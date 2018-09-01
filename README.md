@@ -234,7 +234,7 @@ Please refer to [https://samuraitruong.github.io/yeelight/] (https://samuraitruo
 # Issues & Feedbacks
 Please use github issue page if you encounter with any problem or want to give a feedback, feel free to post an issue on github page
 
-# Bugfixi & Enhancements
+# Bug fixs & Enhancements
 Feel free to fork and pull request the new feature that you make/or bug you fix. Thanks
 
 # Release Notes
