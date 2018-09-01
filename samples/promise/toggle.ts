@@ -9,12 +9,18 @@ discover.start().then((devices: IDevice[]) => {
     logger.info("found device: ", devices);
     const yeelight = new Yeeligt({ lightIp: device.host, lightPort: device.port });
     yeelight.once(CommandType.TOGGLE, (data: IEventResult) => {
-        console.log("can also capture the event data when it ran successful", data);
-    })
+        logger.info("can also capture the event data when it ran successful", data);
+    });
+
+    yeelight.once("commandSuccess", (data: IEventResult) => {
+        logger.info("commandSuccesss fire everytime the command finish", data);
+    });
+
     yeelight.connect().then((l) => {
         l.toggle().then(() => {
             logger.info("The light has been toggled");
             l.disconnect();
+            discover.destroy();
         });
     });
 

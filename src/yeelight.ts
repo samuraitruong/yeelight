@@ -52,15 +52,10 @@ export class Yeeligt extends EventEmitter {
     /**
      * Drop connection/listerners and clean up resources.
      */
-    public disconnect(): Promise<void> {
-        if (!this.client) {
-            return Promise.resolve();
-        }
-        return new Promise((resolve, reject) => {
-            this.removeAllListeners();
-            this.client.destroy();
-            resolve();
-        });
+    public disconnect() {
+        this.removeAllListeners();
+        this.emit("end");
+        this.client.destroy();
     }
     /**
      * establish connection to light,
