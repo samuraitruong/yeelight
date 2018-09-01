@@ -92,7 +92,7 @@ npm install yeelight-awesome
         <span class="hljs-attr">debug</span>: <span class="hljs-literal">true</span>
     });
     discover.once(<span class="hljs-string">"deviceAdded"</span>, (device) =&gt; {
-        <span class="hljs-keyword">const</span> yeelight = <span class="hljs-keyword">new</span> y.Yeeligt({
+        <span class="hljs-keyword">const</span> yeelight = <span class="hljs-keyword">new</span> y.Yeelight({
             <span class="hljs-attr">lightIp</span>: device.host,
             <span class="hljs-attr">lightPort</span>: device.port
         });
@@ -109,7 +109,7 @@ npm install yeelight-awesome
 				<p>To control the light, you need to know the IP of the light, if not sure, using the discover above to find details, after you have details you can make connection to the light and control it</p>
 				<pre><code class="language-js">    <span class="hljs-keyword">import</span> { Yeelight, Color } <span class="hljs-keyword">from</span> <span class="hljs-string">"yeelight-awesome"</span>;
 
-    <span class="hljs-keyword">const</span> yeelight = <span class="hljs-keyword">new</span> Yeeligt({ <span class="hljs-attr">lightIp</span>: device.host, <span class="hljs-attr">lightPort</span>: device.port });
+    <span class="hljs-keyword">const</span> yeelight = <span class="hljs-keyword">new</span> Yeelight({ <span class="hljs-attr">lightIp</span>: device.host, <span class="hljs-attr">lightPort</span>: device.port });
     yeelight.on(<span class="hljs-string">"connected"</span>, () =&gt; {
         yeelight.setRGB(<span class="hljs-keyword">new</span> Color(<span class="hljs-number">66</span>, <span class="hljs-number">87</span>, <span class="hljs-number">23</span>), <span class="hljs-string">"smooth"</span>, <span class="hljs-number">5000</span>);
     });
@@ -152,7 +152,7 @@ npm install yeelight-awesome
     discover.start().then(<span class="hljs-function">(<span class="hljs-params">devices</span>) =&gt;</span> {
         <span class="hljs-keyword">const</span> device = devices[<span class="hljs-number">0</span>];
         logger.info(<span class="hljs-string">"found device: "</span>, devices);
-        <span class="hljs-keyword">const</span> yeelight = <span class="hljs-keyword">new</span> Yeeligt({ <span class="hljs-attr">lightIp</span>: device.host, <span class="hljs-attr">lightPort</span>: device.port });
+        <span class="hljs-keyword">const</span> yeelight = <span class="hljs-keyword">new</span> Yeelight({ <span class="hljs-attr">lightIp</span>: device.host, <span class="hljs-attr">lightPort</span>: device.port });
 
         yeelight.connect().then(<span class="hljs-function">(<span class="hljs-params">l</span>) =&gt;</span> {
             l.toggle().then(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
@@ -170,7 +170,7 @@ npm install yeelight-awesome
 				<p>All the method has promise support.
 				example: </p>
 				<pre><code class="language-js">    <span class="hljs-comment">// yeelight will always running on port 55443</span>
-    <span class="hljs-keyword">const</span> yeelight = <span class="hljs-keyword">new</span> Yeeligt({ <span class="hljs-attr">lightIp</span>: <span class="hljs-string">"192.168.1.101"</span>, <span class="hljs-attr">lightPort</span>: <span class="hljs-number">55443</span> });
+    <span class="hljs-keyword">const</span> yeelight = <span class="hljs-keyword">new</span> Yeelight({ <span class="hljs-attr">lightIp</span>: <span class="hljs-string">"192.168.1.101"</span>, <span class="hljs-attr">lightPort</span>: <span class="hljs-number">55443</span> });
     yeelight.once(CommandType.SET_NAME, (data) =&gt; {
         logger.info(<span class="hljs-string">"Can also capture the event data when it ran successful"</span>, data);
     });
@@ -201,12 +201,12 @@ npm install yeelight-awesome
 				<h1 id="samples">Samples</h1>
 				<p>Here are a full sample of set color flow</p>
 				<pre><code class="language-js">    <span class="hljs-comment">// Typescript</span>
-    <span class="hljs-keyword">import</span> { Discover, IDevice,StartFlowAction , FlowState, Yeeligt, logger } <span class="hljs-keyword">from</span> <span class="hljs-string">"yeelight-awesome"</span>;
+    <span class="hljs-keyword">import</span> { Discover, IDevice,StartFlowAction , FlowState, Yeelight, logger } <span class="hljs-keyword">from</span> <span class="hljs-string">"yeelight-awesome"</span>;
 
     <span class="hljs-keyword">const</span> discover = <span class="hljs-keyword">new</span> Discover({ <span class="hljs-attr">port</span>: <span class="hljs-number">1982</span>, <span class="hljs-attr">host</span>: <span class="hljs-string">""</span>, <span class="hljs-attr">asPromise</span>: <span class="hljs-literal">true</span>, <span class="hljs-attr">debug</span>: <span class="hljs-literal">true</span> }, logger);
     discover.once(<span class="hljs-string">"deviceAdded"</span>, (device: IDevice) =&gt; {
         logger.info(<span class="hljs-string">"found device: "</span>, device);
-        <span class="hljs-keyword">const</span> yeelight = <span class="hljs-keyword">new</span> Yeeligt({ <span class="hljs-attr">lightIp</span>: device.host, <span class="hljs-attr">lightPort</span>: device.port });
+        <span class="hljs-keyword">const</span> yeelight = <span class="hljs-keyword">new</span> Yeelight({ <span class="hljs-attr">lightIp</span>: device.host, <span class="hljs-attr">lightPort</span>: device.port });
 
         yeelight.on(<span class="hljs-string">"connected"</span>, () =&gt; {
             yeelight.startColorFlow([
@@ -227,7 +227,7 @@ npm install yeelight-awesome
     discover.start().then(<span class="hljs-function">(<span class="hljs-params">devices</span>) =&gt;</span> {
         <span class="hljs-keyword">const</span> device = devices[<span class="hljs-number">0</span>];
         logger.info(<span class="hljs-string">"found device: "</span>, devices);
-        <span class="hljs-keyword">const</span> yeelight = <span class="hljs-keyword">new</span> Yeeligt({ <span class="hljs-attr">lightIp</span>: device.host, <span class="hljs-attr">lightPort</span>: device.port });
+        <span class="hljs-keyword">const</span> yeelight = <span class="hljs-keyword">new</span> Yeelight({ <span class="hljs-attr">lightIp</span>: device.host, <span class="hljs-attr">lightPort</span>: device.port }, logger);
 
         yeelight.connect().then(<span class="hljs-function">(<span class="hljs-params">l</span>) =&gt;</span> {
             l.startColorFlow([
