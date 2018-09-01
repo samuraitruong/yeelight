@@ -89,7 +89,6 @@ npm install yeelight-awesome
     <span class="hljs-keyword">const</span> y = <span class="hljs-built_in">require</span>(<span class="hljs-string">"yeelight-awesome"</span>);
     <span class="hljs-keyword">const</span> discover = <span class="hljs-keyword">new</span> y.Discover({
         <span class="hljs-attr">port</span>: <span class="hljs-number">1982</span>,
-        <span class="hljs-attr">host</span>: <span class="hljs-string">""</span>,
         <span class="hljs-attr">debug</span>: <span class="hljs-literal">true</span>
     });
     discover.once(<span class="hljs-string">"deviceAdded"</span>, (device) =&gt; {
@@ -116,9 +115,93 @@ npm install yeelight-awesome
     });
     yeelight.connect();
 </code></pre>
+				<h2 id="handle-events">Handle Events</h2>
+				<p>The yeelight awesome using Event Emitter pattern, so that you can hook up into the event to get &amp; process data. bellow are list of event</p>
+				<ul>
+					<li>commandSuccess: This event emit on every command successful</li>
+					<li>set_power</li>
+					<li>toggle</li>
+					<li>set_default</li>
+					<li>start_cf</li>
+					<li>stop_cf</li>
+					<li>get_prop</li>
+					<li>set_scene</li>
+					<li>set_ct_abx</li>
+					<li>set_rgg</li>
+					<li>set_bright</li>
+					<li>cron_add</li>
+					<li>cron_get</li>
+					<li>cron_del</li>
+					<li>set_adjust</li>
+					<li>set_music</li>
+					<li>set_name</li>
+					<li>adjust_bright</li>
+					<li>adjust_ct</li>
+					<li>adjust_color</li>
+				</ul>
+				<p>event data. each event will emit with below data</p>
+				<pre><code class="language-js">interface IEventResult {
+    <span class="hljs-attr">action</span>: CommandType;
+    command: Command;
+    result: ICommandResult;
+    success: boolean;
+}</code></pre>
+				<h2 id="use-promise">Use Promise</h2>
+				<p>see below example</p>
+				<pre><code class="language-js">    <span class="hljs-keyword">const</span> discover = <span class="hljs-keyword">new</span> Discover({ <span class="hljs-attr">debug</span>: <span class="hljs-literal">true</span> }, logger);
+    discover.start().then(<span class="hljs-function">(<span class="hljs-params">devices</span>) =&gt;</span> {
+        <span class="hljs-keyword">const</span> device = devices[<span class="hljs-number">0</span>];
+        logger.info(<span class="hljs-string">"found device: "</span>, devices);
+        <span class="hljs-keyword">const</span> yeelight = <span class="hljs-keyword">new</span> Yeeligt({ <span class="hljs-attr">lightIp</span>: device.host, <span class="hljs-attr">lightPort</span>: device.port });
+
+        yeelight.connect().then(<span class="hljs-function">(<span class="hljs-params">l</span>) =&gt;</span> {
+            l.toggle().then(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+                logger.info(<span class="hljs-string">"The light has been toggled"</span>);
+                <span class="hljs-comment">// you need to call disconnect and destroy when you finish</span>
+                l.disconnect();
+                discover.destroy();
+            });
+        });
+
+    }).catch(<span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> {
+        logger.error(e);
+        discover.destroy();
+    });</code></pre>
+				<p>All the method has promise support.
+				example: </p>
+				<pre><code class="language-js">    <span class="hljs-comment">// yeelight will always running on port 55443</span>
+    <span class="hljs-keyword">const</span> yeelight = <span class="hljs-keyword">new</span> Yeeligt({ <span class="hljs-attr">lightIp</span>: <span class="hljs-string">"192.168.1.101"</span>, <span class="hljs-attr">lightPort</span>: <span class="hljs-number">55443</span> });
+    yeelight.once(CommandType.SET_NAME, (data) =&gt; {
+        logger.info(<span class="hljs-string">"Can also capture the event data when it ran successful"</span>, data);
+    });
+
+    yeelight.once(<span class="hljs-string">"commandSuccess"</span>, (data) =&gt; {
+        logger.info(<span class="hljs-string">"commandSuccesss fire everytime the command finish"</span>, data);
+    });
+    yeelight.connect().then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">light</span>) </span>{
+        light.setName(<span class="hljs-string">"Bedroom1_light"</span>)
+    })</code></pre>
+				<h2 id="logger">Logger</h2>
+				<p>You can pass any logger in the constructor of Discover/Yeelight class. In our example we use winston library to write a log.</p>
+				<p>to write your own logger, you need implement the logger with below ILogger interface</p>
+				<pre><code class="language-js">    interface ILogger {
+        <span class="hljs-attr">info</span>: <span class="hljs-function">(<span class="hljs-params">message: string, data?: any</span>) =&gt;</span> <span class="hljs-keyword">void</span>;
+        error: <span class="hljs-function">(<span class="hljs-params">message: string, data?: any</span>) =&gt;</span> <span class="hljs-keyword">void</span>;
+        debug: <span class="hljs-function">(<span class="hljs-params">message: string, data?: any</span>) =&gt;</span> <span class="hljs-keyword">void</span>;
+        log?: <span class="hljs-function">(<span class="hljs-params">message: string, data?: any</span>) =&gt;</span> <span class="hljs-keyword">void</span>;
+    }</code></pre>
+				<p>If logger not being passed to the constructor, the console.log will be used. by using default Logger below</p>
+				<pre><code class="language-js">    <span class="hljs-keyword">const</span> defaultLogger: ILogger = {
+        <span class="hljs-attr">debug</span>: <span class="hljs-function">(<span class="hljs-params">message: string, obj: any</span>) =&gt;</span> <span class="hljs-built_in">console</span>.debug,
+        <span class="hljs-attr">error</span>: <span class="hljs-function">(<span class="hljs-params">message: string, obj: any</span>) =&gt;</span> <span class="hljs-built_in">console</span>.error,
+        <span class="hljs-attr">info</span>: <span class="hljs-function">(<span class="hljs-params">message: string, obj: any</span>) =&gt;</span> <span class="hljs-built_in">console</span>.info,
+        <span class="hljs-attr">log</span>: <span class="hljs-function">(<span class="hljs-params">message: string, obj: any</span>) =&gt;</span> <span class="hljs-built_in">console</span>.log,
+    };
+</code></pre>
 				<h1 id="samples">Samples</h1>
 				<p>Here are a full sample of set color flow</p>
-				<pre><code class="language-js">    <span class="hljs-keyword">import</span> { Discover, IDevice,StartFlowAction , FlowState, Yeeligt, logger } <span class="hljs-keyword">from</span> <span class="hljs-string">"yeelight-awesome"</span>;
+				<pre><code class="language-js">    <span class="hljs-comment">// Typescript</span>
+    <span class="hljs-keyword">import</span> { Discover, IDevice,StartFlowAction , FlowState, Yeeligt, logger } <span class="hljs-keyword">from</span> <span class="hljs-string">"yeelight-awesome"</span>;
 
     <span class="hljs-keyword">const</span> discover = <span class="hljs-keyword">new</span> Discover({ <span class="hljs-attr">port</span>: <span class="hljs-number">1982</span>, <span class="hljs-attr">host</span>: <span class="hljs-string">""</span>, <span class="hljs-attr">asPromise</span>: <span class="hljs-literal">true</span>, <span class="hljs-attr">debug</span>: <span class="hljs-literal">true</span> }, logger);
     discover.once(<span class="hljs-string">"deviceAdded"</span>, (device: IDevice) =&gt; {
@@ -139,17 +222,54 @@ npm install yeelight-awesome
 
     discover.start();
 </code></pre>
+				<p>Or javascript</p>
+				<pre><code class="language-js">    <span class="hljs-keyword">const</span> discover = <span class="hljs-keyword">new</span> Discover({ <span class="hljs-attr">debug</span>: <span class="hljs-literal">true</span> }, logger);
+    discover.start().then(<span class="hljs-function">(<span class="hljs-params">devices</span>) =&gt;</span> {
+        <span class="hljs-keyword">const</span> device = devices[<span class="hljs-number">0</span>];
+        logger.info(<span class="hljs-string">"found device: "</span>, devices);
+        <span class="hljs-keyword">const</span> yeelight = <span class="hljs-keyword">new</span> Yeeligt({ <span class="hljs-attr">lightIp</span>: device.host, <span class="hljs-attr">lightPort</span>: device.port });
+
+        yeelight.connect().then(<span class="hljs-function">(<span class="hljs-params">l</span>) =&gt;</span> {
+            l.startColorFlow([
+                <span class="hljs-keyword">new</span> FlowState(<span class="hljs-number">2000</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2700</span>, <span class="hljs-number">100</span>),
+                <span class="hljs-keyword">new</span> FlowState(<span class="hljs-number">2000</span>, <span class="hljs-number">1</span>, <span class="hljs-number">255</span>, <span class="hljs-number">50</span>),
+                <span class="hljs-keyword">new</span> FlowState(<span class="hljs-number">2000</span>, <span class="hljs-number">7</span>, <span class="hljs-number">1500</span>, <span class="hljs-number">30</span>),
+                <span class="hljs-keyword">new</span> FlowState(<span class="hljs-number">2000</span>, <span class="hljs-number">2</span>, <span class="hljs-number">5000</span>, <span class="hljs-number">45</span>),
+                <span class="hljs-keyword">new</span> FlowState(<span class="hljs-number">2000</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3000</span>, <span class="hljs-number">25</span>),
+            ]).then(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+                logger.info(<span class="hljs-string">"Start color flow finish"</span>);
+                <span class="hljs-comment">// you need to call disconnect and destroy when you finish</span>
+                l.disconnect();
+                discover.destroy();
+            });
+        });
+
+    }).catch(<span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> {
+        logger.error(e);
+        discover.destroy();
+    });</code></pre>
 				<p>Please refer to [<a href="https://github.com/samuraitruong/yeelight/tree/master/samples%5D">https://github.com/samuraitruong/yeelight/tree/master/samples]</a> (<a href="https://github.com/samuraitruong/yeelight/tree/master/samples">https://github.com/samuraitruong/yeelight/tree/master/samples</a>)</p>
+				<p>NOTE: The example was written in typescript so you need to use ts-node to run them. </p>
+				<pre><code class="language-bash">ts-node samples/filename.ts</code></pre>
 				<h1 id="api">API</h1>
 				<p>Yeelight awesome has implement all the support function for yeelight device, Just in case the device has new function that not covert by the API, you can use the sendCommands function with your own data structure to make a request to the light</p>
 				<p>Please refer to [<a href="https://samuraitruong.github.io/yeelight/%5D">https://samuraitruong.github.io/yeelight/]</a> (<a href="https://samuraitruong.github.io/yeelight/">https://samuraitruong.github.io/yeelight/</a>) for all details document</p>
+				<ul>
+					<li>NOTE: This library has been test and confirm working on Yeelight YLDP02YL AC220V RGBW E27 Smart LED Bulb </li>
+				</ul>
 				<h1 id="wip">WIP</h1>
 				<ul>
-					<li>Adding support promise</li>
 					<li>Adding error handling event/successful event</li>
 					<li>Enhancement documents and add defined type for typescript</li>
 					<li>Unit test &amp; Test Coverage for the main code</li>
 				</ul>
+				<h1 id="issues-feedbacks">Issues &amp; Feedbacks</h1>
+				<p>Please use github issue page if you encounter with any problem or want to give a feedback, feel free to post an issue on github page</p>
+				<h1 id="bugfixi-enhancements">Bugfixi &amp; Enhancements</h1>
+				<p>Feel free to fork and pull request the new feature that you make/or bug you fix. Thanks</p>
+				<h1 id="release-notes">Release Notes</h1>
+				<p>1.0.3: Added support promises
+				1.0.0-1.0.0.2 : The very first initial , include all test and working function</p>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -180,6 +300,9 @@ npm install yeelight-awesome
 						<a href="modules/_models_command_.html">"models/command"</a>
 					</li>
 					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_models_command_result_.html">"models/command-<wbr>result"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
 						<a href="modules/_models_config_.html">"models/config"</a>
 					</li>
 					<li class=" tsd-kind-external-module tsd-is-external">
@@ -192,10 +315,16 @@ npm install yeelight-awesome
 						<a href="modules/_models_enums_.html">"models/enums"</a>
 					</li>
 					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_models_event_result_.html">"models/event-<wbr>result"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
 						<a href="modules/_models_flow_state_.html">"models/flow-<wbr>state"</a>
 					</li>
 					<li class=" tsd-kind-external-module tsd-is-external">
 						<a href="modules/_models_index_.html">"models/index"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_models_logger_.html">"models/logger"</a>
 					</li>
 					<li class=" tsd-kind-external-module tsd-is-external">
 						<a href="modules/_models_scene_.html">"models/scene"</a>

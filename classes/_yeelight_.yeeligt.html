@@ -69,6 +69,13 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>The client to connect and control the light</p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -95,9 +102,12 @@
 						<section class="tsd-index-section tsd-is-external">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external"><a href="_yeelight_.yeeligt.html#event_name" class="tsd-kind-icon">EVENT_<wbr>NAME</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external"><a href="_yeelight_.yeeligt.html#client" class="tsd-kind-icon">client</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external"><a href="_yeelight_.yeeligt.html#connected" class="tsd-kind-icon">connected</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external"><a href="_yeelight_.yeeligt.html#logger" class="tsd-kind-icon">logger</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external"><a href="_yeelight_.yeeligt.html#options" class="tsd-kind-icon">options</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external"><a href="_yeelight_.yeeligt.html#resultcommands" class="tsd-kind-icon">result<wbr>Commands</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external"><a href="_yeelight_.yeeligt.html#sentcommands" class="tsd-kind-icon">sent<wbr>Commands</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-static tsd-is-external"><a href="_yeelight_.yeeligt.html#defaultmaxlisteners" class="tsd-kind-icon">default<wbr>Max<wbr>Listeners</a></li>
 							</ul>
@@ -111,6 +121,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-external"><a href="_yeelight_.yeeligt.html#cronadd" class="tsd-kind-icon">cron<wbr>Add</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-external"><a href="_yeelight_.yeeligt.html#crondelete" class="tsd-kind-icon">cron<wbr>Delete</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-external"><a href="_yeelight_.yeeligt.html#cronget" class="tsd-kind-icon">cron<wbr>Get</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-external"><a href="_yeelight_.yeeligt.html#disconnect" class="tsd-kind-icon">disconnect</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-external"><a href="_yeelight_.yeeligt.html#emit" class="tsd-kind-icon">emit</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-external"><a href="_yeelight_.yeeligt.html#eventnames" class="tsd-kind-icon">event<wbr>Names</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-external"><a href="_yeelight_.yeeligt.html#getmaxlisteners" class="tsd-kind-icon">get<wbr>Max<wbr>Listeners</a></li>
@@ -119,6 +130,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-external"><a href="_yeelight_.yeeligt.html#listeners" class="tsd-kind-icon">listeners</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-external"><a href="_yeelight_.yeeligt.html#off" class="tsd-kind-icon">off</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-external"><a href="_yeelight_.yeeligt.html#on" class="tsd-kind-icon">on</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-external"><a href="_yeelight_.yeeligt.html#onmessage" class="tsd-kind-icon">on<wbr>Message</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-external"><a href="_yeelight_.yeeligt.html#once" class="tsd-kind-icon">once</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-external"><a href="_yeelight_.yeeligt.html#prependlistener" class="tsd-kind-icon">prepend<wbr>Listener</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-external"><a href="_yeelight_.yeeligt.html#prependoncelistener" class="tsd-kind-icon">prepend<wbr>Once<wbr>Listener</a></li>
@@ -151,19 +163,33 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Yeeligt<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><a href="../interfaces/_models_config_.iconfig.html" class="tsd-signature-type">IConfig</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_yeelight_.yeeligt.html" class="tsd-signature-type">Yeeligt</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Yeeligt<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><a href="../interfaces/_models_config_.iconfig.html" class="tsd-signature-type">IConfig</a>, logger<span class="tsd-signature-symbol">?: </span><a href="../interfaces/_models_logger_.ilogger.html" class="tsd-signature-type">ILogger</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_yeelight_.yeeligt.html" class="tsd-signature-type">Yeeligt</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/c0df672/src/yeelight.ts#L12">yeelight.ts:12</a></li>
+									<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/51b600a/src/yeelight.ts#L17">yeelight.ts:17</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<dl class="tsd-comment-tags">
+									<dt>constructor</dt>
+									<dd></dd>
+								</dl>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>options: <a href="../interfaces/_models_config_.iconfig.html" class="tsd-signature-type">IConfig</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>: The client config initial the client</p>
+										</div>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> logger: <a href="../interfaces/_models_logger_.ilogger.html" class="tsd-signature-type">ILogger</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_yeelight_.yeeligt.html" class="tsd-signature-type">Yeeligt</a></h4>
@@ -174,12 +200,22 @@
 			<section class="tsd-panel-group tsd-member-group tsd-is-external">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external">
+					<a name="event_name" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> EVENT_<wbr>NAME</h3>
+					<div class="tsd-signature tsd-kind-icon">EVENT_<wbr>NAME<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"command_result"</span><span class="tsd-signature-symbol"> =&nbsp;&quot;command_result&quot;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/51b600a/src/yeelight.ts#L17">yeelight.ts:17</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external">
 					<a name="client" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> client</h3>
 					<div class="tsd-signature tsd-kind-icon">client<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Socket</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/c0df672/src/yeelight.ts#L10">yeelight.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/51b600a/src/yeelight.ts#L13">yeelight.ts:13</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -189,7 +225,17 @@
 					<div class="tsd-signature tsd-kind-icon">connected<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/c0df672/src/yeelight.ts#L11">yeelight.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/51b600a/src/yeelight.ts#L14">yeelight.ts:14</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external">
+					<a name="logger" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> <span class="tsd-flag ts-flagOptional">Optional</span> logger</h3>
+					<div class="tsd-signature tsd-kind-icon">logger<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_models_logger_.ilogger.html" class="tsd-signature-type">ILogger</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/51b600a/src/yeelight.ts#L22">yeelight.ts:22</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -199,7 +245,22 @@
 					<div class="tsd-signature tsd-kind-icon">options<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_models_config_.iconfig.html" class="tsd-signature-type">IConfig</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/c0df672/src/yeelight.ts#L13">yeelight.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/51b600a/src/yeelight.ts#L22">yeelight.ts:22</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>: The client config initial the client</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external">
+					<a name="resultcommands" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> result<wbr>Commands</h3>
+					<div class="tsd-signature tsd-kind-icon">result<wbr>Commands<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_models_command_result_.icommandresult.html" class="tsd-signature-type">ICommandResult</a><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/51b600a/src/yeelight.ts#L16">yeelight.ts:16</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -209,7 +270,7 @@
 					<div class="tsd-signature tsd-kind-icon">sent<wbr>Commands<span class="tsd-signature-symbol">:</span> <a href="_models_command_.command.html" class="tsd-signature-type">Command</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/c0df672/src/yeelight.ts#L12">yeelight.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/51b600a/src/yeelight.ts#L15">yeelight.ts:15</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -277,13 +338,13 @@
 					<a name="adjust" class="tsd-anchor"></a>
 					<h3>adjust</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">adjust<span class="tsd-signature-symbol">(</span>type<span class="tsd-signature-symbol">: </span><a href="../enums/_models_enums_.commandtype.html#adjust_bright" class="tsd-signature-type">ADJUST_BRIGHT</a><span class="tsd-signature-symbol"> | </span><a href="../enums/_models_enums_.commandtype.html#adjust_color" class="tsd-signature-type">ADJUST_COLOR</a><span class="tsd-signature-symbol"> | </span><a href="../enums/_models_enums_.commandtype.html#adjust_ct" class="tsd-signature-type">ADJUST_CT</a>, percentage<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, duration<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">adjust<span class="tsd-signature-symbol">(</span>type<span class="tsd-signature-symbol">: </span><a href="../enums/_models_enums_.commandtype.html#adjust_bright" class="tsd-signature-type">ADJUST_BRIGHT</a><span class="tsd-signature-symbol"> | </span><a href="../enums/_models_enums_.commandtype.html#adjust_color" class="tsd-signature-type">ADJUST_COLOR</a><span class="tsd-signature-symbol"> | </span><a href="../enums/_models_enums_.commandtype.html#adjust_ct" class="tsd-signature-type">ADJUST_CT</a>, percentage<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, duration<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_models_event_result_.ieventresult.html" class="tsd-signature-type">IEventResult</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/c0df672/src/yeelight.ts#L224">yeelight.ts:224</a></li>
+									<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/51b600a/src/yeelight.ts#L292">yeelight.ts:292</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -309,7 +370,8 @@
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_models_event_result_.ieventresult.html" class="tsd-signature-type">IEventResult</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>return a promise of IEventResult</p>
 						</li>
 					</ul>
 				</section>
@@ -317,16 +379,22 @@
 					<a name="connect" class="tsd-anchor"></a>
 					<h3>connect</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">connect<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">connect<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="_yeelight_.yeeligt.html" class="tsd-signature-type">Yeeligt</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/c0df672/src/yeelight.ts#L20">yeelight.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/51b600a/src/yeelight.ts#L64">yeelight.ts:64</a></li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>establish connection to light,</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="_yeelight_.yeeligt.html" class="tsd-signature-type">Yeeligt</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>return promise of the current instance</p>
 						</li>
 					</ul>
 				</section>
@@ -334,13 +402,13 @@
 					<a name="cronadd" class="tsd-anchor"></a>
 					<h3>cron<wbr>Add</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">cron<wbr>Add<span class="tsd-signature-symbol">(</span>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, time<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">cron<wbr>Add<span class="tsd-signature-symbol">(</span>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, time<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_models_event_result_.ieventresult.html" class="tsd-signature-type">IEventResult</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/c0df672/src/yeelight.ts#L47">yeelight.ts:47</a></li>
+									<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/51b600a/src/yeelight.ts#L97">yeelight.ts:97</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -364,7 +432,8 @@
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_models_event_result_.ieventresult.html" class="tsd-signature-type">IEventResult</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>return a promise of IEventResult</p>
 						</li>
 					</ul>
 				</section>
@@ -372,13 +441,13 @@
 					<a name="crondelete" class="tsd-anchor"></a>
 					<h3>cron<wbr>Delete</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">cron<wbr>Delete<span class="tsd-signature-symbol">(</span>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">cron<wbr>Delete<span class="tsd-signature-symbol">(</span>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_models_event_result_.ieventresult.html" class="tsd-signature-type">IEventResult</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/c0df672/src/yeelight.ts#L61">yeelight.ts:61</a></li>
+									<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/51b600a/src/yeelight.ts#L113">yeelight.ts:113</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -395,7 +464,8 @@
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_models_event_result_.ieventresult.html" class="tsd-signature-type">IEventResult</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>return a promise of IEventResult</p>
 						</li>
 					</ul>
 				</section>
@@ -403,13 +473,13 @@
 					<a name="cronget" class="tsd-anchor"></a>
 					<h3>cron<wbr>Get</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">cron<wbr>Get<span class="tsd-signature-symbol">(</span>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">cron<wbr>Get<span class="tsd-signature-symbol">(</span>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_models_event_result_.ieventresult.html" class="tsd-signature-type">IEventResult</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/c0df672/src/yeelight.ts#L54">yeelight.ts:54</a></li>
+									<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/51b600a/src/yeelight.ts#L105">yeelight.ts:105</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -426,6 +496,29 @@
 									</div>
 								</li>
 							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_models_event_result_.ieventresult.html" class="tsd-signature-type">IEventResult</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>return a promise of IEventResult</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-external">
+					<a name="disconnect" class="tsd-anchor"></a>
+					<h3>disconnect</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
+						<li class="tsd-signature tsd-kind-icon">disconnect<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/51b600a/src/yeelight.ts#L55">yeelight.ts:55</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Drop connection/listerners and clean up resources.</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
@@ -500,13 +593,13 @@
 					<a name="getproperty" class="tsd-anchor"></a>
 					<h3>get<wbr>Property</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Property<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../enums/_models_enums_.devicepropery.html" class="tsd-signature-type">DevicePropery</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Property<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../enums/_models_enums_.devicepropery.html" class="tsd-signature-type">DevicePropery</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_models_event_result_.ieventresult.html" class="tsd-signature-type">IEventResult</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/c0df672/src/yeelight.ts#L122">yeelight.ts:122</a></li>
+									<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/51b600a/src/yeelight.ts#L183">yeelight.ts:183</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -527,7 +620,8 @@
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_models_event_result_.ieventresult.html" class="tsd-signature-type">IEventResult</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>return a promise of IEventResult</p>
 						</li>
 					</ul>
 				</section>
@@ -670,6 +764,29 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-external">
+					<a name="onmessage" class="tsd-anchor"></a>
+					<h3>on<wbr>Message</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Message<span class="tsd-signature-symbol">(</span>msg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Buffer</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/51b600a/src/yeelight.ts#L31">yeelight.ts:31</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>msg: <span class="tsd-signature-type">Buffer</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -911,13 +1028,13 @@
 					<a name="sendcommand" class="tsd-anchor"></a>
 					<h3>send<wbr>Command</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">send<wbr>Command<span class="tsd-signature-symbol">(</span>command<span class="tsd-signature-symbol">: </span><a href="_models_command_.command.html" class="tsd-signature-type">Command</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">send<wbr>Command<span class="tsd-signature-symbol">(</span>command<span class="tsd-signature-symbol">: </span><a href="_models_command_.command.html" class="tsd-signature-type">Command</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_models_event_result_.ieventresult.html" class="tsd-signature-type">IEventResult</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/c0df672/src/yeelight.ts#L233">yeelight.ts:233</a></li>
+									<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/51b600a/src/yeelight.ts#L302">yeelight.ts:302</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -935,7 +1052,8 @@
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_models_event_result_.ieventresult.html" class="tsd-signature-type">IEventResult</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>return a promise of IEventResult</p>
 						</li>
 					</ul>
 				</section>
@@ -943,13 +1061,13 @@
 					<a name="setadjust" class="tsd-anchor"></a>
 					<h3>set<wbr>Adjust</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">set<wbr>Adjust<span class="tsd-signature-symbol">(</span>adjustType<span class="tsd-signature-symbol">: </span><a href="../enums/_models_enums_.adjusttype.html" class="tsd-signature-type">AdjustType</a>, prop<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"bright"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"color"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"ct"</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Adjust<span class="tsd-signature-symbol">(</span>adjustType<span class="tsd-signature-symbol">: </span><a href="../enums/_models_enums_.adjusttype.html" class="tsd-signature-type">AdjustType</a>, prop<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"bright"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"color"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"ct"</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_models_event_result_.ieventresult.html" class="tsd-signature-type">IEventResult</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/c0df672/src/yeelight.ts#L187">yeelight.ts:187</a></li>
+									<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/51b600a/src/yeelight.ts#L252">yeelight.ts:252</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -976,7 +1094,8 @@
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_models_event_result_.ieventresult.html" class="tsd-signature-type">IEventResult</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>return a promise of IEventResult</p>
 						</li>
 					</ul>
 				</section>
@@ -984,13 +1103,13 @@
 					<a name="setbright" class="tsd-anchor"></a>
 					<h3>set<wbr>Bright</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">set<wbr>Bright<span class="tsd-signature-symbol">(</span>brightness<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, effect<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"smooth"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"sudden"</span>, duration<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Bright<span class="tsd-signature-symbol">(</span>brightness<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, effect<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"smooth"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"sudden"</span>, duration<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_models_event_result_.ieventresult.html" class="tsd-signature-type">IEventResult</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/c0df672/src/yeelight.ts#L171">yeelight.ts:171</a></li>
+									<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/51b600a/src/yeelight.ts#L235">yeelight.ts:235</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1027,7 +1146,8 @@
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_models_event_result_.ieventresult.html" class="tsd-signature-type">IEventResult</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>return a promise of IEventResult</p>
 						</li>
 					</ul>
 				</section>
@@ -1035,13 +1155,13 @@
 					<a name="setctabx" class="tsd-anchor"></a>
 					<h3>set<wbr>CtAbx</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">set<wbr>CtAbx<span class="tsd-signature-symbol">(</span>ct<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, effect<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"smooth"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"sudden"</span>, duration<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">set<wbr>CtAbx<span class="tsd-signature-symbol">(</span>ct<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, effect<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"smooth"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"sudden"</span>, duration<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_models_event_result_.ieventresult.html" class="tsd-signature-type">IEventResult</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/c0df672/src/yeelight.ts#L136">yeelight.ts:136</a></li>
+									<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/51b600a/src/yeelight.ts#L198">yeelight.ts:198</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1075,7 +1195,8 @@
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_models_event_result_.ieventresult.html" class="tsd-signature-type">IEventResult</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>return a promise of IEventResult</p>
 						</li>
 					</ul>
 				</section>
@@ -1083,13 +1204,13 @@
 					<a name="setdefault" class="tsd-anchor"></a>
 					<h3>set<wbr>Default</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">set<wbr>Default<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Default<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_models_event_result_.ieventresult.html" class="tsd-signature-type">IEventResult</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/c0df672/src/yeelight.ts#L79">yeelight.ts:79</a></li>
+									<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/51b600a/src/yeelight.ts#L134">yeelight.ts:134</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1102,7 +1223,8 @@
 									then he can use set_default to do a snapshot.</p>
 								</div>
 							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_models_event_result_.ieventresult.html" class="tsd-signature-type">IEventResult</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>return a promise of IEventResult</p>
 						</li>
 					</ul>
 				</section>
@@ -1135,13 +1257,13 @@
 					<a name="setmusic" class="tsd-anchor"></a>
 					<h3>set<wbr>Music</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">set<wbr>Music<span class="tsd-signature-symbol">(</span>action<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">0</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">1</span>, host<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"string"</span>, port<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Music<span class="tsd-signature-symbol">(</span>action<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">0</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">1</span>, host<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"string"</span>, port<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_models_event_result_.ieventresult.html" class="tsd-signature-type">IEventResult</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/c0df672/src/yeelight.ts#L204">yeelight.ts:204</a></li>
+									<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/51b600a/src/yeelight.ts#L270">yeelight.ts:270</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1178,7 +1300,8 @@
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_models_event_result_.ieventresult.html" class="tsd-signature-type">IEventResult</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>return a promise of IEventResult</p>
 						</li>
 					</ul>
 				</section>
@@ -1186,13 +1309,13 @@
 					<a name="setname" class="tsd-anchor"></a>
 					<h3>set<wbr>Name</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">set<wbr>Name<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Name<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_models_event_result_.ieventresult.html" class="tsd-signature-type">IEventResult</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/c0df672/src/yeelight.ts#L216">yeelight.ts:216</a></li>
+									<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/51b600a/src/yeelight.ts#L283">yeelight.ts:283</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1213,7 +1336,8 @@
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_models_event_result_.ieventresult.html" class="tsd-signature-type">IEventResult</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>return a promise of IEventResult</p>
 						</li>
 					</ul>
 				</section>
@@ -1221,13 +1345,13 @@
 					<a name="setpower" class="tsd-anchor"></a>
 					<h3>set<wbr>Power</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">set<wbr>Power<span class="tsd-signature-symbol">(</span>turnOn<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span>, effect<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"smooth"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"sudden"</span>, duration<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Power<span class="tsd-signature-symbol">(</span>turnOn<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span>, effect<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"smooth"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"sudden"</span>, duration<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_models_event_result_.ieventresult.html" class="tsd-signature-type">IEventResult</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/c0df672/src/yeelight.ts#L38">yeelight.ts:38</a></li>
+									<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/51b600a/src/yeelight.ts#L86">yeelight.ts:86</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1242,7 +1366,7 @@
 									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> duration: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;500</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_models_event_result_.ieventresult.html" class="tsd-signature-type">IEventResult</a><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -1250,13 +1374,13 @@
 					<a name="setrgb" class="tsd-anchor"></a>
 					<h3>setRGB</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">setRGB<span class="tsd-signature-symbol">(</span>color<span class="tsd-signature-symbol">: </span><a href="_models_color_.color.html" class="tsd-signature-type">Color</a>, effect<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"smooth"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"sudden"</span>, duration<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">setRGB<span class="tsd-signature-symbol">(</span>color<span class="tsd-signature-symbol">: </span><a href="_models_color_.color.html" class="tsd-signature-type">Color</a>, effect<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"smooth"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"sudden"</span>, duration<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_models_event_result_.ieventresult.html" class="tsd-signature-type">IEventResult</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/c0df672/src/yeelight.ts#L153">yeelight.ts:153</a></li>
+									<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/51b600a/src/yeelight.ts#L216">yeelight.ts:216</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1293,7 +1417,8 @@
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_models_event_result_.ieventresult.html" class="tsd-signature-type">IEventResult</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>return a promise of IEventResult</p>
 						</li>
 					</ul>
 				</section>
@@ -1301,13 +1426,13 @@
 					<a name="setscene" class="tsd-anchor"></a>
 					<h3>set<wbr>Scene</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">set<wbr>Scene&lt;T&gt;<span class="tsd-signature-symbol">(</span>scene<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Scene&lt;T&gt;<span class="tsd-signature-symbol">(</span>scene<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_models_event_result_.ieventresult.html" class="tsd-signature-type">IEventResult</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/c0df672/src/yeelight.ts#L111">yeelight.ts:111</a></li>
+									<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/51b600a/src/yeelight.ts#L171">yeelight.ts:171</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1326,9 +1451,13 @@
 							<ul class="tsd-parameters">
 								<li>
 									<h5>scene: <span class="tsd-signature-type">T</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>type of scene to update</p>
+									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_models_event_result_.ieventresult.html" class="tsd-signature-type">IEventResult</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>return a promise of IEventResult</p>
 						</li>
 					</ul>
 				</section>
@@ -1336,13 +1465,13 @@
 					<a name="startcolorflow" class="tsd-anchor"></a>
 					<h3>start<wbr>Color<wbr>Flow</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">start<wbr>Color<wbr>Flow<span class="tsd-signature-symbol">(</span>states<span class="tsd-signature-symbol">: </span><a href="_models_flow_state_.flowstate.html" class="tsd-signature-type">FlowState</a><span class="tsd-signature-symbol">[]</span>, action<span class="tsd-signature-symbol">?: </span><a href="../enums/_models_enums_.startflowaction.html" class="tsd-signature-type">StartFlowAction</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">start<wbr>Color<wbr>Flow<span class="tsd-signature-symbol">(</span>states<span class="tsd-signature-symbol">: </span><a href="_models_flow_state_.flowstate.html" class="tsd-signature-type">FlowState</a><span class="tsd-signature-symbol">[]</span>, action<span class="tsd-signature-symbol">?: </span><a href="../enums/_models_enums_.startflowaction.html" class="tsd-signature-type">StartFlowAction</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_models_event_result_.ieventresult.html" class="tsd-signature-type">IEventResult</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/c0df672/src/yeelight.ts#L97">yeelight.ts:97</a></li>
+									<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/51b600a/src/yeelight.ts#L153">yeelight.ts:153</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1363,7 +1492,8 @@
 									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> action: <a href="../enums/_models_enums_.startflowaction.html" class="tsd-signature-type">StartFlowAction</a><span class="tsd-signature-symbol"> =&nbsp;StartFlowAction.LED_STAY</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_models_event_result_.ieventresult.html" class="tsd-signature-type">IEventResult</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>return a promise of IEventResult</p>
 						</li>
 					</ul>
 				</section>
@@ -1371,13 +1501,13 @@
 					<a name="stopcolorflow" class="tsd-anchor"></a>
 					<h3>stop<wbr>Color<wbr>Flow</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">stop<wbr>Color<wbr>Flow<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">stop<wbr>Color<wbr>Flow<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_models_event_result_.ieventresult.html" class="tsd-signature-type">IEventResult</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/c0df672/src/yeelight.ts#L104">yeelight.ts:104</a></li>
+									<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/51b600a/src/yeelight.ts#L162">yeelight.ts:162</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1385,7 +1515,7 @@
 									<p>This method is used to stop a running color flow.</p>
 								</div>
 							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_models_event_result_.ieventresult.html" class="tsd-signature-type">IEventResult</a><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -1393,13 +1523,13 @@
 					<a name="toggle" class="tsd-anchor"></a>
 					<h3>toggle</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">toggle<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">toggle<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_models_event_result_.ieventresult.html" class="tsd-signature-type">IEventResult</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/c0df672/src/yeelight.ts#L68">yeelight.ts:68</a></li>
+									<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/51b600a/src/yeelight.ts#L122">yeelight.ts:122</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1408,7 +1538,8 @@
 									This method is used to switch on or off the smart LED (software managed on/off)</p>
 								</div>
 							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_models_event_result_.ieventresult.html" class="tsd-signature-type">IEventResult</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Return the promise indicate the command success or reject</p>
 						</li>
 					</ul>
 				</section>
@@ -1476,6 +1607,9 @@
 						<a href="../modules/_models_command_.html">"models/command"</a>
 					</li>
 					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="../modules/_models_command_result_.html">"models/command-<wbr>result"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
 						<a href="../modules/_models_config_.html">"models/config"</a>
 					</li>
 					<li class=" tsd-kind-external-module tsd-is-external">
@@ -1488,10 +1622,16 @@
 						<a href="../modules/_models_enums_.html">"models/enums"</a>
 					</li>
 					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="../modules/_models_event_result_.html">"models/event-<wbr>result"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
 						<a href="../modules/_models_flow_state_.html">"models/flow-<wbr>state"</a>
 					</li>
 					<li class=" tsd-kind-external-module tsd-is-external">
 						<a href="../modules/_models_index_.html">"models/index"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="../modules/_models_logger_.html">"models/logger"</a>
 					</li>
 					<li class=" tsd-kind-external-module tsd-is-external">
 						<a href="../modules/_models_scene_.html">"models/scene"</a>
@@ -1515,13 +1655,22 @@
 								<a href="_yeelight_.yeeligt.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external">
+								<a href="_yeelight_.yeeligt.html#event_name" class="tsd-kind-icon">EVENT_<wbr>NAME</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external">
 								<a href="_yeelight_.yeeligt.html#client" class="tsd-kind-icon">client</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external">
 								<a href="_yeelight_.yeeligt.html#connected" class="tsd-kind-icon">connected</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external">
+								<a href="_yeelight_.yeeligt.html#logger" class="tsd-kind-icon">logger</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external">
 								<a href="_yeelight_.yeeligt.html#options" class="tsd-kind-icon">options</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external">
+								<a href="_yeelight_.yeeligt.html#resultcommands" class="tsd-kind-icon">result<wbr>Commands</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external">
 								<a href="_yeelight_.yeeligt.html#sentcommands" class="tsd-kind-icon">sent<wbr>Commands</a>
@@ -1547,6 +1696,9 @@
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-external">
 								<a href="_yeelight_.yeeligt.html#cronget" class="tsd-kind-icon">cron<wbr>Get</a>
 							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-external">
+								<a href="_yeelight_.yeeligt.html#disconnect" class="tsd-kind-icon">disconnect</a>
+							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-external">
 								<a href="_yeelight_.yeeligt.html#emit" class="tsd-kind-icon">emit</a>
 							</li>
@@ -1570,6 +1722,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-external">
 								<a href="_yeelight_.yeeligt.html#on" class="tsd-kind-icon">on</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-external">
+								<a href="_yeelight_.yeeligt.html#onmessage" class="tsd-kind-icon">on<wbr>Message</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-external">
 								<a href="_yeelight_.yeeligt.html#once" class="tsd-kind-icon">once</a>
