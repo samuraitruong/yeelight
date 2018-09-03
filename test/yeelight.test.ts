@@ -69,7 +69,7 @@ describe("Yeelight Class Test", () => {
             async () => {
                 const yeelight = new Yeelight(options);
                 const y = await yeelight.connect();
-                const expectData = {
+                const expectData1 = {
                     action: "set_name",
                     command: new Command(1, CommandType.SET_NAME, ["this is invalid name"]),
                     result: { id: 1, error: { code: -1, message: "General error" } },
@@ -91,10 +91,10 @@ describe("Yeelight Class Test", () => {
 
                 const result = await y.setName("this is invalid name");
 
-                expect({ ...result }).to.deep.equal(expectData);
-                SinonAssert.calledWith(spy1, expectData);
-                SinonAssert.calledWith(spy2, expectData);
-                SinonAssert.calledWith(spy3, expectData.command);
+                expect({ ...result }).to.deep.equal(expectData1);
+                SinonAssert.calledWith(spy1, expectData1);
+                SinonAssert.calledWith(spy2, expectData1);
+                SinonAssert.calledWith(spy3, expectData1.command);
                 yeelight.disconnect();
             });
         it("setName() should reject promise, raise commandTimedout event when socket not response",
