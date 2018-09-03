@@ -3,4 +3,5 @@ export interface ICommandResult {
     success: boolean;
     results: any[];
     result: any[];
+    error?: { code: number, message: string };
 }
