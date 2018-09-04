@@ -15,9 +15,11 @@ describe("Yeelight Class Test", () => {
         const y = await yeelight.connect();
         expect(y).not.eq(null);
         expect(y.connected).to.eq(true);
+        y.disconnect();
     });
-    describe("setName() tests", () => {
-
+    // tslint:disable-next-line:only-arrow-functions
+    describe("setName() tests", function() {
+        this.retries(3);
         it("setName() should work when send valid message", async () => {
             const yeelight = new Yeelight(options);
             const y = await yeelight.connect();
