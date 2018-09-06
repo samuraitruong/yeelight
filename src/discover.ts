@@ -1,12 +1,17 @@
 import { createSocket, Socket } from "dgram";
 import { EventEmitter } from "events";
+import * as net from "net";
+import { address, toBuffer } from "ip";
 import { AddressInfo } from "net";
 import { defaultLogger } from "./logger";
 import { IDevice } from "./models/device";
 import { IDiscoverConfig } from "./models/discover-config";
 import { ILogger } from "./models/logger";
 import { Utils } from "./utils";
-
+import { checkPortStatus } from "portscanner";
+process.on('uncaughtException', (err) => {
+    console.log(err);
+})
 /**
  * The class to discover yeelight device on wifi network using UDP package
  * @constructor
@@ -17,7 +22,7 @@ export class Discover extends EventEmitter {
     private devices: IDevice[];
     private options: IDiscoverConfig = {
         debug: true,
-        host: "",
+        host: null,
         limit: 1,
         multicastHost: "239.255.255.250",
         port: 1982,
@@ -38,6 +43,58 @@ export class Discover extends EventEmitter {
         this.logger = logger || defaultLogger;
     }
     /**
+     * Try to verify if the light on and listening on the know ip address
+     * @param ipAddress : know IP Address of the light.
+     */
+    public async detectLightIP(ipAddress: string): Promise<IDevice> {
+        const device: Partial<IDevice> = {
+            host: ipAddress,
+            port: 55443,
+        };
+        return new Promise<IDevice>((resolve, reject) => {
+            checkPortStatus(55443, ipAddress, (err: any, status: any) => {
+                console.log(ipAddress, status);
+                if (err || status === "closed") {
+                    reject(err);
+                }
+                resolve(device as IDevice);
+            })
+            // const socket: net.Socket = new net.Socket();
+            // socket.on("error", (err: { code: string }) => {
+            //     console.log(ipAddress, err.code);
+            // });
+            // socket.connect(55443, ipAddress, (err: any) => {
+            //     const device: Partial<IDevice> = {
+            //         host: ipAddress,
+            //         port: 55443,
+            //     };
+            //     return resolve(device as IDevice);
+            // });
+        });
+    }
+    public async scanByIp(startIp: number = 1, endIp: number = 255): Promise<IDevice | IDevice[]> {
+        const localIp = address();
+        const buffer = toBuffer(localIp);
+        const root = buffer[0] + "." + buffer[1] + "." + buffer[2] + ".";
+        let count = 0;
+        for (let i = startIp; i <= endIp; i++) {
+            try {
+                const testIp = root + i;
+                count++;
+                const device = await this.detectLightIP(testIp);
+                this.devices.push(device);
+                this.emit("deviceAdded", device);
+
+            } catch (err) {
+                this.logger.error(err);
+            }
+        }
+        if (this.devices.length === 0) {
+            return Promise.reject("No device found after all ip scanned");
+        }
+        return Promise.resolve(this.devices);
+    }
+    /**
      * The class to discover yeelight device on wifi network using UDP package
      * @constructor
      * @param {string} title - Yeelight Discover
@@ -45,9 +102,11 @@ export class Discover extends EventEmitter {
      * @returns {Promise<IDevice | IDevice[]>} a promise that could resolve to 1 or many devices on the network
      */
     public start(): Promise<IDevice | IDevice[]> {
+        const localIp = address();
         const me = this;
         return new Promise((resolve, reject) => {
-            this.client.bind(this.options.port, this.options.host, () => {
+            this.logger.debug("discover options: ", this.options);
+            this.client.bind(this.options.port, null, () => {
                 me.client.setBroadcast(true);
                 me.client.send(me.getMessage(), me.options.port, me.options.multicastHost, (err) => {
                     if (err) {
@@ -71,6 +130,8 @@ export class Discover extends EventEmitter {
                                     reject("No device found after timeout exceeded : " + ts);
                                 }
                             }
+                            console.log(" ping message again");
+                            me.client.send(me.getMessage(), me.options.port, me.options.multicastHost);
                         }, interval);
                     }
                 });

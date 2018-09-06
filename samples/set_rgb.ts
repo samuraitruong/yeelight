@@ -8,7 +8,7 @@ const discover = new Discover({ port: 1982, debug: true }, logger);
 discover.once("deviceAdded", (device: IDevice) => {
     const yeelight = new Yeelight({ lightIp: device.host, lightPort: device.port });
     yeelight.on("connected", () => {
-        yeelight.setRGB(new Color(66, 87, 23), "smooth", 5000);
+        yeelight.setRGB(new Color(255, 1, 1), "smooth", 5000);
     });
     yeelight.connect();
 });

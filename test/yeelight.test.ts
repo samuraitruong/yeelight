@@ -1,9 +1,9 @@
 import { expect } from "chai";
 import "mocha";
-import { spy, assert as SinonAssert } from "sinon";
+import { assert as SinonAssert, spy } from "sinon";
+import { Command, CommandType } from "../src/models";
 import { Yeelight } from "../src/yeelight";
 import { TestUtils } from "./test-util";
-import { Command, CommandType } from "../src/models";
 
 describe("Yeelight Class Test", () => {
     const options = { lightIp: "127.0.0.1", lightPort: 55443, timeout: 500 };
