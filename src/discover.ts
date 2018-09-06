@@ -1,17 +1,17 @@
 import { createSocket, Socket } from "dgram";
 import { EventEmitter } from "events";
-import * as net from "net";
 import { address, toBuffer } from "ip";
+import * as net from "net";
 import { AddressInfo } from "net";
+import { checkPortStatus } from "portscanner";
 import { defaultLogger } from "./logger";
 import { IDevice } from "./models/device";
 import { IDiscoverConfig } from "./models/discover-config";
 import { ILogger } from "./models/logger";
 import { Utils } from "./utils";
-import { checkPortStatus } from "portscanner";
-process.on('uncaughtException', (err) => {
+process.on("uncaughtException", (err) => {
     console.log(err);
-})
+});
 /**
  * The class to discover yeelight device on wifi network using UDP package
  * @constructor
@@ -58,7 +58,7 @@ export class Discover extends EventEmitter {
                     reject(err);
                 }
                 resolve(device as IDevice);
-            })
+            });
             // const socket: net.Socket = new net.Socket();
             // socket.on("error", (err: { code: string }) => {
             //     console.log(ipAddress, err.code);
@@ -167,7 +167,7 @@ export class Discover extends EventEmitter {
      * @param {Buffer} buffer the buffer revieved from the socket
      * @param {AddressInfo} address the TCP info of the devices who send the message
      */
-    private onSocketMessage(buffer: Buffer, address: AddressInfo) {
+    private onSocketMessage(buffer: Buffer, addressInfo: AddressInfo) {
         const message = buffer.toString();
         if (this.options.debug && this.logger) {
             this.logger.info(message);

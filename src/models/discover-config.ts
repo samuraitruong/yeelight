@@ -40,7 +40,7 @@ export interface IDiscoverConfig {
     filter?: (device: IDevice) => boolean;
 
     /**
-     * If after timeout reached and not found any device, fallback to use IP scan 
+     * If after timeout reached and not found any device, fallback to use IP scan
      * @default true
      */
     fallback?: boolean;
