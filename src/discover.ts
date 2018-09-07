@@ -22,6 +22,7 @@ export class Discover extends EventEmitter {
     private devices: IDevice[];
     private options: IDiscoverConfig = {
         debug: true,
+        fallback: true,
         host: null,
         limit: 1,
         multicastHost: "239.255.255.250",
@@ -53,11 +54,13 @@ export class Discover extends EventEmitter {
         };
         return new Promise<IDevice>((resolve, reject) => {
             checkPortStatus(55443, ipAddress, (err: any, status: any) => {
-                console.log(ipAddress, status);
+                // console.log(ipAddress, status);
                 if (err || status === "closed") {
-                    reject(err);
+                    return resolve(null);
+                } else {
+                    this.addDevice(device as IDevice);
+                    return resolve(device as IDevice);
                 }
-                resolve(device as IDevice);
             });
             // const socket: net.Socket = new net.Socket();
             // socket.on("error", (err: { code: string }) => {
@@ -72,23 +75,22 @@ export class Discover extends EventEmitter {
             // });
         });
     }
-    public async scanByIp(startIp: number = 1, endIp: number = 255): Promise<IDevice | IDevice[]> {
+    public async scanByIp(startIp: number = 1, endIp: number = 254): Promise<IDevice | IDevice[]> {
         const localIp = address();
-        const buffer = toBuffer(localIp);
-        const root = buffer[0] + "." + buffer[1] + "." + buffer[2] + ".";
         let count = 0;
-        for (let i = startIp; i <= endIp; i++) {
-            try {
-                const testIp = root + i;
-                count++;
-                const device = await this.detectLightIP(testIp);
-                this.devices.push(device);
-                this.emit("deviceAdded", device);
+        const availabledIps = Utils.getListIpAddress(localIp);
+        const promises = availabledIps.map(x => this.detectLightIP(x));
+        await Promise.all(promises);
+        // try {
+        //     const testIp = root + i;
+        //     count++;
+        //     const device = await this.detectLightIP(testIp);
+        //     this.devices.push(device);
+        //     this.emit("deviceAdded", device);
 
-            } catch (err) {
-                this.logger.error(err);
-            }
-        }
+        // } catch (err) {
+        //     this.logger.error(err);
+        // }
         if (this.devices.length === 0) {
             return Promise.reject("No device found after all ip scanned");
         }
@@ -127,11 +129,16 @@ export class Discover extends EventEmitter {
                                     resolve(this.devices);
                                 } else {
                                     clearInterval(timer);
-                                    reject("No device found after timeout exceeded : " + ts);
+                                    if (!this.options.fallback) {
+                                        reject("No device found after timeout exceeded : " + ts);
+                                    }
                                 }
                             }
                             console.log(" ping message again");
                             me.client.send(me.getMessage(), me.options.port, me.options.multicastHost);
+                            if (ts > this.options.timeout && this.options.fallback) {
+                                this.scanByIp().then(resolve).catch(reject);
+                            }
                         }, interval);
                     }
                 });
@@ -175,7 +182,6 @@ export class Discover extends EventEmitter {
         const device = Utils.parseDeviceInfo(message);
         if (device) {
             this.addDevice(device);
-            this.emit("deviceAdded", device);
         }
     }
     /**
@@ -187,6 +193,8 @@ export class Discover extends EventEmitter {
         const existDevice = this.devices.findIndex((x) => x.id === device.id);
         if (existDevice <= 0) {
             this.devices.push(device);
+            this.emit("deviceAdded", device);
+
             return 1;
         }
         this.devices[existDevice] = device;

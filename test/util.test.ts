@@ -12,6 +12,23 @@ describe("Util Test", () => {
         expect(device).not.eq(null);
         expect(device).deep.eq(outputExpected);
     });
+
+    it("getListIpAddress should get the arround ip address first", () => {
+        const ip = "192.168.1.5";
+        const output = Utils.getListIpAddress(ip, 1, 10);
+        expect(output).to.deep.eq([
+            "192.168.1.4",
+            "192.168.1.6",
+            "192.168.1.3",
+            "192.168.1.7",
+            "192.168.1.2",
+            "192.168.1.8",
+            "192.168.1.1",
+            "192.168.1.9",
+            "192.168.1.10",
+        ])
+
+    })
     describe("hexToNumber() test", () => {
         const json = require("./data/color.json");
         // tslint:disable-next-line:forin
