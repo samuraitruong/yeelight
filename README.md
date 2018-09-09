@@ -1,24 +1,27 @@
-# yeelight
+# YEELIGHT AWESOME - NODEJS
 The node api to control yeelight devices using wifi network TCP/UDP
 
 [![Build Status](https://travis-ci.org/samuraitruong/yeelight.svg?branch=develop)](https://travis-ci.org/samuraitruong/yeelight)
-# Installation
+## Installation
 ```bash 
 
 npm install yeelight-awesome
 
 ```
 
-# Get Started
-## Setup your light
+## Get Started
+### Setup your light
 You need to enable "LAN Control" on the phone App make the light discoverable over LAN network. Open the phone app, go to the light setting and toggle LAN control on.
 
-## Discover the light
+Reset your device
+Use physical switch to turn on - off the light 5 time, give the 1 second break in the between of the onn/off. You probably need to do reset device and reset up it with phone app if the discover doesn't work properly.
+
+### Discover the light
 Before you can control the light, you need to discover it unless you know the light's IP
 ```js
     // typescript
     import { Discover ,IDevice } from "yeelight-awesome";
-    const discover = new Discover({ port: 1982, host: "",  debug: true }, logger);
+    const discover = new Discover({ port: 1982,  debug: true }, logger);
     discover.once("deviceAdded", (device: IDevice) => {
         // using device action
     });
@@ -49,7 +52,28 @@ Before you can control the light, you need to discover it unless you know the li
     discover.start();
 
 ```
-## Control the light
+
+There is know issue with the yeelight device that discover method doesn't work at the first time attemp. In this case we can:
+- reset device and resetup -see instruction above
+- make the connection using the light IP without discover method, after the first connection successful. the light now will response to discover method
+- from version 1.0.6, there is fallback option to using Ip scan if discover failed. this fallback option is turn on by default. 
+  ```js
+const discover = new Discover({fallback: true});
+
+discover.start();
+
+  ```
+- Use IP scan method (this method will expect to take few seconds)
+  ```js
+const discover = new Discover({});
+
+discover.scanByIp().then(devices => console.log("scan finished: ", devices));
+
+discover.on("deviceAdded", (device: IDevice) => {
+    console.log("found device", device);
+});
+  ```
+### Control the light
 To control the light, you need to know the IP of the light, if not sure, using the discover above to find details, after you have details you can make connection to the light and control it
 
 ```js
@@ -62,7 +86,7 @@ To control the light, you need to know the IP of the light, if not sure, using t
     yeelight.connect();
 
 ```
-## Handle Events
+### Handle Events
 The yeelight awesome using Event Emitter pattern, so that you can hook up into the event to get & process data. bellow are list of event
 - commandSuccess: This event emit on every command successful
 - set_power
@@ -94,7 +118,7 @@ interface IEventResult {
     success: boolean;
 }
 ```
-## Use Promise 
+### Use Promise 
 see below example
 ```js
     const discover = new Discover({ debug: true }, logger);
@@ -133,7 +157,7 @@ example:
         light.setName("Bedroom1_light")
     })
 ```
-## Logger
+### Logger
 You can pass any logger in the constructor of Discover/Yeelight class. In our example we use winston library to write a log.
 
 to write your own logger, you need implement the logger with below ILogger interface
@@ -164,7 +188,7 @@ Here are a full sample of set color flow
     // Typescript
     import { Discover, IDevice,StartFlowAction , FlowState, Yeelight, logger } from "yeelight-awesome";
 
-    const discover = new Discover({ port: 1982, host: "", asPromise: true, debug: true }, logger);
+    const discover = new Discover({ port: 1982, asPromise: true, debug: true }, logger);
     discover.once("deviceAdded", (device: IDevice) => {
         logger.info("found device: ", device);
         const yeelight = new Yeelight({ lightIp: device.host, lightPort: device.port });
@@ -238,5 +262,6 @@ Please use github issue page if you encounter with any problem or want to give a
 Feel free to fork and pull request the new feature that you make/or bug you fix. Thanks
 
 # Release Notes
+- 1.0.6 : added support IP scan method fallback
 - 1.0.3: Added support promises
 - 1.0.0-1.0.0.2 : The very first initial , include all test and working function

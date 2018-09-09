@@ -33,6 +33,7 @@ export class Discover extends EventEmitter {
     /**
      * @constructor
      * @param {IDiscoverConfig } options discover object include the port and multicast host.
+     * see {@link IDiscoverConfig} for more detail
      * @param {ILogger} logger  the application logger which implement of log, info, debug and error function
      */
     constructor(options: IDiscoverConfig, private logger?: ILogger) {
@@ -75,11 +76,17 @@ export class Discover extends EventEmitter {
             // });
         });
     }
+    /**
+     * Perfrom IP port scan to find an IP with port 55443 open rather than using SSDP discovery method
+     * @param {number} startIp=1 The starting IP to scan, default : 1
+     * @param {number} endIp=254 The end IP to scan, default : 254
+     * @requires {Promise<IDevice | IDevice[]>} promise of list of device found
+     */
     public async scanByIp(startIp: number = 1, endIp: number = 254): Promise<IDevice | IDevice[]> {
         const localIp = address();
-        let count = 0;
+        const count = 0;
         const availabledIps = Utils.getListIpAddress(localIp);
-        const promises = availabledIps.map(x => this.detectLightIP(x));
+        const promises = availabledIps.map((x) => this.detectLightIP(x));
         await Promise.all(promises);
         // try {
         //     const testIp = root + i;
@@ -98,9 +105,7 @@ export class Discover extends EventEmitter {
     }
     /**
      * The class to discover yeelight device on wifi network using UDP package
-     * @constructor
-     * @param {string} title - Yeelight Discover
-     * @param {string} author
+     * You need to turn on "LAN Control" on phone app to get SSDP discover function work
      * @returns {Promise<IDevice | IDevice[]>} a promise that could resolve to 1 or many devices on the network
      */
     public start(): Promise<IDevice | IDevice[]> {
