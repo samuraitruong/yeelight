@@ -13,6 +13,7 @@ script:
   - npm run cover
   - npm run build
   - npm run doc-gen
+  - npm run patch
 before_deploy:
   # Set up git user name and tag this commit
   - git config --local user.name "TravisCI"

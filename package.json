@@ -14,6 +14,7 @@
         "cover": "nyc mocha test/*.test.ts --timeout 10000 --reporter mochawesome",
         "prepublish": "npm run build",
         "doc-gen": "typedoc --out doc src/index.ts && touch doc/.nojekyll",
+        "patch": "node patch.js",
         "ghdeploy": "gh-pages -d doc -m 'CI generated'"
     },
     "husky": {
