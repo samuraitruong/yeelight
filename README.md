@@ -2,6 +2,11 @@
 The node api to control yeelight devices using wifi network TCP/UDP
 
 [![Build Status](https://travis-ci.org/samuraitruong/yeelight.svg?branch=develop)](https://travis-ci.org/samuraitruong/yeelight)
+
+[Test Report](https://samuraitruong.github.io/yeelight/mochawesome-report/mochawesome.html)
+
+[Test Coverage](https://samuraitruong.github.io/yeelight/coverage/)
+
 ## Installation
 ```bash 
 

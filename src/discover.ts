@@ -42,6 +42,7 @@ export class Discover extends EventEmitter {
         this.options = { ...this.options, ...options };
         this.client = createSocket("udp4");
         this.client.on("message", this.onSocketMessage.bind(this));
+        this.client.on("error", this.onError.bind(this));
         this.logger = logger || defaultLogger;
     }
     /**
@@ -55,7 +56,6 @@ export class Discover extends EventEmitter {
         };
         return new Promise<IDevice>((resolve, reject) => {
             checkPortStatus(55443, ipAddress, (err: any, status: any) => {
-                // console.log(ipAddress, status);
                 if (err || status === "closed") {
                     return resolve(null);
                 } else {
@@ -63,17 +63,6 @@ export class Discover extends EventEmitter {
                     return resolve(device as IDevice);
                 }
             });
-            // const socket: net.Socket = new net.Socket();
-            // socket.on("error", (err: { code: string }) => {
-            //     console.log(ipAddress, err.code);
-            // });
-            // socket.connect(55443, ipAddress, (err: any) => {
-            //     const device: Partial<IDevice> = {
-            //         host: ipAddress,
-            //         port: 55443,
-            //     };
-            //     return resolve(device as IDevice);
-            // });
         });
     }
     /**
@@ -88,16 +77,7 @@ export class Discover extends EventEmitter {
         const availabledIps = Utils.getListIpAddress(localIp);
         const promises = availabledIps.map((x) => this.detectLightIP(x));
         await Promise.all(promises);
-        // try {
-        //     const testIp = root + i;
-        //     count++;
-        //     const device = await this.detectLightIP(testIp);
-        //     this.devices.push(device);
-        //     this.emit("deviceAdded", device);
-
-        // } catch (err) {
-        //     this.logger.error(err);
-        // }
+        
         if (this.devices.length === 0) {
             return Promise.reject("No device found after all ip scanned");
         }
@@ -117,7 +97,7 @@ export class Discover extends EventEmitter {
                 me.client.setBroadcast(true);
                 me.client.send(me.getMessage(), me.options.port, me.options.multicastHost, (err) => {
                     if (err) {
-                        console.log("ERROR", err);
+                        this.logger.log("ERROR", err);
                         reject(err);
                     } else {
                         let ts = 0;
@@ -139,7 +119,6 @@ export class Discover extends EventEmitter {
                                     }
                                 }
                             }
-                            console.log(" ping message again");
                             me.client.send(me.getMessage(), me.options.port, me.options.multicastHost);
                             if (ts > this.options.timeout && this.options.fallback) {
                                 this.scanByIp().then(resolve).catch(reject);
@@ -165,6 +144,14 @@ export class Discover extends EventEmitter {
                 this.client.close(resolve);
             }
         });
+    }
+    /**
+     * Internal function to handle socket error
+     * @param error Error details
+     */
+    private onError(error: Error) {
+        this.logger.error("Internal Error ", error);
+        this.emit("error", error);
     }
     /**
      * Generate the UDP message to discover device on local network.
