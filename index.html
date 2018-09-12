@@ -67,8 +67,9 @@
 				<h1 id="yeelight-awesome-nodejs">YEELIGHT AWESOME - NODEJS</h1>
 				<p>The node api to control yeelight devices using wifi network TCP/UDP</p>
 				<p><a href="https://travis-ci.org/samuraitruong/yeelight"><img src="https://travis-ci.org/samuraitruong/yeelight.svg?branch=develop" alt="Build Status"></a></p>
-				<p><a href="https://samuraitruong.github.io/yeelight/mochawesome-report/mochawesome.html">Test Report</a></p>
+				<p><a href="https://samuraitruong.github.io/yeelight/mochawesome-report/mochawesome.html">Mocha Test Report</a></p>
 				<p><a href="https://samuraitruong.github.io/yeelight/coverage/">Test Coverage</a></p>
+				<p><a href="https://codecov.io/gh/samuraitruong/yeelight/branch/develop">codecov</a></p>
 				<h2 id="installation">Installation</h2>
 				<pre><code class="language-bash">
 npm install yeelight-awesome
@@ -113,30 +114,32 @@ npm install yeelight-awesome
 				<ul>
 					<li>reset device and resetup -see instruction above</li>
 					<li>make the connection using the light IP without discover method, after the first connection successful. the light now will response to discover method</li>
-					<li>from version 1.0.6, there is fallback option to using Ip scan if discover failed. this fallback option is turn on by default.
+					<li><p>from version 1.0.6, there is fallback option to using Ip scan if discover failed. this fallback option is turn on by default. </p>
+						<pre><code class="language-js">  <span class="hljs-keyword">const</span> discover = <span class="hljs-keyword">new</span> Discover({<span class="hljs-attr">fallback</span>: <span class="hljs-literal">true</span>});
+
+  discover.start();
+</code></pre>
+					</li>
+					<li>Use IP scan method (this method will expect to take few seconds)
 						<code>`</code>js
-					const discover = new Discover({fallback: true});</li>
+					const discover = new Discover({});</li>
 				</ul>
-				<p>discover.start();</p>
-				<pre><code>- Use<span class="hljs-built_in"> IP </span>scan method (this method will expect <span class="hljs-keyword">to</span> take few seconds)
-  ```js
-const discover = new Discover({});
+				<p>discover.scanByIp().then(devices =&gt; console.log(&quot;scan finished: &quot;, devices));</p>
+				<p>discover.on(&quot;deviceAdded&quot;, (device: IDevice) =&gt; {
+					console.log(&quot;found device&quot;, device);
+				});</p>
+				<pre><code><span class="hljs-comment">### Control the light</span>
+<span class="hljs-keyword">To</span> control the light, you need <span class="hljs-keyword">to</span> know the<span class="hljs-built_in"> IP </span>of the light, <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> sure, using the discover above <span class="hljs-keyword">to</span> <span class="hljs-builtin-name">find</span> details, after you have details you can make<span class="hljs-built_in"> connection </span><span class="hljs-keyword">to</span> the light <span class="hljs-keyword">and</span> control it
 
-discover.scanByIp().then(devices =&gt; console.log(<span class="hljs-string">"scan finished: "</span>, devices));
+```js
+    import { Yeelight, Color } <span class="hljs-keyword">from</span> <span class="hljs-string">"yeelight-awesome"</span>;
 
-discover.on(<span class="hljs-string">"deviceAdded"</span>, (device: IDevice) =&gt; {
-    console.log(<span class="hljs-string">"found device"</span>, device);
-});</code></pre><h3 id="control-the-light">Control the light</h3>
-				<p>To control the light, you need to know the IP of the light, if not sure, using the discover above to find details, after you have details you can make connection to the light and control it</p>
-				<pre><code class="language-js">    <span class="hljs-keyword">import</span> { Yeelight, Color } <span class="hljs-keyword">from</span> <span class="hljs-string">"yeelight-awesome"</span>;
-
-    <span class="hljs-keyword">const</span> yeelight = <span class="hljs-keyword">new</span> Yeelight({ <span class="hljs-attr">lightIp</span>: device.host, <span class="hljs-attr">lightPort</span>: device.port });
+    const yeelight = new Yeelight({ lightIp: device.host, lightPort: device.port });
     yeelight.on(<span class="hljs-string">"connected"</span>, () =&gt; {
-        yeelight.setRGB(<span class="hljs-keyword">new</span> Color(<span class="hljs-number">66</span>, <span class="hljs-number">87</span>, <span class="hljs-number">23</span>), <span class="hljs-string">"smooth"</span>, <span class="hljs-number">5000</span>);
+        yeelight.setRGB(new Color(66, 87, 23), <span class="hljs-string">"smooth"</span>, 5000);
     });
     yeelight.connect();
-</code></pre>
-				<h3 id="handle-events">Handle Events</h3>
+</code></pre><h3 id="handle-events">Handle Events</h3>
 				<p>The yeelight awesome using Event Emitter pattern, so that you can hook up into the event to get &amp; process data. bellow are list of event</p>
 				<ul>
 					<li>commandSuccess: This event emit on every command successful</li>
