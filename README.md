@@ -3,9 +3,11 @@ The node api to control yeelight devices using wifi network TCP/UDP
 
 [![Build Status](https://travis-ci.org/samuraitruong/yeelight.svg?branch=develop)](https://travis-ci.org/samuraitruong/yeelight)
 
-[Test Report](https://samuraitruong.github.io/yeelight/mochawesome-report/mochawesome.html)
+[Mocha Test Report](https://samuraitruong.github.io/yeelight/mochawesome-report/mochawesome.html)
 
 [Test Coverage](https://samuraitruong.github.io/yeelight/coverage/)
+
+[codecov](https://codecov.io/gh/samuraitruong/yeelight/branch/develop)
 
 ## Installation
 ```bash 
@@ -63,9 +65,9 @@ There is know issue with the yeelight device that discover method doesn't work a
 - make the connection using the light IP without discover method, after the first connection successful. the light now will response to discover method
 - from version 1.0.6, there is fallback option to using Ip scan if discover failed. this fallback option is turn on by default. 
   ```js
-const discover = new Discover({fallback: true});
+    const discover = new Discover({fallback: true});
 
-discover.start();
+    discover.start();
 
   ```
 - Use IP scan method (this method will expect to take few seconds)
