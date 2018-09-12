@@ -77,7 +77,7 @@ export class Discover extends EventEmitter {
         const availabledIps = Utils.getListIpAddress(localIp);
         const promises = availabledIps.map((x) => this.detectLightIP(x));
         await Promise.all(promises);
-        
+
         if (this.devices.length === 0) {
             return Promise.reject("No device found after all ip scanned");
         }
