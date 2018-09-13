@@ -24,6 +24,7 @@ export class TestUtils {
         //done();
     }
     public static afterEach(done: () => void) {
+        TestUtils.port++;
         // aa
         if (socket) {
             socket.removeAllListeners();
