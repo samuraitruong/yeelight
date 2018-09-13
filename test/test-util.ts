@@ -33,8 +33,8 @@ export class TestUtils {
         }
         if (server) {
             server.removeAllListeners();
-            server.close();
-            done();
+            server.close(done);
+            //done();
         } else {
             done();
         }

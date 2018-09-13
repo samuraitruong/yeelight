@@ -1,9 +1,7 @@
 # YEELIGHT AWESOME - NODEJS
 The node api to control yeelight devices using wifi network TCP/UDP
 
-[![Build Status](https://travis-ci.org/samuraitruong/yeelight.svg?branch=develop)](https://travis-ci.org/samuraitruong/yeelight)
-
-[![Codecov branch](https://img.shields.io/codecov/c/github/samuraitruong/yeelight/develop.svg?style=popout)](https://codecov.io/gh/samuraitruong/yeelight/branch/develop)
+[![Build Status](https://travis-ci.org/samuraitruong/yeelight.svg?branch=develop)](https://travis-ci.org/samuraitruong/yeelight) [![Codecov branch](https://img.shields.io/codecov/c/github/samuraitruong/yeelight/develop.svg?style=popout)](https://codecov.io/gh/samuraitruong/yeelight/branch/develop)
 
 [Mocha Test Report](https://samuraitruong.github.io/yeelight/mochawesome-report/mochawesome.html)
 
