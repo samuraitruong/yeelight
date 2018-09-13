@@ -95,7 +95,7 @@ export class Yeelight extends EventEmitter {
      * @returns {Promise<IEventResult>} return a promise of IEventResult
     */
     public setPower(turnOn: boolean = true,
-        effect: "smooth" | "sudden", duration: number = 500): Promise<IEventResult> {
+                    effect: "smooth" | "sudden", duration: number = 500): Promise<IEventResult> {
         return this.sendCommand(new Command(1, CommandType.SET_POWER, [(turnOn ? "on" : "off"), effect, duration]));
     }
     /**
@@ -162,7 +162,7 @@ export class Yeelight extends EventEmitter {
      * @returns {Promise<IEventResult>} return a promise of IEventResult
      */
     public startColorFlow(states: FlowState[],
-        action: StartFlowAction = StartFlowAction.LED_STAY): Promise<IEventResult> {
+                          action: StartFlowAction = StartFlowAction.LED_STAY): Promise<IEventResult> {
         const values = states.reduce((a, b) => [...a, ...b.getState()], []);
         return this.sendCommand(new Command(1, CommandType.START_COLOR_FLOW,
             [states.length, action, values.join(",")]));
@@ -301,7 +301,7 @@ export class Yeelight extends EventEmitter {
      * @returns {Promise<IEventResult>} return a promise of IEventResult
      */
     public adjust(type: CommandType.ADJUST_BRIGHT | CommandType.ADJUST_COLOR | CommandType.ADJUST_CT,
-        percentage: number, duration: number): Promise<IEventResult> {
+                  percentage: number, duration: number): Promise<IEventResult> {
         return this.sendCommand(new Command(1, type, [percentage, duration]));
     }
     /**
