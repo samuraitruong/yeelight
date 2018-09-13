@@ -6,7 +6,7 @@ import { Yeelight } from "../src/yeelight";
 import { TestUtils } from "./test-util";
 
 describe("Yeelight Class Test", () => {
-    const options = { lightIp: "127.0.0.1", lightPort: 55443, timeout: 500 };
+    const options = { lightIp: "127.0.0.1", lightPort: 55443, timeout: 2000 };
     beforeEach(TestUtils.beforeEach);
     afterEach(TestUtils.afterEach);
 
