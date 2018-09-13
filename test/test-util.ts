@@ -4,7 +4,7 @@ let socket: Socket;
 let data: any = {};
 let validateFunc: (incommingData: any) => void;
 export class TestUtils {
-
+    public static port = 55443;
     public static beforeEach(done: () => void) {
         const me = TestUtils;
         server = createServer((s: Socket) => {
@@ -19,8 +19,9 @@ export class TestUtils {
             // socket.pipe(socket);
         });
         server.on("connection", (s) => socket = s);
-        server.listen(55443, "127.0.0.1");
-        done();
+        console.log("this.port", me.port);
+        server.listen(me.port, "127.0.0.1", done);
+        //done();
     }
     public static afterEach(done: () => void) {
         // aa

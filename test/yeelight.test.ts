@@ -18,9 +18,10 @@ describe("Yeelight Class Test", () => {
         y.disconnect();
     });
     // tslint:disable-next-line:only-arrow-functions
-    describe("setName() tests", function() {
-        this.retries(3);
+    describe("setName() tests", function () {
+        //this.retries(3);
         it("setName() should work when send valid message", async () => {
+            options.lightPort = TestUtils.port;
             const yeelight = new Yeelight(options);
             const y = await yeelight.connect();
             TestUtils.mockSocket({ id: 1, result: ["ok"] }, (x) => {
@@ -36,6 +37,7 @@ describe("Yeelight Class Test", () => {
 
         it("setName() should fire commandSuccess, set_name, set_name_sent event", async () => {
             const yeelight = new Yeelight(options);
+            options.lightPort = TestUtils.port;
             const y = await yeelight.connect();
             const expectData = {
                 action: "set_name",
@@ -70,6 +72,7 @@ describe("Yeelight Class Test", () => {
         it("setName() should fire error when send invalid name, should fire set_name, commandError, set_name_sent events",
             async () => {
                 const yeelight = new Yeelight(options);
+                options.lightPort = TestUtils.port;
                 const y = await yeelight.connect();
                 const expectData1 = {
                     action: "set_name",
@@ -102,6 +105,8 @@ describe("Yeelight Class Test", () => {
         it("setName() should reject promise, raise commandTimedout event when socket not response",
             async () => {
                 const yeelight = new Yeelight(options);
+                options.lightPort = TestUtils.port;
+                console.log("port", options);
                 const y = await yeelight.connect();
                 const expectData = {
                     action: "set_name",
