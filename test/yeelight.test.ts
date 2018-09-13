@@ -19,7 +19,7 @@ describe("Yeelight Class Test", () => {
     });
     // tslint:disable-next-line:only-arrow-functions
     describe("setName() tests", function () {
-        //this.retries(3);
+        this.retries(3);
         it("setName() should work when send valid message", async () => {
             options.lightPort = TestUtils.port;
             const yeelight = new Yeelight(options);
