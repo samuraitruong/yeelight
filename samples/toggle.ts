@@ -1,6 +1,5 @@
 import { Discover } from "../src/discover";
 import { IDevice } from "../src/models/device";
-import { ILogger } from "../src/models/logger";
 import { Yeelight } from "../src/yeelight";
 import { logger } from "./logger";
 
@@ -11,10 +10,12 @@ discover.once("deviceAdded", (device: IDevice) => {
 
     yeelight.on("connected", () => {
         console.log("device.status", device.status);
-        // yeelight.setPower(device.status === DeviceStatus.OFF);
         yeelight.toggle();
+        yeelight.on("commandSuccess", () => {
+            yeelight.disconnect();
+        });
     });
     yeelight.connect();
 });
 
-discover.start().catch((err) => console.log(err));
+discover.start().catch((err) => console.log(err)).then(x => discover.destroy());

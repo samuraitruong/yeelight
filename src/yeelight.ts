@@ -10,8 +10,8 @@ import { ILogger } from "./models/logger";
  * The client to connect and control the light
  */
 export class Yeelight extends EventEmitter {
+    public connected: boolean;
     private client: Socket;
-    private connected: boolean;
     private sentCommands: Command[];
     private resultCommands: ICommandResult[];
     private readonly EVENT_NAME = "command_result";
@@ -27,26 +27,34 @@ export class Yeelight extends EventEmitter {
         this.client = new Socket();
         this.client.on("data", this.onMessage.bind(this));
         this.emit("ready", this);
+        // Set default timeout if not provide
+        this.options.timeout = this.options.timeout || 5000;
     }
     public onMessage(msg: Buffer) {
         const json = msg.toString();
         const result: ICommandResult = JSON.parse(json);
-        this.logger.info("Light data recieved: ", result);
-        if (result.id && result.result) {
-            this.resultCommands.push(result);
-            const originalCommand = this.sentCommands.find((x) => x.id === result.id);
+        this.resultCommands.push(result);
+        const originalCommand = this.sentCommands.find((x) => x.id === result.id);
+        if (!originalCommand) {
+            return;
+        }
+        const eventData: IEventResult = {
+            action: originalCommand.method,
+            command: originalCommand,
+            result,
+            success: true,
+        };
 
-            const eventData: IEventResult = {
-                action: originalCommand.method,
-                command: originalCommand,
-                result,
-                success: true,
-            };
-            this.emit(`${this.EVENT_NAME}_${result.id}`, eventData);
-            if (originalCommand) {
-                this.emit(originalCommand.method, eventData);
-                this.emit("commandSuccess", eventData);
-            }
+        this.logger.info("Light data recieved: ", result);
+        this.emit(`${this.EVENT_NAME}_${result.id}`, eventData);
+        this.emit(originalCommand.method, eventData);
+
+        if (result.id && result.result) {
+            this.emit("commandSuccess", eventData);
+        }
+        if (result && result.error) {
+            eventData.success = false;
+            this.emit("commandError", eventData);
         }
     }
     /**
@@ -55,7 +63,10 @@ export class Yeelight extends EventEmitter {
     public disconnect() {
         this.removeAllListeners();
         this.emit("end");
+        this.client.end(null);
         this.client.destroy();
+
+        this.client.removeAllListeners("data");
     }
     /**
      * establish connection to light,
@@ -305,17 +316,17 @@ export class Yeelight extends EventEmitter {
         this.sentCommands.push(command);
         return new Promise((resolve, reject) => {
             const timer = setTimeout(() => {
-                this.removeAllListeners(`${this.EVENT_NAME}_${command.id}`);
-                return reject("Command timeout");
-            }, 5000);
+                me.removeAllListeners(`${this.EVENT_NAME}_${command.id}`);
+                me.emit("commandTimedout", command);
+                return reject("Command timedout, not recieved response from server.");
+            }, this.options.timeout);
 
             this.once(`${this.EVENT_NAME}_${command.id}`, (commandResult: IEventResult) => {
                 clearTimeout(timer);
                 return resolve(commandResult);
             });
-
             this.client.write(command.getString() + "\r\n", () => {
-                me.emit(command.method + "_sent");
+                me.emit(command.method + "_sent", command);
             });
         });
     }

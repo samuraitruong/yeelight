@@ -1,6 +1,6 @@
 {
     "name": "yeelight-awesome",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "description": "The node.js client api to control yeelight device over WIFI",
     "main": "lib/index.js",
     "publisher": "Truong Nguyen",
@@ -11,9 +11,10 @@
         "build": "tsc --project tsconfig.json",
         "lint": "tslint --project . --fix",
         "dev": "tsc --watch --project tsconfig.json",
-        "cover": "nyc mocha test/*.test.ts --reporter mochawesome",
+        "cover": "nyc mocha test/*.test.ts --timeout 10000 --reporter mochawesome",
         "prepublish": "npm run build",
         "doc-gen": "typedoc --out doc src/index.ts && touch doc/.nojekyll",
+        "patch": "node patch.js",
         "ghdeploy": "gh-pages -d doc -m 'CI generated'"
     },
     "husky": {
@@ -25,8 +26,10 @@
     "license": "MIT",
     "devDependencies": {
         "@types/chai": "^4.1.4",
+        "@types/ip": "0.0.31",
         "@types/mocha": "^5.2.5",
         "@types/node": "^10.9.3",
+        "@types/sinon": "^5.0.2",
         "@types/winston": "^2.4.4",
         "chai": "^4.1.2",
         "gh-pages": "^1.2.0",
@@ -34,6 +37,7 @@
         "mocha": "^5.2.0",
         "mochawesome": "^3.0.3",
         "nyc": "^13.0.1",
+        "sinon": "^6.1.5",
         "ts-node": "^7.0.1",
         "tslint": "^5.11.0",
         "typedoc": "^0.12.0",
@@ -41,7 +45,9 @@
         "winston": "^3.0.0"
     },
     "dependencies": {
-        "ip": "^1.1.5"
+        "@types/portscanner": "^2.1.0",
+        "ip": "^1.1.5",
+        "portscanner": "^2.2.0"
     },
     "repository": {
         "type": "git",

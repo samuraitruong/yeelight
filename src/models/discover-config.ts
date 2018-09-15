@@ -38,4 +38,10 @@ export interface IDiscoverConfig {
      * @default : null
      */
     filter?: (device: IDevice) => boolean;
+
+    /**
+     * If after timeout reached and not found any device, fallback to use IP scaner
+     * @default true
+     */
+    fallback?: boolean;
 }
