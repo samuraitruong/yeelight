@@ -20,16 +20,15 @@ describe("Yeelight Class Test", () => {
         const y = await yeelight.connect();
         expect(y).not.eq(null);
         expect(y.connected).to.eq(true);
-        y.disconnect();
+        await y.disconnect();
     });
     // tslint:disable-next-line:only-arrow-functions
     describe("setName() tests", function () {
-        this.retries(3);
+        // this.retries(3);
         it("setName() should work when send valid message", async () => {
             options.lightPort = TestUtils.port;
             const yeelight = new Yeelight(options);
             const y = await yeelight.connect();
-            await sleep();
             TestUtils.mockSocket({ id: 1, result: ["ok"] }, (x) => {
                 expect(x).to.deep.eq({
                     id: 1, method: "set_name", params: ["unit_test"],
@@ -38,14 +37,13 @@ describe("Yeelight Class Test", () => {
 
             const result = await y.setName("unit_test");
             expect(result).to.not.eq(null);
-            yeelight.disconnect();
+            await yeelight.disconnect();
         });
 
         it("setName() should fire commandSuccess, set_name, set_name_sent event", async () => {
             const yeelight = new Yeelight(options);
             options.lightPort = TestUtils.port;
             const y = await yeelight.connect();
-            await sleep();
             const expectData = {
                 action: "set_name",
                 command: new Command(1, CommandType.SET_NAME, ["unit_test"]),
@@ -72,7 +70,7 @@ describe("Yeelight Class Test", () => {
             SinonAssert.calledWith(spy1, expectData);
             SinonAssert.calledWith(spy2, expectData);
             SinonAssert.calledWith(spy3, expectData.command);
-            yeelight.disconnect();
+            await yeelight.disconnect();
         });
 
         // tslint:disable-next-line:max-line-length
@@ -81,7 +79,6 @@ describe("Yeelight Class Test", () => {
                 const yeelight = new Yeelight(options);
                 options.lightPort = TestUtils.port;
                 const y = await yeelight.connect();
-                await sleep();
                 const expectData1 = {
                     action: "set_name",
                     command: new Command(1, CommandType.SET_NAME, ["this is invalid name"]),
@@ -108,7 +105,7 @@ describe("Yeelight Class Test", () => {
                 SinonAssert.calledWith(spy1, expectData1);
                 SinonAssert.calledWith(spy2, expectData1);
                 SinonAssert.calledWith(spy3, expectData1.command);
-                yeelight.disconnect();
+                await yeelight.disconnect();
             });
         it("setName() should reject promise, raise commandTimedout event when socket not response",
             async () => {
@@ -140,7 +137,7 @@ describe("Yeelight Class Test", () => {
                 }
                 SinonAssert.calledWith(spy2, expectData.command);
                 SinonAssert.calledWith(spy3, expectData.command);
-                yeelight.disconnect();
+                await yeelight.disconnect();
             });
     });
 
