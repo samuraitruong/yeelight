@@ -5,6 +5,11 @@ import { Command, CommandType } from "../src/models";
 import { Yeelight } from "../src/yeelight";
 import { TestUtils } from "./test-util";
 
+async function sleep() {
+    return new Promise((resolve) => {
+        setTimeout(resolve, 200)
+    })
+}
 describe("Yeelight Class Test", () => {
     const options = { lightIp: "127.0.0.1", lightPort: 55443, timeout: 2000 };
     beforeEach(TestUtils.beforeEach);
@@ -24,6 +29,7 @@ describe("Yeelight Class Test", () => {
             options.lightPort = TestUtils.port;
             const yeelight = new Yeelight(options);
             const y = await yeelight.connect();
+            await sleep();
             TestUtils.mockSocket({ id: 1, result: ["ok"] }, (x) => {
                 expect(x).to.deep.eq({
                     id: 1, method: "set_name", params: ["unit_test"],
@@ -39,6 +45,7 @@ describe("Yeelight Class Test", () => {
             const yeelight = new Yeelight(options);
             options.lightPort = TestUtils.port;
             const y = await yeelight.connect();
+            await sleep();
             const expectData = {
                 action: "set_name",
                 command: new Command(1, CommandType.SET_NAME, ["unit_test"]),
@@ -74,6 +81,7 @@ describe("Yeelight Class Test", () => {
                 const yeelight = new Yeelight(options);
                 options.lightPort = TestUtils.port;
                 const y = await yeelight.connect();
+                await sleep();
                 const expectData1 = {
                     action: "set_name",
                     command: new Command(1, CommandType.SET_NAME, ["this is invalid name"]),
@@ -108,6 +116,7 @@ describe("Yeelight Class Test", () => {
                 options.lightPort = TestUtils.port;
                 console.log("port", options);
                 const y = await yeelight.connect();
+                await sleep();
                 const expectData = {
                     action: "set_name",
                     command: new Command(1, CommandType.SET_NAME, ["mybulb"]),
