@@ -18,6 +18,7 @@ export enum CommandType {
     SET_SCENE = "set_scene",
     SET_CT_ABX = "set_ct_abx",
     SET_RGB = "set_rgb",
+    SET_HSV = "set_hsv",
     SET_BRIGHT = "set_bright",
     CRON_ADD = "cron_add",
     CRON_GET = "cron_get",
