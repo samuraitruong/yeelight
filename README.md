@@ -67,17 +67,17 @@ There is know issue with the yeelight device that discover method doesn't work a
     const discover = new Discover({fallback: true});
 
     discover.start();
-
   ```
+
 - Use IP scan method (this method will expect to take few seconds)
   ```js
-const discover = new Discover({});
+    const discover = new Discover({});
 
-discover.scanByIp().then(devices => console.log("scan finished: ", devices));
+    discover.scanByIp().then(devices => console.log("scan finished: ", devices));
 
-discover.on("deviceAdded", (device: IDevice) => {
-    console.log("found device", device);
-});
+    discover.on("deviceAdded", (device: IDevice) => {
+      console.log("found device", device);
+    });
   ```
 ### Control the light
 To control the light, you need to know the IP of the light, if not sure, using the discover above to find details, after you have details you can make connection to the light and control it
@@ -90,8 +90,8 @@ To control the light, you need to know the IP of the light, if not sure, using t
         yeelight.setRGB(new Color(66, 87, 23), "smooth", 5000);
     });
     yeelight.connect();
-
 ```
+
 ### Handle Events
 The yeelight awesome using Event Emitter pattern, so that you can hook up into the event to get & process data. bellow are list of event
 - commandSuccess: This event emit on every command successful
@@ -103,7 +103,8 @@ The yeelight awesome using Event Emitter pattern, so that you can hook up into t
 - get_prop
 - set_scene
 - set_ct_abx
-- set_rgg
+- set_rgb
+- set_hsv
 - set_bright
 - cron_add
 - cron_get

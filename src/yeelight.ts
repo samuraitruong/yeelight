@@ -227,7 +227,25 @@ export class Yeelight extends EventEmitter {
     public setRGB(color: Color, effect: "smooth" | "sudden", duration: number): Promise<IEventResult> {
         return this.sendCommand(new Command(1, CommandType.SET_RGB, [color.getValue(), effect, duration]));
     }
-
+    /**
+     * This method is used to change the color of a smart LED.
+     * Only accepted if the smart LED is currently in "on" state.
+     * @param hue  the target hue, whose type is integer.
+     * It should be expressed in decimal integer ranges from 0 to 359.
+     * @param sat  the target saturation, whose type is integer.
+     * It should be expressed in decimal integer ranges from 0 to 100.
+     * @param {"smooth"| "sudden"} effect  support two values: "sudden" and "smooth". If effect is "sudden",
+     * then the color temperature will be changed directly to target value,
+     * under this case, the third parameter "duration" is ignored. If effect is "smooth",
+     * then the color temperature will be changed to target value in a gradual fashion, under this case,
+     * the total time of gradual change is specified in third parameter "duration".
+     * @param {number} duration  specifies the total time of the gradual changing. The unit is milliseconds.
+     * The minimum support duration is 30 milliseconds.
+     * @returns {Promise<IEventResult>} return a promise of IEventResult
+     */
+    public setHSV(hue: number, sat: number, effect: "smooth" | "sudden", duration: number): Promise<IEventResult> {
+        return this.sendCommand(new Command(1, CommandType.SET_HSV, [hue, sat, effect, duration]));
+    }
     /**
      * This method is used to change the color of a smart LED.
      * Only accepted if the smart LED is currently in "on" state.
