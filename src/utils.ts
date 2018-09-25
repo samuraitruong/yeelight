@@ -30,7 +30,6 @@ export function parseDeviceInfo(message: string): IDevice {
     device.hue = parseInt(getString("hue", "0"), 10);
     device.rgb = parseInt(getString("rgb", "0"), 10);
     device.sat = parseInt(getString("sat", "0"), 10);
-    device.hue = parseInt(getString("hue", "0"), 10);
     device.mode = parseInt(getString("color_mode", "0"), 10) as ColorMode;
 
     const host = device.location.substr(11);
