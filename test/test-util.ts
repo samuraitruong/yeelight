@@ -9,7 +9,6 @@ export class TestUtils {
         const me = TestUtils;
         server = createServer((s: Socket) => {
             socket = s;
-            //  console.log("create server", data);
             if (data != null) {
                 socket.write(JSON.stringify(data));
                 socket.once("data", (incomming) => {
@@ -24,8 +23,7 @@ export class TestUtils {
         //done();
     }
     public static afterEach(done: () => void) {
-        TestUtils.port++;
-        // aa
+        // TestUtils.port++;
         if (socket) {
             socket.removeAllListeners();
             socket.end();
@@ -34,7 +32,6 @@ export class TestUtils {
         if (server) {
             server.removeAllListeners();
             server.close(done);
-            //done();
         } else {
             done();
         }
