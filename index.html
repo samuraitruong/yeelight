@@ -117,29 +117,28 @@ npm install yeelight-awesome
 					<li><p>from version 1.0.6, there is fallback option to using Ip scan if discover failed. this fallback option is turn on by default. </p>
 						<pre><code class="language-js">  <span class="hljs-keyword">const</span> discover = <span class="hljs-keyword">new</span> Discover({<span class="hljs-attr">fallback</span>: <span class="hljs-literal">true</span>});
 
-  discover.start();
-</code></pre>
+  discover.start();</code></pre>
 					</li>
-					<li>Use IP scan method (this method will expect to take few seconds)
-						<code>`</code>js
-					const discover = new Discover({});</li>
+					<li><p>Use IP scan method (this method will expect to take few seconds)</p>
+						<pre><code class="language-js">  <span class="hljs-keyword">const</span> discover = <span class="hljs-keyword">new</span> Discover({});
+
+  discover.scanByIp().then(<span class="hljs-function"><span class="hljs-params">devices</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"scan finished: "</span>, devices));
+
+  discover.on(<span class="hljs-string">"deviceAdded"</span>, (device: IDevice) =&gt; {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"found device"</span>, device);
+  });</code></pre>
+						<h3 id="control-the-light">Control the light</h3>
+						<p>To control the light, you need to know the IP of the light, if not sure, using the discover above to find details, after you have details you can make connection to the light and control it</p>
+					</li>
 				</ul>
-				<p>discover.scanByIp().then(devices =&gt; console.log(&quot;scan finished: &quot;, devices));</p>
-				<p>discover.on(&quot;deviceAdded&quot;, (device: IDevice) =&gt; {
-					console.log(&quot;found device&quot;, device);
-				});</p>
-				<pre><code><span class="hljs-comment">### Control the light</span>
-<span class="hljs-keyword">To</span> control the light, you need <span class="hljs-keyword">to</span> know the<span class="hljs-built_in"> IP </span>of the light, <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> sure, using the discover above <span class="hljs-keyword">to</span> <span class="hljs-builtin-name">find</span> details, after you have details you can make<span class="hljs-built_in"> connection </span><span class="hljs-keyword">to</span> the light <span class="hljs-keyword">and</span> control it
+				<pre><code class="language-js">    <span class="hljs-keyword">import</span> { Yeelight, Color } <span class="hljs-keyword">from</span> <span class="hljs-string">"yeelight-awesome"</span>;
 
-```js
-    import { Yeelight, Color } <span class="hljs-keyword">from</span> <span class="hljs-string">"yeelight-awesome"</span>;
-
-    const yeelight = new Yeelight({ lightIp: device.host, lightPort: device.port });
+    <span class="hljs-keyword">const</span> yeelight = <span class="hljs-keyword">new</span> Yeelight({ <span class="hljs-attr">lightIp</span>: device.host, <span class="hljs-attr">lightPort</span>: device.port });
     yeelight.on(<span class="hljs-string">"connected"</span>, () =&gt; {
-        yeelight.setRGB(new Color(66, 87, 23), <span class="hljs-string">"smooth"</span>, 5000);
+        yeelight.setRGB(<span class="hljs-keyword">new</span> Color(<span class="hljs-number">66</span>, <span class="hljs-number">87</span>, <span class="hljs-number">23</span>), <span class="hljs-string">"smooth"</span>, <span class="hljs-number">5000</span>);
     });
-    yeelight.connect();
-</code></pre><h3 id="handle-events">Handle Events</h3>
+    yeelight.connect();</code></pre>
+				<h3 id="handle-events">Handle Events</h3>
 				<p>The yeelight awesome using Event Emitter pattern, so that you can hook up into the event to get &amp; process data. bellow are list of event</p>
 				<ul>
 					<li>commandSuccess: This event emit on every command successful</li>
@@ -151,7 +150,8 @@ npm install yeelight-awesome
 					<li>get_prop</li>
 					<li>set_scene</li>
 					<li>set_ct_abx</li>
-					<li>set_rgg</li>
+					<li>set_rgb</li>
+					<li>set_hsv</li>
 					<li>set_bright</li>
 					<li>cron_add</li>
 					<li>cron_get</li>
@@ -293,6 +293,7 @@ npm install yeelight-awesome
 				<p>Feel free to fork and pull request the new feature that you make/or bug you fix. Thanks</p>
 				<h1 id="release-notes">Release Notes</h1>
 				<ul>
+					<li>1.0.7 : Added  set_shv function</li>
 					<li>1.0.6 : added support IP scan method fallback</li>
 					<li>1.0.3: Added support promises</li>
 					<li>1.0.0-1.0.0.2 : The very first initial , include all test and working function</li>
