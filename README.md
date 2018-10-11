@@ -2,7 +2,7 @@
 The node api to control yeelight devices using wifi network TCP/UDP
 
 [![Build Status](https://travis-ci.org/samuraitruong/yeelight.svg?branch=develop)](https://travis-ci.org/samuraitruong/yeelight) [![Codecov branch](https://img.shields.io/codecov/c/github/samuraitruong/yeelight/develop.svg?style=popout)](https://codecov.io/gh/samuraitruong/yeelight/branch/develop)
-
+[![Package Quality](http://npm.packagequality.com/badge/yeelight-awesome.png)](http://packagequality.com/#?package=yeelight-awesome)
 [Mocha Test Report](https://samuraitruong.github.io/yeelight/mochawesome-report/mochawesome.html)
 
 [Test Coverage Report](https://samuraitruong.github.io/yeelight/coverage/)
@@ -269,6 +269,7 @@ Please use github issue page if you encounter with any problem or want to give a
 Feel free to fork and pull request the new feature that you make/or bug you fix. Thanks
 
 # Release Notes
+- 1.0.7 : Added  set_shv function
 - 1.0.6 : added support IP scan method fallback
 - 1.0.3: Added support promises
 - 1.0.0-1.0.0.2 : The very first initial , include all test and working function

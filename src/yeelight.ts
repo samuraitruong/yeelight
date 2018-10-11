@@ -60,13 +60,13 @@ export class Yeelight extends EventEmitter {
     /**
      * Drop connection/listerners and clean up resources.
      */
-    public disconnect() {
+    public disconnect(): Promise<any> {
         this.removeAllListeners();
         this.emit("end");
-        this.client.end(null);
-        this.client.destroy();
-
+        // this.client.destroy();
         this.client.removeAllListeners("data");
+
+        return new Promise((resolve) => this.client.end(null, resolve));
     }
     /**
      * establish connection to light,

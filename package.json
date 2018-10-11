@@ -1,6 +1,6 @@
 {
     "name": "yeelight-awesome",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "description": "The node.js client api to control yeelight device over WIFI",
     "main": "lib/index.js",
     "publisher": "Truong Nguyen",
