@@ -256,6 +256,14 @@ Yeelight awesome has implement all the support function for yeelight device, Jus
 Please refer to [https://samuraitruong.github.io/yeelight/] (https://samuraitruong.github.io/yeelight/) for all details document
 
 * NOTE: This library has been test and confirm working on Yeelight YLDP02YL AC220V RGBW E27 Smart LED Bulb 
+To run the example, you need to install ts-node
+
+``` bash
+npm install ts-node -g
+then execute the ts-ndoe instead of node with the typescript file
+
+ts-node sample/start-flow.ts
+```
 
 # WIP
 - Adding error handling event/successful event
@@ -269,6 +277,7 @@ Please use github issue page if you encounter with any problem or want to give a
 Feel free to fork and pull request the new feature that you make/or bug you fix. Thanks
 
 # Release Notes
+- 1.0.8 : Fix the repeat count of startColorFlow function (start_cf)
 - 1.0.7 : Added  set_shv function
 - 1.0.6 : added support IP scan method fallback
 - 1.0.3: Added support promises
