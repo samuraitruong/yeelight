@@ -279,8 +279,13 @@ npm install yeelight-awesome
 				<p>Yeelight awesome has implement all the support function for yeelight device, Just in case the device has new function that not covert by the API, you can use the sendCommands function with your own data structure to make a request to the light</p>
 				<p>Please refer to [<a href="https://samuraitruong.github.io/yeelight/%5D">https://samuraitruong.github.io/yeelight/]</a> (<a href="https://samuraitruong.github.io/yeelight/">https://samuraitruong.github.io/yeelight/</a>) for all details document</p>
 				<ul>
-					<li>NOTE: This library has been test and confirm working on Yeelight YLDP02YL AC220V RGBW E27 Smart LED Bulb </li>
+					<li>NOTE: This library has been test and confirm working on Yeelight YLDP02YL AC220V RGBW E27 Smart LED Bulb
+					To run the example, you need to install ts-node</li>
 				</ul>
+				<pre><code class="language-bash">npm install ts-node -g
+<span class="hljs-keyword">then</span> execute the ts-ndoe instead of node with the typescript file
+
+ts-node sample/start-flow.ts</code></pre>
 				<h1 id="wip">WIP</h1>
 				<ul>
 					<li>Adding error handling event/successful event</li>
@@ -293,6 +298,7 @@ npm install yeelight-awesome
 				<p>Feel free to fork and pull request the new feature that you make/or bug you fix. Thanks</p>
 				<h1 id="release-notes">Release Notes</h1>
 				<ul>
+					<li>1.0.8 : Fix the repeat count of startColorFlow function (start_cf)</li>
 					<li>1.0.7 : Added  set_shv function</li>
 					<li>1.0.6 : added support IP scan method fallback</li>
 					<li>1.0.3: Added support promises</li>
