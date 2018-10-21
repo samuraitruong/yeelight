@@ -265,13 +265,12 @@ declare module "yeelight-awesome" {
 
         private sentCommands : Command[];
         private resultCommands : ICommandResult[];
-        private readonly EVENT_NAME = "command_result";
         /**
          * @constructor
          * @param {IConfig} options : The client config initial the client
          */
         constructor(options : IConfig, logger?: ILogger);
-        public onMessage(msg : Buffer);
+        public onMessage(msg : Buffer) : void;
         /**
          * Drop connection/listerners and clean up resources.
          */
@@ -293,7 +292,7 @@ declare module "yeelight-awesome" {
          * The minimum support duration is 30 milliseconds.
          * @returns {Promise<IEventResult>} return a promise of IEventResult
         */
-        public setPower(turnOn : boolean, effect : "smooth" | "sudden", duration) : Promise < IEventResult >;
+        public setPower(turnOn : boolean, effect : "smooth" | "sudden", duration : number) : Promise < IEventResult >;
         /**
          * This method is used to start a timer job on the smart LED.
          * Only accepted if the smart LED is currently in "on" state
@@ -489,8 +488,12 @@ declare module "yeelight-awesome" {
          */
         public sendCommand(command : Command) : Promise < IEventResult >;
 
-        public on(event : 'set_rgb', listener : (name : string) => void) : this;
-        public on(event : string, listener : Function) : this;
+        public on(event : 'set_rgb', listener : (commandResult : ICommandResult) => void) : void;
+        public on(event : 'set_toggle', listener : (commandResult : ICommandResult) => void) : void;
+        public on(event : 'set_ct', listener : (commandResult : ICommandResult) => void) : void;
+        public on(event : CommandType, listener : (commandResult : ICommandResult) => void) : void;
+        public on(event : string, listener : (commandResult : ICommandResult) => void) : void;
+        public emit(event : string, data : any) : void;
     }
 
     /**
@@ -555,5 +558,14 @@ declare module "yeelight-awesome" {
          * @returns {0 |1 } return 0 if device already existing, 1 if new device added to the list
          */
         private addDevice(device : IDevice) : 0 | 1;
+        /**
+         * Event emit when device found on networks
+         * @param {string} event : should be deviceAdded
+         * @param {Function} listener callback function to handle device
+         */
+        public on(event : "deviceAdded", listener : (device : IDevice) => void) : void;
+        public on(event : string, listener : (info : any) => void) : void;
+
+        public emit(event : string, data : any) : void;
     }
 }
