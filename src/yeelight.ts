@@ -158,14 +158,15 @@ export class Yeelight extends EventEmitter {
      * then change CT to 5000K & minimum brightness gradually in 500ms.
      * After 4 changes reached, stopped the flow and power off the smart LED.
      * @param {StarFlowAction} action:  is the action taken after the flow is stopped
-     * 0 means infinite loop on the state changing.
+     * @param {number} repeat is the total number of visible state changing before color flow
+     *  stopped. 0 means infinite loop on the state changing. @default infinity
      * @returns {Promise<IEventResult>} return a promise of IEventResult
      */
-    public startColorFlow(states: FlowState[],
-                          action: StartFlowAction = StartFlowAction.LED_STAY): Promise<IEventResult> {
+    public startColorFlow(states: FlowState[], action: StartFlowAction = StartFlowAction.LED_STAY,
+                          repeat: number = 0): Promise<IEventResult> {
         const values = states.reduce((a, b) => [...a, ...b.getState()], []);
         return this.sendCommand(new Command(1, CommandType.START_COLOR_FLOW,
-            [states.length, action, values.join(",")]));
+            [repeat, action, values.join(",")]));
     }
     /**
      * This method is used to stop a running color flow.
@@ -267,10 +268,10 @@ export class Yeelight extends EventEmitter {
     /**
      * @param command This method is used to change brightness, CT or color of a smart LED without
      * knowing the current value, it's main used by controllers.
-     * @param {adjustType} adjustType the direction of the adjustment. The valid value can be:
-     * “increase": increase the specified property
-     *  “decrease": decrease the specified property
-     * “circle": increase the specified property, after it reaches the max value back to minimum value
+     * @param {AdjustType} adjustType the direction of the adjustment. The valid value can be:
+     * increase: increase the specified property
+     * decrease: decrease the specified property
+     * circle: increase the specified property, after it reaches the max value back to minimum value
      * @param {string} prop  the property to adjust. The valid value can be:
      * “bright": adjust brightness.
      * “ct": adjust color temperature.

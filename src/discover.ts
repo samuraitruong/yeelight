@@ -20,6 +20,7 @@ process.on("uncaughtException", (err) => {
  */
 export class Discover extends EventEmitter {
     private devices: IDevice[];
+    private timer: any;
     private options: IDiscoverConfig = {
         debug: true,
         fallback: true,
@@ -102,18 +103,18 @@ export class Discover extends EventEmitter {
                     } else {
                         let ts = 0;
                         const interval = 200;
-                        const timer = setInterval(() => {
+                        me.timer = setInterval(() => {
                             ts += interval;
                             if (this.devices.length >= this.options.limit) {
-                                clearInterval(timer);
+                                clearInterval(me.timer);
                                 resolve(this.devices);
                             }
                             if (this.options.timeout > 0 && this.options.timeout < ts) {
                                 if (this.devices.length > 0) {
-                                    clearInterval(timer);
+                                    clearInterval(me.timer);
                                     resolve(this.devices);
                                 } else {
-                                    clearInterval(timer);
+                                    clearInterval(me.timer);
                                     if (!this.options.fallback) {
                                         reject("No device found after timeout exceeded : " + ts);
                                     }
@@ -135,6 +136,9 @@ export class Discover extends EventEmitter {
      * @returns {Promise} return a promise, fullfil will call after internal socket connection dropped
      */
     public destroy(): Promise<void> {
+        if (this.timer) {
+            clearInterval(this.timer);
+        }
         if (!this.client) {
             return Promise.resolve();
         }
