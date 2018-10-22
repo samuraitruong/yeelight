@@ -277,6 +277,7 @@ Please use github issue page if you encounter with any problem or want to give a
 Feel free to fork and pull request the new feature that you make/or bug you fix. Thanks
 
 # Release Notes
+- 1.0.10 : Added typescript declaration 
 - 1.0.8 : Fix the repeat count of startColorFlow function (start_cf)
 - 1.0.7 : Added  set_shv function
 - 1.0.6 : added support IP scan method fallback
