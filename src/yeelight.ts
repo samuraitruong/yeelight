@@ -95,7 +95,7 @@ export class Yeelight extends EventEmitter {
      * @returns {Promise<IEventResult>} return a promise of IEventResult
     */
     public setPower(turnOn: boolean = true,
-                    effect: "smooth" | "sudden", duration: number = 500): Promise<IEventResult> {
+        effect: "smooth" | "sudden", duration: number = 500): Promise<IEventResult> {
         return this.sendCommand(new Command(1, CommandType.SET_POWER, [(turnOn ? "on" : "off"), effect, duration]));
     }
     /**
@@ -163,7 +163,7 @@ export class Yeelight extends EventEmitter {
      * @returns {Promise<IEventResult>} return a promise of IEventResult
      */
     public startColorFlow(states: FlowState[], action: StartFlowAction = StartFlowAction.LED_STAY,
-                          repeat: number = 0): Promise<IEventResult> {
+        repeat: number = 0): Promise<IEventResult> {
         const values = states.reduce((a, b) => [...a, ...b.getState()], []);
         return this.sendCommand(new Command(1, CommandType.START_COLOR_FLOW,
             [repeat, action, values.join(",")]));
@@ -268,10 +268,10 @@ export class Yeelight extends EventEmitter {
     /**
      * @param command This method is used to change brightness, CT or color of a smart LED without
      * knowing the current value, it's main used by controllers.
-     * @param {adjustType} adjustType the direction of the adjustment. The valid value can be:
-     * “increase": increase the specified property
-     *  “decrease": decrease the specified property
-     * “circle": increase the specified property, after it reaches the max value back to minimum value
+     * @param {AdjustType} adjustType the direction of the adjustment. The valid value can be:
+     * increase: increase the specified property
+     * decrease: decrease the specified property
+     * circle: increase the specified property, after it reaches the max value back to minimum value
      * @param {string} prop  the property to adjust. The valid value can be:
      * “bright": adjust brightness.
      * “ct": adjust color temperature.
@@ -320,7 +320,7 @@ export class Yeelight extends EventEmitter {
      * @returns {Promise<IEventResult>} return a promise of IEventResult
      */
     public adjust(type: CommandType.ADJUST_BRIGHT | CommandType.ADJUST_COLOR | CommandType.ADJUST_CT,
-                  percentage: number, duration: number): Promise<IEventResult> {
+        percentage: number, duration: number): Promise<IEventResult> {
         return this.sendCommand(new Command(1, type, [percentage, duration]));
     }
     /**
@@ -332,7 +332,6 @@ export class Yeelight extends EventEmitter {
     public sendCommand(command: Command): Promise<IEventResult> {
         const me = this;
         command.id = (this.sentCommands.length + 1);
-        console.log("command ", command.getString());
         this.sentCommands.push(command);
         return new Promise((resolve, reject) => {
             const timer = setTimeout(() => {
