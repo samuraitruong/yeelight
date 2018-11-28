@@ -187,7 +187,7 @@ export class Discover extends EventEmitter {
      */
     private addDevice(device: IDevice): 0 | 1 {
         const existDevice = this.devices.findIndex((x) => x.id === device.id);
-        if (existDevice <= 0) {
+        if (existDevice === -1) {
             this.devices.push(device);
             this.emit("deviceAdded", device);
 
