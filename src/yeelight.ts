@@ -25,14 +25,23 @@ export class Yeelight extends EventEmitter {
         this.sentCommands = new Array<Command>();
         this.resultCommands = new Array<ICommandResult>();
         this.client = new Socket();
-        this.client.on("data", this.onMessage.bind(this));
+        this.client.on("data", this.onData.bind(this));
         this.emit("ready", this);
         // Set default timeout if not provide
         this.options.timeout = this.options.timeout || 5000;
     }
-    public onMessage(msg: Buffer) {
-        const json = msg.toString();
-        const result: ICommandResult = JSON.parse(json);
+    public onData(data: Buffer) {
+        const messages = data.toString();
+
+        messages.split("\n").forEach((message) => {
+            const json = message.toString();
+            if (json) {
+                const result: ICommandResult = JSON.parse(json);
+                this.onMessage(result)
+            }
+        });
+    }
+    public onMessage(result: ICommandResult) {
         this.resultCommands.push(result);
         const originalCommand = this.sentCommands.find((x) => x.id === result.id);
         if (!originalCommand) {
