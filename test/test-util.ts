@@ -18,7 +18,7 @@ export class TestUtils {
             // socket.pipe(socket);
         });
         server.on("connection", (s) => socket = s);
-        console.log("this.port", me.port);
+        // console.log("this.port", me.port);
         server.listen(me.port, "127.0.0.1", done);
         //done();
     }

@@ -108,9 +108,8 @@ export class Yeelight extends EventEmitter {
             return this.connectToIp(this.options.lightIp, this.options.lightPort);
         } else if (this.options.lightId) {
             // If only the Id is given, start searching for that id:
-            console.log("starting discovery");
             const discover = new Discover({
-                filter: (device: IDevice) => device.id === this.options.lightId,
+                filter: (d: IDevice) => d.id === this.options.lightId,
                 limit: 1,
                 timeout: this.connectTimeout,
             });
@@ -118,7 +117,6 @@ export class Yeelight extends EventEmitter {
             await discover.destroy();
             const device = devices[0];
             if (device) {
-                console.log("found device", device);
                 return this.connectToIp(device.host, device.port);
             } else {
                 throw new Error("Unable to connect, no device with id '" + this.options.lightId + "' found");
@@ -433,7 +431,6 @@ export class Yeelight extends EventEmitter {
         });
     }
     private connectToIp(host: string, port: number): Promise<Yeelight> {
-        console.log("Connecting to " + host + ":" + port);
         return new Promise((resolve, reject) => {
             this.isConnecting = true;
             this.isClosing = false;
@@ -525,7 +522,6 @@ export class Yeelight extends EventEmitter {
                 }
             })
             .catch((e) => {
-                console.log("Error in ping!", e);
             });
         }
     }
