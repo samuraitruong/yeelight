@@ -23,6 +23,7 @@ describe("Yeelight Class Test", () => {
         it("setName() should work when send valid message", async () => {
             options.lightPort = TestUtils.port;
             const yeelight = new Yeelight(options);
+            yeelight.disablePing = true;
             const y = await yeelight.connect();
             TestUtils.mockSocket({ id: 1, result: ["ok"] }, (x) => {
                 expect(x).to.deep.eq({
@@ -37,6 +38,7 @@ describe("Yeelight Class Test", () => {
 
         it("setName() should fire commandSuccess, set_name, set_name_sent event", async () => {
             const yeelight = new Yeelight(options);
+            yeelight.disablePing = true;
             options.lightPort = TestUtils.port;
             const y = await yeelight.connect();
             const expectData = {
@@ -72,6 +74,7 @@ describe("Yeelight Class Test", () => {
         it("setName() should fire error when send invalid name, should fire set_name, commandError, set_name_sent events",
             async () => {
                 const yeelight = new Yeelight(options);
+                yeelight.disablePing = true;
                 options.lightPort = TestUtils.port;
                 const y = await yeelight.connect();
                 const expectData1 = {
@@ -113,6 +116,7 @@ describe("Yeelight Class Test", () => {
         it("setName() should reject promise, raise commandTimedout event when socket not response",
             async () => {
                 const yeelight = new Yeelight(options);
+                yeelight.disablePing = true;
                 options.lightPort = TestUtils.port;
                 console.log("port", options);
                 const y = await yeelight.connect();

@@ -14,6 +14,7 @@ const DEFAULT_PORT = 55443;
 export class Yeelight extends EventEmitter {
     public connected: boolean;
     public autoReconnect: boolean = false;
+    public disablePing: boolean = false;
     public autoReconnectTime: number = 1000;
     public connectTimeout: number = 1000;
 
@@ -25,7 +26,8 @@ export class Yeelight extends EventEmitter {
     private isConnecting: boolean = false;
     private isClosing: boolean = false;
     private isReconnecting: boolean = false;
-    private reconnectTimeout: NodeJS.Timer;
+    private reconnectTimeout: NodeJS.Timer | null = null;
+    private pingTimeout: NodeJS.Timer | null = null;
 
     private readonly EVENT_NAME = "command_result";
     /**
@@ -379,6 +381,27 @@ export class Yeelight extends EventEmitter {
         return this.sendCommand(new Command(1, type, [percentage, duration]));
     }
     /**
+     * This method is used to just check if the connection is alive
+     */
+    public ping(): Promise<void> {
+        return this.sendCommand(new Command(1, CommandType.PING, []))
+        .catch((command: IEventResult) => {
+            // Expect a response: {"id":6, "error":{"code":-1, "message":"method not supported"}}
+            const result = command.result;
+            if (
+                !result ||
+                !result.error ||
+                result.error.code !== -1 ||
+                !(result.error.message + "").match(/not supported/i)
+            ) {
+                throw command;
+            }
+        })
+        .then(() => {
+            // do nothing with the response
+        });
+    }
+    /**
      * Use this function to send any command to the light,
      * please refer to specification to know the structure of command data
      * @param {Command} command The command to send to light via socket write
@@ -421,6 +444,7 @@ export class Yeelight extends EventEmitter {
         if (!this.connected) {
             this.connected = true;
             this.emit("connected");
+            this.triggerPing();
         }
     }
     private wasDisconnected() {
@@ -451,6 +475,22 @@ export class Yeelight extends EventEmitter {
                     }
                 }, this.autoReconnectTime);
             }
+        }
+    }
+    private triggerPing() {
+        if (this.connected && !this.disablePing) {
+            this.ping()
+            .then(() => {
+                if (!this.pingTimeout) {
+                    this.pingTimeout = setTimeout(() => {
+                        this.pingTimeout = null;
+                        this.triggerPing();
+                    }, this.connectTimeout);
+                }
+            })
+            .catch((e) => {
+                console.log("Error in ping!", e);
+            });
         }
     }
 
