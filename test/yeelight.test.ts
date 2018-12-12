@@ -185,7 +185,7 @@ describe("Yeelight Class Test", () => {
                     verifyReply === undefined ?
                     replyData :
                     verifyReply
-                )
+                );
                 if (result) {
                     result = removeClasses(result);
                 }
