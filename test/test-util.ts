@@ -12,7 +12,9 @@ export class TestUtils {
             if (data != null) {
                 socket.on("data", (incomming) => {
                     validateFunc(JSON.parse(incomming.toString()));
-                    socket.write(JSON.stringify(data));
+                    if (data) {
+                        socket.write(JSON.stringify(data));
+                    }
                 });
             }
             // socket.pipe(socket);
