@@ -356,7 +356,7 @@ export class Yeelight extends EventEmitter {
      * effect. The control device can stop music mode by explicitly send a stop command or just by closing the socket.
      * @returns {Promise<IEventResult>} return a promise of IEventResult
      */
-    public setMusic(action: 0 | 1, host: "string", port: number): Promise<IEventResult> {
+    public setMusic(action: 0 | 1, host: string, port: number): Promise<IEventResult> {
         return this.sendCommand(new Command(1, CommandType.SET_MUSIC, [host, port]));
     }
 
