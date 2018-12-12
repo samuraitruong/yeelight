@@ -1,7 +1,7 @@
 import { createServer, Server, Socket } from "net";
 let server: Server;
 let socket: Socket;
-let data: any = {};
+let data: any = null;
 let validateFunc: (incommingData: any) => void;
 export class TestUtils {
     public static port = 55443;
@@ -9,14 +9,12 @@ export class TestUtils {
         const me = TestUtils;
         server = createServer((s: Socket) => {
             socket = s;
-            if (data != null) {
-                socket.on("data", (incomming) => {
-                    validateFunc(JSON.parse(incomming.toString()));
-                    if (data) {
-                        socket.write(JSON.stringify(data));
-                    }
-                });
-            }
+            socket.on("data", (incomming) => {
+                validateFunc(JSON.parse(incomming.toString()));
+                if (data) {
+                    socket.write(JSON.stringify(data));
+                }
+            });
             // socket.pipe(socket);
         });
         server.on("connection", (s) => socket = s);
