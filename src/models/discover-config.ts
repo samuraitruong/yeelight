@@ -44,4 +44,9 @@ export interface IDiscoverConfig {
      * @default true
      */
     fallback?: boolean;
+
+    /**
+     * How often to rescan the detwork for devices in milliseconds, default is 200
+     */
+    scanInterval?: number;
 }
