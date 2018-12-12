@@ -6,6 +6,8 @@ import {
     FlowState, ICommandResult, IConfig, IEventResult, Scene, StartFlowAction,
 } from "./models";
 import { ILogger } from "./models/logger";
+
+const DEFAULT_PORT = 55443;
 /**
  * The client to connect and control the light
  */
@@ -114,7 +116,7 @@ export class Yeelight extends EventEmitter {
         return new Promise((resolve, reject) => {
             this.isConnecting = true;
             this.isClosing = false;
-            this.client.connect(this.options.lightPort, this.options.lightIp, () => {
+            this.client.connect(this.options.lightPort || DEFAULT_PORT, this.options.lightIp, () => {
                 this.isConnecting = false;
                 this.wasConnected();
                 // me.emit("connected", this);
