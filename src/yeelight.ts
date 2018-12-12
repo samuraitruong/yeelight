@@ -38,21 +38,6 @@ export class Yeelight extends EventEmitter {
         super();
         this.logger = logger || defaultLogger;
         this.resultCommands = new Array<ICommandResult>();
-        this.client = new Socket();
-        this.client.on("data", this.onData.bind(this));
-        this.client.on("connect", () => {
-            this.wasConnected();
-        });
-        this.client.on("close", () => {
-            this.wasDisconnected();
-        });
-        this.client.on("end", () => {
-            this.wasDisconnected();
-        });
-        this.client.on("error", (err) => {
-            this.emit("error", err);
-            this.wasDisconnected();
-        });
         this.emit("ready", this);
         // Set default timeout if not provide
         this.options.timeout = this.options.timeout || 5000;
@@ -81,7 +66,6 @@ export class Yeelight extends EventEmitter {
             result,
             success: true,
         };
-
         this.logger.info("Light data recieved: ", result);
         this.emit(`${this.EVENT_NAME}_${result.id}`, eventData);
         this.emit(originalCommand.method, eventData);
@@ -99,13 +83,16 @@ export class Yeelight extends EventEmitter {
     /**
      * Drop connection/listerners and clean up resources.
      */
-    public disconnect(): Promise<any> {
+    public disconnect(): Promise<void> {
         this.removeAllListeners();
         this.emit("end");
         // this.client.destroy();
         this.client.removeAllListeners("data");
         this.isClosing = true;
-        return new Promise((resolve) => this.client.end(null, resolve));
+        return new Promise((resolve) => this.client.end(null, resolve))
+        .then(() => {
+            return this.closeConnection();
+        });
     }
     /**
      * establish connection to light,
@@ -118,6 +105,26 @@ export class Yeelight extends EventEmitter {
         return new Promise((resolve, reject) => {
             this.isConnecting = true;
             this.isClosing = false;
+            if (this.client) {
+                // close old socket:
+                this.closeConnection();
+            }
+            this.client = new Socket();
+            this.client.on("data", this.onData.bind(this));
+            this.client.on("connect", () => {
+                this.wasConnected();
+            });
+            this.client.on("close", () => {
+                this.wasDisconnected();
+            });
+            this.client.on("end", () => {
+                this.wasDisconnected();
+            });
+            this.client.on("error", (err) => {
+                this.emit("error", err);
+                this.wasDisconnected();
+            });
+
             this.client.connect(this.options.lightPort || DEFAULT_PORT, this.options.lightIp, () => {
                 this.isConnecting = false;
                 this.wasConnected();
@@ -466,7 +473,9 @@ export class Yeelight extends EventEmitter {
                         if (!this.isConnecting) {
                             this.connect()
                             .catch((err) => {
-                                this.emit("error", "Erorr during reconnect: " + err);
+                                if (!err.toString().match(/timeout/)) { // ignore connection timeout
+                                    this.emit("error", "Erorr during reconnect: " + err);
+                                }
                                 this._recoverNetworkError();
                             });
                         } else {
@@ -491,6 +500,13 @@ export class Yeelight extends EventEmitter {
             .catch((e) => {
                 console.log("Error in ping!", e);
             });
+        }
+    }
+    private closeConnection() {
+        this.wasDisconnected();
+        if (this.client) {
+            this.client.removeAllListeners();
+            this.client.destroy();
         }
     }
 
