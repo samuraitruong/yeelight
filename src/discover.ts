@@ -68,7 +68,7 @@ export class Discover extends EventEmitter {
     }
     /**
      * Perfrom IP port scan to find an IP with port 55443 open rather than using SSDP discovery method
-     * @requires {Promise<IDevice | IDevice[]>} promise of list of device found
+     * @requires {Promise<IDevice[]>} promise of list of device found
      */
     public async scanByIp(): Promise<IDevice[]> {
         const localIp = address();
@@ -82,9 +82,9 @@ export class Discover extends EventEmitter {
     /**
      * The class to discover yeelight device on wifi network using UDP package
      * You need to turn on "LAN Control" on phone app to get SSDP discover function work
-     * @returns {Promise<IDevice | IDevice[]>} a promise that could resolve to 1 or many devices on the network
+     * @returns {Promise<IDevice[]>} a promise that could resolve to 1 or many devices on the network
      */
-    public start(): Promise<IDevice | IDevice[]> {
+    public start(): Promise<IDevice[]> {
 
         return new Promise((resolve, reject) => {
             try {
