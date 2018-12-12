@@ -94,9 +94,17 @@ describe("Yeelight Class Test", () => {
                     });
                 });
 
-                const result = await y.setName("this is invalid name");
+                let result = null;
+                let errResult;
+                try {
+                    result = await y.setName("this is invalid name");
+                } catch (error) {
+                    errResult = error;
+                }
 
-                expect({ ...result }).to.deep.equal(expectData1);
+                expect(result).to.be.equal(null)
+
+                expect({ ...errResult }).to.deep.equal(expectData1);
                 SinonAssert.calledWith(spy1, expectData1);
                 SinonAssert.calledWith(spy2, expectData1);
                 SinonAssert.calledWith(spy3, expectData1.command);

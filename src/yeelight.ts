@@ -402,7 +402,13 @@ export class Yeelight extends EventEmitter {
 
             this.once(`${this.EVENT_NAME}_${command.id}`, (commandResult: IEventResult) => {
                 clearTimeout(timer);
-                return resolve(commandResult);
+
+                const result = commandResult.result;
+                if (result.id && result.result) {
+                    resolve(commandResult);
+                } else if (result.error) {
+                    reject(commandResult);
+                }
             });
             const msg = command.getString();
             this.client.write(msg + "\r\n", () => {
