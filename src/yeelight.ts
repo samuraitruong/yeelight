@@ -137,8 +137,11 @@ export class Yeelight extends EventEmitter {
      * The minimum support duration is 30 milliseconds.
      * @returns {Promise<IEventResult>} return a promise of IEventResult
     */
-    public setPower(turnOn: boolean = true,
-                    effect: "smooth" | "sudden", duration: number = 500): Promise<IEventResult> {
+    public setPower(
+        turnOn: boolean = true,
+        effect: "smooth" | "sudden" = "sudden",
+        duration: number = 500,
+    ): Promise<IEventResult> {
         return this.sendCommand(new Command(1, CommandType.SET_POWER, [(turnOn ? "on" : "off"), effect, duration]));
     }
     /**
@@ -250,7 +253,11 @@ export class Yeelight extends EventEmitter {
      * The minimum support duration is 30 milliseconds.
      * @returns {Promise<IEventResult>} return a promise of IEventResult
      */
-    public setCtAbx(ct: number, effect: "smooth" | "sudden", duration: number = 500): Promise<IEventResult> {
+    public setCtAbx(
+        ct: number,
+        effect: "smooth" | "sudden" = "sudden",
+        duration: number = 500,
+    ): Promise<IEventResult> {
         return this.sendCommand(new Command(1, CommandType.SET_CT_ABX, [ct, effect, duration]));
     }
     /**
@@ -290,7 +297,7 @@ export class Yeelight extends EventEmitter {
     public setHSV(
         hue: number,
         sat: number,
-        effect: "smooth" | "sudden",
+        effect: "smooth" | "sudden" = "sudden",
         duration: number = 500,
     ): Promise<IEventResult> {
         return this.sendCommand(new Command(1, CommandType.SET_HSV, [hue, sat, effect, duration]));
@@ -310,7 +317,11 @@ export class Yeelight extends EventEmitter {
      * The minimum support duration is 30 milliseconds.
      * @returns {Promise<IEventResult>} return a promise of IEventResult
      */
-    public setBright(brightness: number, effect: "smooth" | "sudden", duration: number = 500): Promise<IEventResult> {
+    public setBright(
+        brightness: number,
+        effect: "smooth" | "sudden" = "sudden",
+        duration: number = 500,
+    ): Promise<IEventResult> {
         return this.sendCommand(new Command(1, CommandType.SET_BRIGHT, [brightness, effect, duration]));
     }
     /**
