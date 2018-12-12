@@ -10,9 +10,9 @@ export class TestUtils {
         server = createServer((s: Socket) => {
             socket = s;
             if (data != null) {
-                socket.write(JSON.stringify(data));
-                socket.once("data", (incomming) => {
+                socket.on("data", (incomming) => {
                     validateFunc(JSON.parse(incomming.toString()));
+                    socket.write(JSON.stringify(data));
                 });
             }
             // socket.pipe(socket);
