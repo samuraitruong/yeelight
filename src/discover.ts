@@ -9,9 +9,6 @@ import { IDevice } from "./models/device";
 import { IDiscoverConfig } from "./models/discover-config";
 import { ILogger } from "./models/logger";
 import { Utils } from "./utils";
-process.on("uncaughtException", (err) => {
-    console.log(err);
-});
 /**
  * The class to discover yeelight device on wifi network using UDP package
  * @constructor
