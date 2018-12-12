@@ -216,7 +216,7 @@ export class Yeelight extends EventEmitter {
      * The minimum support duration is 30 milliseconds.
      * @returns {Promise<IEventResult>} return a promise of IEventResult
      */
-    public setCtAbx(ct: number, effect: "smooth" | "sudden", duration: number): Promise<IEventResult> {
+    public setCtAbx(ct: number, effect: "smooth" | "sudden", duration: number = 500): Promise<IEventResult> {
         return this.sendCommand(new Command(1, CommandType.SET_CT_ABX, [ct, effect, duration]));
     }
     /**
@@ -234,7 +234,7 @@ export class Yeelight extends EventEmitter {
      * The minimum support duration is 30 milliseconds.
      * @returns {Promise<IEventResult>} return a promise of IEventResult
      */
-    public setRGB(color: Color, effect: "smooth" | "sudden", duration: number): Promise<IEventResult> {
+    public setRGB(color: Color, effect: "smooth" | "sudden", duration: number = 500): Promise<IEventResult> {
         return this.sendCommand(new Command(1, CommandType.SET_RGB, [color.getValue(), effect, duration]));
     }
     /**
@@ -253,7 +253,12 @@ export class Yeelight extends EventEmitter {
      * The minimum support duration is 30 milliseconds.
      * @returns {Promise<IEventResult>} return a promise of IEventResult
      */
-    public setHSV(hue: number, sat: number, effect: "smooth" | "sudden", duration: number): Promise<IEventResult> {
+    public setHSV(
+        hue: number,
+        sat: number,
+        effect: "smooth" | "sudden",
+        duration: number = 500,
+    ): Promise<IEventResult> {
         return this.sendCommand(new Command(1, CommandType.SET_HSV, [hue, sat, effect, duration]));
     }
     /**
@@ -271,7 +276,7 @@ export class Yeelight extends EventEmitter {
      * The minimum support duration is 30 milliseconds.
      * @returns {Promise<IEventResult>} return a promise of IEventResult
      */
-    public setBright(brightness: number, effect: "smooth" | "sudden", duration: number): Promise<IEventResult> {
+    public setBright(brightness: number, effect: "smooth" | "sudden", duration: number = 500): Promise<IEventResult> {
         return this.sendCommand(new Command(1, CommandType.SET_BRIGHT, [brightness, effect, duration]));
     }
     /**
@@ -329,7 +334,7 @@ export class Yeelight extends EventEmitter {
      * @returns {Promise<IEventResult>} return a promise of IEventResult
      */
     public adjust(type: CommandType.ADJUST_BRIGHT | CommandType.ADJUST_COLOR | CommandType.ADJUST_CT,
-                  percentage: number, duration: number): Promise<IEventResult> {
+                  percentage: number = 0, duration: number = 500): Promise<IEventResult> {
         return this.sendCommand(new Command(1, type, [percentage, duration]));
     }
     /**
