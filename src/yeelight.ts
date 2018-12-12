@@ -385,7 +385,7 @@ export class Yeelight extends EventEmitter {
     /**
      * This method is used to just check if the connection is alive
      */
-    public ping(): Promise<void> {
+    public ping(): Promise<null> {
         return this.sendCommand(new Command(1, CommandType.PING, []))
         .catch((command: IEventResult) => {
             // Expect a response: {"id":6, "error":{"code":-1, "message":"method not supported"}}
@@ -401,6 +401,7 @@ export class Yeelight extends EventEmitter {
         })
         .then(() => {
             // do nothing with the response
+            return null;
         });
     }
     /**
