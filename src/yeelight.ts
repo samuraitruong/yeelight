@@ -1,9 +1,10 @@
 import { EventEmitter } from "events";
 import { Socket, SocketConnectOpts } from "net";
+import { Discover } from "./discover";
 import { defaultLogger } from "./logger";
 import {
     AdjustType, Color, Command, CommandType, DevicePropery,
-    FlowState, ICommandResult, IConfig, IEventResult, Scene, StartFlowAction,
+    FlowState, ICommandResult, IConfig, IDevice, IEventResult, Scene, StartFlowAction,
 } from "./models";
 import { ILogger } from "./models/logger";
 
@@ -98,48 +99,33 @@ export class Yeelight extends EventEmitter {
      * establish connection to light,
      * @returns return promise of the current instance
      */
-    public connect(): Promise<Yeelight> {
+    public async connect(): Promise<Yeelight> {
         if (this.isConnecting) {
-            return Promise.reject("Already connecting");
+            throw new Error("Already connecting");
         }
-        return new Promise((resolve, reject) => {
-            this.isConnecting = true;
-            this.isClosing = false;
-            if (this.client) {
-                // close old socket:
-                this.closeConnection();
-            }
-            this.client = new Socket();
-            this.client.on("data", this.onData.bind(this));
-            this.client.on("connect", () => {
-                this.wasConnected();
-            });
-            this.client.on("close", () => {
-                this.wasDisconnected();
-            });
-            this.client.on("end", () => {
-                this.wasDisconnected();
-            });
-            this.client.on("error", (err) => {
-                this.emit("error", err);
-                this.wasDisconnected();
-            });
 
-            this.client.connect(this.options.lightPort || DEFAULT_PORT, this.options.lightIp, () => {
-                this.isConnecting = false;
-                this.wasConnected();
-                // me.emit("connected", this);
-                resolve(this);
+        if (this.options.lightIp) {
+            return this.connectToIp(this.options.lightIp, this.options.lightPort);
+        } else if (this.options.lightId) {
+            // If only the Id is given, start searching for that id:
+            console.log("starting discovery");
+            const discover = new Discover({
+                filter: (device: IDevice) => device.id === this.options.lightId,
+                limit: 1,
+                timeout: this.connectTimeout,
             });
-            this.client.once("error", (err) => {
-                this.isConnecting = false;
-                reject(err);
-            });
-            setTimeout(() => {
-                this.isConnecting = false;
-                reject("Connection timeout");
-            }, this.connectTimeout);
-        });
+            const devices = await discover.start();
+            await discover.destroy();
+            const device = devices[0];
+            if (device) {
+                console.log("found device", device);
+                return this.connectToIp(device.host, device.port);
+            } else {
+                throw new Error("Unable to connect, no device with id '" + this.options.lightId + "' found");
+            }
+        } else {
+            throw new Error("Unable to connect, neither config.lightIp or options.lightId is set");
+        }
     }
     /*
      * This method is used to switch on or off the smart LED (software managed on/off)
@@ -444,6 +430,47 @@ export class Yeelight extends EventEmitter {
             this.client.write(msg + "\r\n", () => {
                 this.emit(command.method + "_sent", command);
             });
+        });
+    }
+    private connectToIp(host: string, port: number): Promise<Yeelight> {
+        console.log("Connecting to " + host + ":" + port);
+        return new Promise((resolve, reject) => {
+            this.isConnecting = true;
+            this.isClosing = false;
+            if (this.client) {
+                // close old socket:
+                this.closeConnection();
+            }
+            this.client = new Socket();
+            this.client.on("data", this.onData.bind(this));
+            this.client.on("connect", () => {
+                this.wasConnected();
+            });
+            this.client.on("close", () => {
+                this.wasDisconnected();
+            });
+            this.client.on("end", () => {
+                this.wasDisconnected();
+            });
+            this.client.on("error", (err) => {
+                this.emit("error", err);
+                this.wasDisconnected();
+            });
+
+            this.client.connect(port || DEFAULT_PORT, host, () => {
+                this.isConnecting = false;
+                this.wasConnected();
+                // me.emit("connected", this);
+                resolve(this);
+            });
+            this.client.once("error", (err) => {
+                this.isConnecting = false;
+                reject(err);
+            });
+            setTimeout(() => {
+                this.isConnecting = false;
+                reject("Connection timeout");
+            }, this.connectTimeout);
         });
     }
     private wasConnected() {
