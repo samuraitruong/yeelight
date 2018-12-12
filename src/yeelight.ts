@@ -11,9 +11,20 @@ import { ILogger } from "./models/logger";
  */
 export class Yeelight extends EventEmitter {
     public connected: boolean;
+    public autoReconnect: boolean = false;
+    public autoReconnectTime: number = 1000;
+    public connectTimeout: number = 1000;
+
     private client: Socket;
-    private sentCommands: Command[];
+    private commandId: number = 1;
+    private sentCommands: {[commandId: string]: Command} = {};
     private resultCommands: ICommandResult[];
+
+    private isConnecting: boolean = false;
+    private isClosing: boolean = false;
+    private isReconnecting: boolean = false;
+    private reconnectTimeout: NodeJS.Timer;
+
     private readonly EVENT_NAME = "command_result";
     /**
      * @constructor
@@ -22,10 +33,22 @@ export class Yeelight extends EventEmitter {
     constructor(private options: IConfig, private logger?: ILogger) {
         super();
         this.logger = logger || defaultLogger;
-        this.sentCommands = new Array<Command>();
         this.resultCommands = new Array<ICommandResult>();
         this.client = new Socket();
         this.client.on("data", this.onData.bind(this));
+        this.client.on("connect", () => {
+            this.wasConnected();
+        });
+        this.client.on("close", () => {
+            this.wasDisconnected();
+        });
+        this.client.on("end", () => {
+            this.wasDisconnected();
+        });
+        this.client.on("error", (err) => {
+            this.emit("error", err);
+            this.wasDisconnected();
+        });
         this.emit("ready", this);
         // Set default timeout if not provide
         this.options.timeout = this.options.timeout || 5000;
@@ -37,13 +60,14 @@ export class Yeelight extends EventEmitter {
             const json = message.toString();
             if (json) {
                 const result: ICommandResult = JSON.parse(json);
-                this.onMessage(result)
+                this.onMessage(result);
             }
         });
     }
     public onMessage(result: ICommandResult) {
         this.resultCommands.push(result);
-        const originalCommand = this.sentCommands.find((x) => x.id === result.id);
+        const commandId = "" + result.id;
+        const originalCommand = this.sentCommands[commandId];
         if (!originalCommand) {
             return;
         }
@@ -57,6 +81,8 @@ export class Yeelight extends EventEmitter {
         this.logger.info("Light data recieved: ", result);
         this.emit(`${this.EVENT_NAME}_${result.id}`, eventData);
         this.emit(originalCommand.method, eventData);
+
+        delete this.sentCommands[commandId];
 
         if (result.id && result.result) {
             this.emit("commandSuccess", eventData);
@@ -74,7 +100,7 @@ export class Yeelight extends EventEmitter {
         this.emit("end");
         // this.client.destroy();
         this.client.removeAllListeners("data");
-
+        this.isClosing = true;
         return new Promise((resolve) => this.client.end(null, resolve));
     }
     /**
@@ -82,13 +108,26 @@ export class Yeelight extends EventEmitter {
      * @returns return promise of the current instance
      */
     public connect(): Promise<Yeelight> {
-        const me = this;
-        return new Promise((resolve) => {
-            this.client.connect(me.options.lightPort, me.options.lightIp, () => {
-                me.connected = true;
-                me.emit("connected", this);
+        if (this.isConnecting) {
+            return Promise.reject("Already connecting");
+        }
+        return new Promise((resolve, reject) => {
+            this.isConnecting = true;
+            this.isClosing = false;
+            this.client.connect(this.options.lightPort, this.options.lightIp, () => {
+                this.isConnecting = false;
+                this.wasConnected();
+                // me.emit("connected", this);
                 resolve(this);
             });
+            this.client.once("error", (err) => {
+                this.isConnecting = false;
+                reject(err);
+            });
+            setTimeout(() => {
+                this.isConnecting = false;
+                reject("Connection timeout");
+            }, this.connectTimeout);
         });
     }
     /*
@@ -344,24 +383,67 @@ export class Yeelight extends EventEmitter {
      * @returns {Promise<IEventResult>} return a promise of IEventResult
      */
     public sendCommand(command: Command): Promise<IEventResult> {
-        const me = this;
-        command.id = (this.sentCommands.length + 1);
-        this.sentCommands.push(command);
+        if (!this.connected) {
+            return Promise.reject("Connection is closed");
+        }
         return new Promise((resolve, reject) => {
+            const commandId = this.commandId++;
+            command.id = commandId;
+            this.sentCommands["" + commandId] = command;
+
             const timer = setTimeout(() => {
-                me.removeAllListeners(`${this.EVENT_NAME}_${command.id}`);
-                me.emit("commandTimedout", command);
-                return reject("Command timedout, not recieved response from server.");
+                this.removeAllListeners(`${this.EVENT_NAME}_${command.id}`);
+                this.emit("commandTimedout", command);
+                this.wasDisconnected();
+                reject("Command timedout, no response from server.");
             }, this.options.timeout);
 
             this.once(`${this.EVENT_NAME}_${command.id}`, (commandResult: IEventResult) => {
                 clearTimeout(timer);
                 return resolve(commandResult);
             });
-            this.client.write(command.getString() + "\r\n", () => {
-                me.emit(command.method + "_sent", command);
+            const msg = command.getString();
+            this.client.write(msg + "\r\n", () => {
+                this.emit(command.method + "_sent", command);
             });
         });
+    }
+    private wasConnected() {
+        this.isReconnecting = false;
+        if (!this.connected) {
+            this.connected = true;
+            this.emit("connected");
+        }
+    }
+    private wasDisconnected() {
+        if (this.connected) {
+            this.connected = false;
+            this.emit("disconnected");
+        }
+
+        this._recoverNetworkError();
+    }
+    private _recoverNetworkError() {
+        if (this.autoReconnect && !this.isClosing) {
+            this.isReconnecting = true;
+
+            if (!this.reconnectTimeout) {
+                this.reconnectTimeout = setTimeout(() => {
+                    this.reconnectTimeout = null;
+                    if (!this.connected) {
+                        if (!this.isConnecting) {
+                            this.connect()
+                            .catch((err) => {
+                                this.emit("error", "Erorr during reconnect: " + err);
+                                this._recoverNetworkError();
+                            });
+                        } else {
+                            this._recoverNetworkError();
+                        }
+                    }
+                }, this.autoReconnectTime);
+            }
+        }
     }
 
 }
