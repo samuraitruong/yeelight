@@ -23,6 +23,12 @@
         }
     },
     "author": "samuraitruong@hotmail.com",
+    "contributors": [
+        {
+            "name": "Johan Nyman",
+            "url": "https://github.com/nytamin"
+        }
+    ],
     "license": "MIT",
     "devDependencies": {
         "@types/chai": "^4.1.4",
