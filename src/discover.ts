@@ -186,8 +186,13 @@ export class Discover extends EventEmitter {
      * @returns {0 |1 } return 0 if device already existing, 1 if new device added to the list
      */
     private addDevice(device: IDevice): 0 | 1 {
-        const existDevice = this.devices.findIndex((x) => x.id === device.id);
-        if (existDevice <= 0) {
+        const existDevice = this.devices.findIndex((x) => {
+            return (
+                x.host && device.host && x.host === device.host &&
+                x.port && device.port && x.port === device.port
+            );
+        });
+        if (existDevice === -1) {
             this.devices.push(device);
             this.emit("deviceAdded", device);
 

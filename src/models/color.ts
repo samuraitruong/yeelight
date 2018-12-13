@@ -11,6 +11,6 @@ export class Color {
     }
     public getValue() {
         // tslint:disable-next-line:no-bitwise
-        return this.red * 65535 + this.green * 256 + this.blue;
+        return this.red * 0x10000 + this.green * 0x100 + this.blue;
     }
 }

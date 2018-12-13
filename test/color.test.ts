@@ -13,10 +13,16 @@ describe("Color Test", () => {
         });
     });
 
-    it("new Color(123, 44, 55) should give the color number : 16776960", () => {
-        const color = new Color(0, 0, 0, "FFFFFF");
+    it("new Color(123, 44, 55) should give the color number : 0x7B2C37", () => {
+        const color = new Color(123, 44, 55);
         const numberValue = color.getValue();
-        expect(numberValue).deep.eq(16776960);
+        expect(numberValue).deep.eq(0x7B2C37);
+    });
+
+    it("new Color(255, 255, 255) should give the color number : 0xFFFFFF", () => {
+        const color = new Color(255, 255, 255);
+        const numberValue = color.getValue();
+        expect(numberValue).deep.eq(0xFFFFFF);
     });
 
     it("new Color(0, 0, 0, \"1ac3ef\") should give the color number : 1754095", () => {
