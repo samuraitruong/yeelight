@@ -222,11 +222,8 @@ export class Discover extends EventEmitter {
         ) {
             const existDevice = this.devices.findIndex((x) => {
                 return (
-                    (x.id && device.id && x.id === device.id) ||
-                    (
-                        x.host && device.host && x.host === device.host &&
-                        x.port && device.port && x.port === device.port
-                    )
+                    x.host && device.host && x.host === device.host &&
+                    x.port && device.port && x.port === device.port
                 );
             });
             if (existDevice === -1) {
