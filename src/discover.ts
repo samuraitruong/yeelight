@@ -9,9 +9,6 @@ import { IDevice } from "./models/device";
 import { IDiscoverConfig } from "./models/discover-config";
 import { ILogger } from "./models/logger";
 import { Utils } from "./utils";
-process.on("uncaughtException", (err) => {
-    console.log(err);
-});
 /**
  * The class to discover yeelight device on wifi network using UDP package
  * @constructor
@@ -31,6 +28,8 @@ export class Discover extends EventEmitter {
         timeout: 10000,
     };
     private client: Socket;
+    private clientBound: boolean = false;
+    private isDestroyed: boolean = false;
     /**
      * @constructor
      * @param {IDiscoverConfig } options discover object include the port and multicast host.
@@ -44,6 +43,7 @@ export class Discover extends EventEmitter {
         this.client = createSocket("udp4");
         this.client.on("message", this.onSocketMessage.bind(this));
         this.client.on("error", this.onError.bind(this));
+        this.clientBound = false;
         this.logger = logger || defaultLogger;
     }
     /**
@@ -68,61 +68,93 @@ export class Discover extends EventEmitter {
     }
     /**
      * Perfrom IP port scan to find an IP with port 55443 open rather than using SSDP discovery method
-     * @param {number} startIp=1 The starting IP to scan, default : 1
-     * @param {number} endIp=254 The end IP to scan, default : 254
-     * @requires {Promise<IDevice | IDevice[]>} promise of list of device found
+     * @requires {Promise<IDevice[]>} promise of list of device found
      */
-    public async scanByIp(startIp: number = 1, endIp: number = 254): Promise<IDevice | IDevice[]> {
+    public async scanByIp(): Promise<IDevice[]> {
         const localIp = address();
         const count = 0;
         const availabledIps = Utils.getListIpAddress(localIp);
         const promises = availabledIps.map((x) => this.detectLightIP(x));
         await Promise.all(promises);
 
-        if (this.devices.length === 0) {
-            return Promise.reject("No device found after all ip scanned");
-        }
-        return Promise.resolve(this.devices);
+        return this.devices;
     }
     /**
      * The class to discover yeelight device on wifi network using UDP package
      * You need to turn on "LAN Control" on phone app to get SSDP discover function work
-     * @returns {Promise<IDevice | IDevice[]>} a promise that could resolve to 1 or many devices on the network
+     * @returns {Promise<IDevice[]>} a promise that could resolve to 1 or many devices on the network
      */
-    public start(): Promise<IDevice | IDevice[]> {
-        const localIp = address();
-        const me = this;
+    public start(): Promise<IDevice[]> {
+
         return new Promise((resolve, reject) => {
-            this.logger.debug("discover options: ", this.options);
-            this.client.bind(this.options.port, null, () => {
-                me.client.setBroadcast(true);
-                me.client.send(me.getMessage(), me.options.port, me.options.multicastHost, (err) => {
+            try {
+                if (!this.clientBound) {
+                    this.clientBound = true;
+                    this.client.bind(this.options.port, null, resolve);
+                } else {
+                    // Already bound to a port
+                    resolve();
+                }
+            } catch (e) {
+                reject(e);
+            }
+        })
+        .then(() => {
+
+            return new Promise<IDevice[]>((resolve, reject) => {
+                this.logger.debug("discover options: ", this.options);
+
+                this.client.setBroadcast(true);
+                this.client.send(this.getMessage(), this.options.port, this.options.multicastHost, (err) => {
                     if (err) {
                         this.logger.log("ERROR", err);
                         reject(err);
                     } else {
                         let ts = 0;
-                        const interval = 200;
-                        me.timer = setInterval(() => {
+                        const interval = this.options.scanInterval || 200;
+
+                        let timer: NodeJS.Timer | null = null;
+                        const callback = (error: any, result?: IDevice[]) => {
+                            if (timer) {
+                                clearInterval(timer);
+                                timer = null;
+                            }
+                            if (error) {
+                                reject(error);
+                            } else {
+                                resolve(result);
+                            }
+                        };
+                        timer = setInterval(() => {
+                            if (this.isDestroyed) {
+                                callback("Discover got destroyed");
+                                return;
+                            }
                             ts += interval;
-                            if (this.devices.length >= this.options.limit) {
-                                clearInterval(me.timer);
-                                resolve(this.devices);
+                            if (this.options.limit && this.devices.length >= this.options.limit) {
+                                clearInterval(this.timer);
+                                callback(null, this.devices);
+                                return;
                             }
                             if (this.options.timeout > 0 && this.options.timeout < ts) {
                                 if (this.devices.length > 0) {
-                                    clearInterval(me.timer);
-                                    resolve(this.devices);
+                                    clearInterval(this.timer);
+                                    callback(null, this.devices);
+                                    return;
                                 } else {
-                                    clearInterval(me.timer);
+                                    clearInterval(this.timer);
                                     if (!this.options.fallback) {
-                                        reject("No device found after timeout exceeded : " + ts);
+                                        callback("No device found after timeout exceeded : " + ts);
+                                        return;
                                     }
                                 }
                             }
-                            me.client.send(me.getMessage(), me.options.port, me.options.multicastHost);
+                            this.client.send(this.getMessage(), this.options.port, this.options.multicastHost);
                             if (ts > this.options.timeout && this.options.fallback) {
-                                this.scanByIp().then(resolve).catch(reject);
+                                this.scanByIp()
+                                .catch((error) => {
+                                    callback(error);
+                                });
                             }
                         }, interval);
                     }
@@ -136,9 +168,7 @@ export class Discover extends EventEmitter {
      * @returns {Promise} return a promise, fullfil will call after internal socket connection dropped
      */
     public destroy(): Promise<void> {
-        if (this.timer) {
-            clearInterval(this.timer);
-        }
+        this.isDestroyed = true;
         if (!this.client) {
             return Promise.resolve();
         }
@@ -185,20 +215,22 @@ export class Discover extends EventEmitter {
      * @param {IDevice} device - the new device found from network
      * @returns {0 |1 } return 0 if device already existing, 1 if new device added to the list
      */
-    private addDevice(device: IDevice): 0 | 1 {
-        const existDevice = this.devices.findIndex((x) => {
-            return (
-                x.host && device.host && x.host === device.host &&
-                x.port && device.port && x.port === device.port
-            );
-        });
-        if (existDevice === -1) {
-            this.devices.push(device);
-            this.emit("deviceAdded", device);
-
-            return 1;
+    private addDevice(device: IDevice): void {
+        if (
+            !this.options.filter ||
+            this.options.filter(device)
+        ) {
+            const existDevice = this.devices.findIndex((x) => {
+                return (
+                    x.host && device.host && x.host === device.host &&
+                    x.port && device.port && x.port === device.port
+                );
+            });
+            if (existDevice === -1) {
+                this.devices.push(device);
+                this.emit("deviceAdded", device);
+            }
+            this.devices[existDevice] = device;
         }
-        this.devices[existDevice] = device;
-        return 0;
     }
 }
