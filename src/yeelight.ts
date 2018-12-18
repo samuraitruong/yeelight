@@ -1,19 +1,35 @@
 import { EventEmitter } from "events";
 import { Socket, SocketConnectOpts } from "net";
+import { Discover } from "./discover";
 import { defaultLogger } from "./logger";
 import {
     AdjustType, Color, Command, CommandType, DevicePropery,
-    FlowState, ICommandResult, IConfig, IEventResult, Scene, StartFlowAction,
+    FlowState, ICommandResult, IConfig, IDevice, IEventResult, Scene, StartFlowAction,
 } from "./models";
 import { ILogger } from "./models/logger";
+
+const DEFAULT_PORT = 55443;
 /**
  * The client to connect and control the light
  */
 export class Yeelight extends EventEmitter {
     public connected: boolean;
+    public autoReconnect: boolean = false;
+    public disablePing: boolean = false;
+    public autoReconnectTime: number = 1000;
+    public connectTimeout: number = 1000;
+
     private client: Socket;
-    private sentCommands: Command[];
+    private commandId: number = 1;
+    private sentCommands: {[commandId: string]: Command} = {};
     private resultCommands: ICommandResult[];
+
+    private isConnecting: boolean = false;
+    private isClosing: boolean = false;
+    private isReconnecting: boolean = false;
+    private reconnectTimeout: NodeJS.Timer | null = null;
+    private pingTimeout: NodeJS.Timer | null = null;
+
     private readonly EVENT_NAME = "command_result";
     /**
      * @constructor
@@ -22,19 +38,26 @@ export class Yeelight extends EventEmitter {
     constructor(private options: IConfig, private logger?: ILogger) {
         super();
         this.logger = logger || defaultLogger;
-        this.sentCommands = new Array<Command>();
         this.resultCommands = new Array<ICommandResult>();
-        this.client = new Socket();
-        this.client.on("data", this.onMessage.bind(this));
         this.emit("ready", this);
         // Set default timeout if not provide
         this.options.timeout = this.options.timeout || 5000;
     }
-    public onMessage(msg: Buffer) {
-        const json = msg.toString();
-        const result: ICommandResult = JSON.parse(json);
+    public onData(data: Buffer) {
+        const messages = data.toString();
+
+        messages.split("\n").forEach((message) => {
+            const json = message.toString();
+            if (json) {
+                const result: ICommandResult = JSON.parse(json);
+                this.onMessage(result);
+            }
+        });
+    }
+    public onMessage(result: ICommandResult) {
         this.resultCommands.push(result);
-        const originalCommand = this.sentCommands.find((x) => x.id === result.id);
+        const commandId = "" + result.id;
+        const originalCommand = this.sentCommands[commandId];
         if (!originalCommand) {
             return;
         }
@@ -44,10 +67,11 @@ export class Yeelight extends EventEmitter {
             result,
             success: true,
         };
-
         this.logger.info("Light data recieved: ", result);
         this.emit(`${this.EVENT_NAME}_${result.id}`, eventData);
         this.emit(originalCommand.method, eventData);
+
+        delete this.sentCommands[commandId];
 
         if (result.id && result.result) {
             this.emit("commandSuccess", eventData);
@@ -60,27 +84,46 @@ export class Yeelight extends EventEmitter {
     /**
      * Drop connection/listerners and clean up resources.
      */
-    public disconnect(): Promise<any> {
+    public disconnect(): Promise<void> {
         this.removeAllListeners();
         this.emit("end");
         // this.client.destroy();
         this.client.removeAllListeners("data");
-
-        return new Promise((resolve) => this.client.end(null, resolve));
+        this.isClosing = true;
+        return new Promise((resolve) => this.client.end(null, resolve))
+        .then(() => {
+            return this.closeConnection();
+        });
     }
     /**
      * establish connection to light,
      * @returns return promise of the current instance
      */
-    public connect(): Promise<Yeelight> {
-        const me = this;
-        return new Promise((resolve) => {
-            this.client.connect(me.options.lightPort, me.options.lightIp, () => {
-                me.connected = true;
-                me.emit("connected", this);
-                resolve(this);
+    public async connect(): Promise<Yeelight> {
+        if (this.isConnecting) {
+            throw new Error("Already connecting");
+        }
+
+        if (this.options.lightIp) {
+            return this.connectToIp(this.options.lightIp, this.options.lightPort);
+        } else if (this.options.lightId) {
+            // If only the Id is given, start searching for that id:
+            const discover = new Discover({
+                filter: (d: IDevice) => d.id === this.options.lightId,
+                limit: 1,
+                timeout: this.connectTimeout,
             });
-        });
+            const devices = await discover.start();
+            await discover.destroy();
+            const device = devices[0];
+            if (device) {
+                return this.connectToIp(device.host, device.port);
+            } else {
+                throw new Error("Unable to connect, no device with id '" + this.options.lightId + "' found");
+            }
+        } else {
+            throw new Error("Unable to connect, neither config.lightIp or options.lightId is set");
+        }
     }
     /*
      * This method is used to switch on or off the smart LED (software managed on/off)
@@ -94,8 +137,11 @@ export class Yeelight extends EventEmitter {
      * The minimum support duration is 30 milliseconds.
      * @returns {Promise<IEventResult>} return a promise of IEventResult
     */
-    public setPower(turnOn: boolean = true,
-                    effect: "smooth" | "sudden", duration: number = 500): Promise<IEventResult> {
+    public setPower(
+        turnOn: boolean = true,
+        effect: "smooth" | "sudden" = "sudden",
+        duration: number = 500,
+    ): Promise<IEventResult> {
         return this.sendCommand(new Command(1, CommandType.SET_POWER, [(turnOn ? "on" : "off"), effect, duration]));
     }
     /**
@@ -207,7 +253,11 @@ export class Yeelight extends EventEmitter {
      * The minimum support duration is 30 milliseconds.
      * @returns {Promise<IEventResult>} return a promise of IEventResult
      */
-    public setCtAbx(ct: number, effect: "smooth" | "sudden", duration: number): Promise<IEventResult> {
+    public setCtAbx(
+        ct: number,
+        effect: "smooth" | "sudden" = "sudden",
+        duration: number = 500,
+    ): Promise<IEventResult> {
         return this.sendCommand(new Command(1, CommandType.SET_CT_ABX, [ct, effect, duration]));
     }
     /**
@@ -225,7 +275,7 @@ export class Yeelight extends EventEmitter {
      * The minimum support duration is 30 milliseconds.
      * @returns {Promise<IEventResult>} return a promise of IEventResult
      */
-    public setRGB(color: Color, effect: "smooth" | "sudden", duration: number): Promise<IEventResult> {
+    public setRGB(color: Color, effect: "smooth" | "sudden", duration: number = 500): Promise<IEventResult> {
         return this.sendCommand(new Command(1, CommandType.SET_RGB, [color.getValue(), effect, duration]));
     }
     /**
@@ -244,7 +294,12 @@ export class Yeelight extends EventEmitter {
      * The minimum support duration is 30 milliseconds.
      * @returns {Promise<IEventResult>} return a promise of IEventResult
      */
-    public setHSV(hue: number, sat: number, effect: "smooth" | "sudden", duration: number): Promise<IEventResult> {
+    public setHSV(
+        hue: number,
+        sat: number,
+        effect: "smooth" | "sudden" = "sudden",
+        duration: number = 500,
+    ): Promise<IEventResult> {
         return this.sendCommand(new Command(1, CommandType.SET_HSV, [hue, sat, effect, duration]));
     }
     /**
@@ -262,7 +317,11 @@ export class Yeelight extends EventEmitter {
      * The minimum support duration is 30 milliseconds.
      * @returns {Promise<IEventResult>} return a promise of IEventResult
      */
-    public setBright(brightness: number, effect: "smooth" | "sudden", duration: number): Promise<IEventResult> {
+    public setBright(
+        brightness: number,
+        effect: "smooth" | "sudden" = "sudden",
+        duration: number = 500,
+    ): Promise<IEventResult> {
         return this.sendCommand(new Command(1, CommandType.SET_BRIGHT, [brightness, effect, duration]));
     }
     /**
@@ -297,7 +356,7 @@ export class Yeelight extends EventEmitter {
      * effect. The control device can stop music mode by explicitly send a stop command or just by closing the socket.
      * @returns {Promise<IEventResult>} return a promise of IEventResult
      */
-    public setMusic(action: 0 | 1, host: "string", port: number): Promise<IEventResult> {
+    public setMusic(action: 0 | 1, host: string, port: number): Promise<IEventResult> {
         return this.sendCommand(new Command(1, CommandType.SET_MUSIC, [host, port]));
     }
 
@@ -320,8 +379,30 @@ export class Yeelight extends EventEmitter {
      * @returns {Promise<IEventResult>} return a promise of IEventResult
      */
     public adjust(type: CommandType.ADJUST_BRIGHT | CommandType.ADJUST_COLOR | CommandType.ADJUST_CT,
-                  percentage: number, duration: number): Promise<IEventResult> {
+                  percentage: number = 0, duration: number = 500): Promise<IEventResult> {
         return this.sendCommand(new Command(1, type, [percentage, duration]));
+    }
+    /**
+     * This method is used to just check if the connection is alive
+     */
+    public ping(): Promise<null> {
+        return this.sendCommand(new Command(1, CommandType.PING, []))
+        .catch((command: IEventResult) => {
+            // Expect a response: {"id":6, "error":{"code":-1, "message":"method not supported"}}
+            const result = command.result;
+            if (
+                !result ||
+                !result.error ||
+                result.error.code !== -1 ||
+                !(result.error.message + "").match(/not supported/i)
+            ) {
+                throw command;
+            }
+        })
+        .then(() => {
+            // do nothing with the response
+            return null;
+        });
     }
     /**
      * Use this function to send any command to the light,
@@ -330,24 +411,138 @@ export class Yeelight extends EventEmitter {
      * @returns {Promise<IEventResult>} return a promise of IEventResult
      */
     public sendCommand(command: Command): Promise<IEventResult> {
-        const me = this;
-        command.id = (this.sentCommands.length + 1);
-        this.sentCommands.push(command);
+        if (!this.connected) {
+            return Promise.reject("Connection is closed");
+        }
         return new Promise((resolve, reject) => {
+            const commandId = this.commandId++;
+            command.id = commandId;
+            this.sentCommands["" + commandId] = command;
+
             const timer = setTimeout(() => {
-                me.removeAllListeners(`${this.EVENT_NAME}_${command.id}`);
-                me.emit("commandTimedout", command);
-                return reject("Command timedout, not recieved response from server.");
+                this.removeAllListeners(`${this.EVENT_NAME}_${command.id}`);
+                this.emit("commandTimedout", command);
+                this.wasDisconnected();
+                reject("Command timedout, no response from server.");
             }, this.options.timeout);
 
             this.once(`${this.EVENT_NAME}_${command.id}`, (commandResult: IEventResult) => {
                 clearTimeout(timer);
-                return resolve(commandResult);
+
+                const result = commandResult.result;
+                if (result.id && result.result) {
+                    resolve(commandResult);
+                } else if (result.error) {
+                    reject(commandResult);
+                }
             });
-            this.client.write(command.getString() + "\r\n", () => {
-                me.emit(command.method + "_sent", command);
+            const msg = command.getString();
+            this.client.write(msg + "\r\n", () => {
+                this.emit(command.method + "_sent", command);
             });
         });
+    }
+    private connectToIp(host: string, port: number): Promise<Yeelight> {
+        return new Promise((resolve, reject) => {
+            this.isConnecting = true;
+            this.isClosing = false;
+            if (this.client) {
+                // close old socket:
+                this.closeConnection();
+            }
+            this.client = new Socket();
+            this.client.on("data", this.onData.bind(this));
+            this.client.on("connect", () => {
+                this.wasConnected();
+            });
+            this.client.on("close", () => {
+                this.wasDisconnected();
+            });
+            this.client.on("end", () => {
+                this.wasDisconnected();
+            });
+            this.client.on("error", (err) => {
+                this.emit("error", err);
+                this.wasDisconnected();
+            });
+
+            this.client.connect(port || DEFAULT_PORT, host, () => {
+                this.isConnecting = false;
+                this.wasConnected();
+                // me.emit("connected", this);
+                resolve(this);
+            });
+            this.client.once("error", (err) => {
+                this.isConnecting = false;
+                reject(err);
+            });
+            setTimeout(() => {
+                this.isConnecting = false;
+                reject("Connection timeout");
+            }, this.connectTimeout);
+        });
+    }
+    private wasConnected() {
+        this.isReconnecting = false;
+        if (!this.connected) {
+            this.connected = true;
+            this.emit("connected");
+            this.triggerPing();
+        }
+    }
+    private wasDisconnected() {
+        if (this.connected) {
+            this.connected = false;
+            this.emit("disconnected");
+        }
+
+        this._recoverNetworkError();
+    }
+    private _recoverNetworkError() {
+        if (this.autoReconnect && !this.isClosing) {
+            this.isReconnecting = true;
+
+            if (!this.reconnectTimeout) {
+                this.reconnectTimeout = setTimeout(() => {
+                    this.reconnectTimeout = null;
+                    if (!this.connected) {
+                        if (!this.isConnecting) {
+                            this.connect()
+                            .catch((err) => {
+                                if (!err.toString().match(/timeout/)) { // ignore connection timeout
+                                    this.emit("error", "Erorr during reconnect: " + err);
+                                }
+                                this._recoverNetworkError();
+                            });
+                        } else {
+                            this._recoverNetworkError();
+                        }
+                    }
+                }, this.autoReconnectTime);
+            }
+        }
+    }
+    private triggerPing() {
+        if (this.connected && !this.disablePing) {
+            this.ping()
+            .then(() => {
+                if (!this.pingTimeout) {
+                    this.pingTimeout = setTimeout(() => {
+                        this.pingTimeout = null;
+                        this.triggerPing();
+                    }, this.connectTimeout);
+                }
+            })
+            .catch((e) => {
+            });
+        }
+    }
+    private closeConnection() {
+        this.wasDisconnected();
+        if (this.client) {
+            this.client.removeAllListeners();
+            this.client.destroy();
+        }
     }
 
 }

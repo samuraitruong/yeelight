@@ -1,0 +1,12 @@
+/.nyc_output
+/coverage
+/doc
+/mochawesome-report
+/samples
+/src
+/test
+
+.travis.yml
+patch.js
+tsconfig.json
+tslint.json

@@ -29,6 +29,7 @@ export enum CommandType {
     ADJUST_BRIGHT = "adjust_bright",
     ADJUST_CT = "adjust_ct",
     ADJUST_COLOR = "adjust_color",
+    PING = "ping", // Note: Ping is not a valid command, but used to check connection
 }
 /**
  * the action taken after the flow is stopped.
