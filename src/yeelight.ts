@@ -357,7 +357,7 @@ export class Yeelight extends EventEmitter {
      * @returns {Promise<IEventResult>} return a promise of IEventResult
      */
     public setMusic(action: 0 | 1, host: string, port: number): Promise<IEventResult> {
-        return this.sendCommand(new Command(1, CommandType.SET_MUSIC, [host, port]));
+        return this.sendCommand(new Command(1, CommandType.SET_MUSIC, [action, host, port]));
     }
 
     /**
