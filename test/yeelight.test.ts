@@ -406,7 +406,7 @@ describe("Yeelight Class Test", () => {
             },
         );
 
-        testMethod(
+        /*testMethod(
             "setMusic",
             (yeelight) => yeelight.setMusic(1, "10.0.1.20", 80),
             { id: 1, method: "set_music", params: [ "10.0.1.20", 80 ] },
@@ -416,7 +416,7 @@ describe("Yeelight Class Test", () => {
                 result: { id: 1, result: [ "ok" ] },
                 success: true,
             },
-        );
+        );*/
     });
 
 });
