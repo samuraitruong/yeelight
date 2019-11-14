@@ -38,7 +38,7 @@ deploy:
       secure: "hCvE5Yx1ldUJ24J7PzIYrb2FJierQJCWUpNBRnsD9PamPnJHQ4+FXENrcF3NSeYhDB4lOJV2/5FC69ldvRVg7W+SnGcqf5/EHr5ErimGJwmUW1U/oW6cP0pFhWQqsF7zKmjiyqGUK9Nrjqg9Ep7neXWNpaJ0+eCNtoEr71IBK1WNiz0X8J3mWkVjA+z6bEmOaUcFnEfazQI36qU6C9Bg5fSw9RbLTEGtaSR/0taSn7Pl6mYtniIN49+fe5itGHKm9Wjr03C1gxViiFkVs5PQmnDSYiLm8Ef8SxaYa6V85zh13urD4rn7YMQLnF8w1ET9sF26sEsDZ/8wLYLdRPRLq5m4vQT9KfUu8w8mX0lPGt2Ekyk0oi9qOSkP2kM5vVslZlalqOIgXeSakBhMS/j00tCufm3ZQud1AueYs2S4cTnD6WeAo4NrJCTqSIz7sYRpsa4ES2TOLI+dGXqjZQX4rI+d2zYcWt36Ld/EDn1bwKmI7E+zWSb0s5mEhW6aV1NGRZbnSfzXUA613ERoW0oRm2FbjL5kXfysMRFXfjUpCSKagH+25NPraa9j/VLtkRLiKzmKaYf07umgjlGbq7EC2o88Z1GXwyLOIH+/6/6e5wOGGZNDN2vhJkr2ofkp0jP+vPNzWmGxEg39ARiiWtQSwoXlI5kunBVNcN8ixRMvD8w="
     keep-history: true
     on:
-      branch: develop
+      branch: master
 notifications:
   webhooks:
     urls:
