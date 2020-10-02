@@ -69,19 +69,6 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-comment">
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>Each visible state changing is defined to be a flow tuple that contains 4 elements:
-							[duration, mode, value, brightness].
-							A flow expression is a series of flow tuples.  So for above request example,
-							it means: change CT to 2700K &amp; maximum brightness gradually in 1000ms,
-							then change color to red &amp; 10% brightness gradually in 500ms, then stay at this state for 5 seconds,
-							then change CT to 5000K &amp; minimum brightness gradually in 500ms. After 4 changes reached, stopped the
-						flow and power off the smart LED.</p>
-					</div>
-				</div>
-			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -130,49 +117,22 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/7149e98/src/models/flow-state.ts#L10">models/flow-state.ts:10</a></li>
+									<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/5bc719a/src/models/flow-state.ts#L10">models/flow-state.ts:10</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<dl class="tsd-comment-tags">
-									<dt>constructor</dt>
-									<dd></dd>
-								</dl>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>duration: <span class="tsd-signature-type">number</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<div class="lead">
-											<p>: Gradual change time or sleep time, in milliseconds, minimum value 50</p>
-										</div>
-									</div>
 								</li>
 								<li>
 									<h5>mode: <span class="tsd-signature-type">number</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<div class="lead">
-											<p>: 1 – color, 2 – color temperature, 7 – sleep.</p>
-										</div>
-									</div>
 								</li>
 								<li>
 									<h5>value: <span class="tsd-signature-type">number</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<div class="lead">
-											<p>:  RGB value when mode is 1, CT value when mode is 2, Ignored when mode is 7.</p>
-										</div>
-									</div>
 								</li>
 								<li>
 									<h5>brightness: <span class="tsd-signature-type">number</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<div class="lead">
-											<p>Brightness value, -1 or 1 ~ 100. Ignored when mode is 7. When this value is -1,
-											brightness in this tuple is ignored (only color or CT change takes effect).</p>
-										</div>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_models_flow_state_.flowstate.html" class="tsd-signature-type">FlowState</a></h4>
@@ -188,15 +148,9 @@
 					<div class="tsd-signature tsd-kind-icon">brightness<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/7149e98/src/models/flow-state.ts#L19">models/flow-state.ts:19</a></li>
+							<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/5bc719a/src/models/flow-state.ts#L19">models/flow-state.ts:19</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Brightness value, -1 or 1 ~ 100. Ignored when mode is 7. When this value is -1,
-							brightness in this tuple is ignored (only color or CT change takes effect).</p>
-						</div>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-external">
 					<a name="duration" class="tsd-anchor"></a>
@@ -204,14 +158,9 @@
 					<div class="tsd-signature tsd-kind-icon">duration<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/7149e98/src/models/flow-state.ts#L19">models/flow-state.ts:19</a></li>
+							<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/5bc719a/src/models/flow-state.ts#L19">models/flow-state.ts:19</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>: Gradual change time or sleep time, in milliseconds, minimum value 50</p>
-						</div>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-external">
 					<a name="mode" class="tsd-anchor"></a>
@@ -219,14 +168,9 @@
 					<div class="tsd-signature tsd-kind-icon">mode<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/7149e98/src/models/flow-state.ts#L19">models/flow-state.ts:19</a></li>
+							<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/5bc719a/src/models/flow-state.ts#L19">models/flow-state.ts:19</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>: 1 – color, 2 – color temperature, 7 – sleep.</p>
-						</div>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-external">
 					<a name="value" class="tsd-anchor"></a>
@@ -234,14 +178,9 @@
 					<div class="tsd-signature tsd-kind-icon">value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/7149e98/src/models/flow-state.ts#L19">models/flow-state.ts:19</a></li>
+							<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/5bc719a/src/models/flow-state.ts#L19">models/flow-state.ts:19</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>:  RGB value when mode is 1, CT value when mode is 2, Ignored when mode is 7.</p>
-						</div>
-					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group tsd-is-external">
@@ -256,14 +195,9 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/7149e98/src/models/flow-state.ts#L25">models/flow-state.ts:25</a></li>
+									<li>Defined in <a href="https://github.com/samuraitruong/yeelight/blob/5bc719a/src/models/flow-state.ts#L25">models/flow-state.ts:25</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>return the array of [duration, mode, value, brightness]</p>
-								</div>
-							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h4>
 						</li>
 					</ul>
