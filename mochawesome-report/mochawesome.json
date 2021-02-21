@@ -5,9 +5,9 @@
     "passes": 42,
     "pending": 0,
     "failures": 0,
-    "start": "2021-02-21T10:17:41.938Z",
-    "end": "2021-02-21T10:17:44.231Z",
-    "duration": 2293,
+    "start": "2021-02-21T10:20:47.440Z",
+    "end": "2021-02-21T10:20:49.774Z",
+    "duration": 2334,
     "testsRegistered": 42,
     "passPercent": 100,
     "pendingPercent": 0,
@@ -19,7 +19,7 @@
     "pendingPercentClass": "danger"
   },
   "suites": {
-    "uuid": "56b2d00c-725d-4ac3-8688-0324fae93da5",
+    "uuid": "9012f074-6cb4-4cc7-a86b-be5346c035e1",
     "title": "",
     "fullFile": "",
     "file": "",
@@ -28,7 +28,7 @@
     "tests": [],
     "suites": [
       {
-        "uuid": "0a75ed94-730d-42a6-bc23-43211803f226",
+        "uuid": "66a47e7c-fc27-4bf9-ab5b-f0aeccd7a7ef",
         "title": "Color Test",
         "fullFile": "/home/travis/build/samuraitruong/yeelight/test/color.test.ts",
         "file": "/test/color.test.ts",
@@ -39,7 +39,7 @@
             "title": "new Color(\"string\") should conver hex string to color object",
             "fullTitle": "Color Test new Color(\"string\") should conver hex string to color object",
             "timedOut": false,
-            "duration": 2,
+            "duration": 1,
             "state": "passed",
             "speed": "fast",
             "pass": true,
@@ -48,7 +48,7 @@
             "code": "var color = new color_1.Color(0, 0, 0, \"FFFFFF\");\nchai_1.expect(__assign({}, color)).deep.eq({\n    blue: 255,\n    color: \"FFFFFF\",\n    green: 255,\n    red: 255,\n});",
             "err": {},
             "isRoot": false,
-            "uuid": "13479d2e-75cc-4237-851a-3073c81d0c84",
+            "uuid": "7ed2bdaf-3f15-4e00-b1d3-3b54d9c28e98",
             "isHook": false,
             "skipped": false
           },
@@ -56,7 +56,7 @@
             "title": "new Color(123, 44, 55) should give the color number : 0x7B2C37",
             "fullTitle": "Color Test new Color(123, 44, 55) should give the color number : 0x7B2C37",
             "timedOut": false,
-            "duration": 0,
+            "duration": 1,
             "state": "passed",
             "speed": "fast",
             "pass": true,
@@ -65,7 +65,7 @@
             "code": "var color = new color_1.Color(123, 44, 55);\nvar numberValue = color.getValue();\nchai_1.expect(numberValue).deep.eq(0x7B2C37);",
             "err": {},
             "isRoot": false,
-            "uuid": "460ac642-33df-4655-a3d0-0d17bea17669",
+            "uuid": "d59edbf5-2d0c-4f57-b2dc-a7fdf1422235",
             "isHook": false,
             "skipped": false
           },
@@ -82,7 +82,7 @@
             "code": "var color = new color_1.Color(255, 255, 255);\nvar numberValue = color.getValue();\nchai_1.expect(numberValue).deep.eq(0xFFFFFF);",
             "err": {},
             "isRoot": false,
-            "uuid": "1a89c538-cb4c-43da-a5d8-2abc47ae556f",
+            "uuid": "03a5921d-4df0-41da-a0e8-276fd2ce8439",
             "isHook": false,
             "skipped": false
           },
@@ -99,17 +99,17 @@
             "code": "var color = new color_1.Color(0, 0, 0, \"1ac3ef\");\nchai_1.expect(__assign({}, color)).deep.eq({\n    blue: 239,\n    color: \"1AC3EF\",\n    green: 195,\n    red: 26,\n});",
             "err": {},
             "isRoot": false,
-            "uuid": "95861f4c-5344-480e-98a5-ee2d160ba68e",
+            "uuid": "51a5e801-bebf-4d17-897e-b9dd7365221b",
             "isHook": false,
             "skipped": false
           }
         ],
         "suites": [],
         "passes": [
-          "13479d2e-75cc-4237-851a-3073c81d0c84",
-          "460ac642-33df-4655-a3d0-0d17bea17669",
-          "1a89c538-cb4c-43da-a5d8-2abc47ae556f",
-          "95861f4c-5344-480e-98a5-ee2d160ba68e"
+          "7ed2bdaf-3f15-4e00-b1d3-3b54d9c28e98",
+          "d59edbf5-2d0c-4f57-b2dc-a7fdf1422235",
+          "03a5921d-4df0-41da-a0e8-276fd2ce8439",
+          "51a5e801-bebf-4d17-897e-b9dd7365221b"
         ],
         "failures": [],
         "pending": [],
@@ -120,7 +120,7 @@
         "_timeout": 10000
       },
       {
-        "uuid": "4d4236cb-5930-4fe0-9ddf-63bb1ec05ecb",
+        "uuid": "6ff9fbcc-b9e2-4d1f-89c7-529362f6599f",
         "title": "Discover Class Test",
         "fullFile": "/home/travis/build/samuraitruong/yeelight/test/discover.test.ts",
         "file": "/test/discover.test.ts",
@@ -129,14 +129,14 @@
             "title": "\"before each\" hook",
             "fullTitle": "Discover Class Test \"before each\" hook",
             "timedOut": false,
-            "duration": 4,
+            "duration": 3,
             "pass": false,
             "fail": false,
             "pending": false,
             "code": "var me = TestUtils;\nserver = net_1.createServer(function (s) {\n    socket = s;\n    socket.on(\"data\", function (incomming) {\n        validateFunc(JSON.parse(incomming.toString()));\n        if (data) {\n            socket.write(JSON.stringify(data));\n        }\n    });\n    // socket.pipe(socket);\n});\nserver.on(\"connection\", function (s) { return socket = s; });\n// console.log(\"this.port\", me.port);\nserver.listen(me.port, \"127.0.0.1\", done);\n//done();",
             "err": {},
             "isRoot": false,
-            "uuid": "d31475b6-5581-41f9-a4da-4902e9193ad8",
+            "uuid": "4f730561-00f3-4024-aecc-4f2ca7311a2e",
             "isHook": true,
             "skipped": false
           }
@@ -146,14 +146,14 @@
             "title": "\"after each\" hook",
             "fullTitle": "Discover Class Test \"after each\" hook",
             "timedOut": false,
-            "duration": 1,
+            "duration": 0,
             "pass": false,
             "fail": false,
             "pending": false,
             "code": "// TestUtils.port++;\nif (socket) {\n    socket.removeAllListeners();\n    socket.end();\n    socket.destroy();\n}\nif (server) {\n    server.removeAllListeners();\n    server.close(done);\n}\nelse {\n    done();\n}",
             "err": {},
             "isRoot": false,
-            "uuid": "74d42778-d8ae-422e-9771-89aa53d8f964",
+            "uuid": "0d92b1c7-86e1-4637-9fc9-c7ad7d3bb721",
             "isHook": true,
             "skipped": false
           }
@@ -163,7 +163,7 @@
             "title": "discover() should find bulbs",
             "fullTitle": "Discover Class Test discover() should find bulbs",
             "timedOut": false,
-            "duration": 204,
+            "duration": 209,
             "state": "passed",
             "speed": "slow",
             "pass": true,
@@ -172,25 +172,25 @@
             "code": "return __awaiter(_this, void 0, void 0, function () {\n        var discover, devices;\n        return __generator(this, function (_a) {\n            switch (_a.label) {\n                case 0:\n                    discover = new discover_1.Discover({\n                        limit: 1,\n                        timeout: 1000,\n                    });\n                    setTimeout(function () {\n                        // Mock message received:\n                        var message = \"HTTP/1.1 200 OK\\r\\n\\\nCache-Control: max-age=3584\\r\\n\\\nDate:\\r\\n\\\nExt:\\r\\n\\\nLocation: yeelight://192.168.0.42:55443\\r\\n\\\nServer: POSIX UPnP/1.0 YGLC/1\\r\\n\\\nid: 0x000000000af2608f\\r\\n\\\nmodel: color\\r\\n\\\nfw_ver: 26\\r\\n\\\nsupport: get_prop set_default set_power toggle set_bright start_cf \\r\\n\\\nstop_cf set_scene cron_add cron_get cron_del set_ct_abx set_rgb set_hsv \\r\\n\\\nset_adjust adjust_bright adjust_ct adjust_color set_music set\\r\\n\\\npower: on\\r\\n\\\nbright: 1\\r\\n\\\ncolor_mode: 1\\r\\n\\\nct: 2234\\r\\n\\\nrgb: 65280\\r\\n\\\nhue: 240\\r\\n\\\nsat: 100\\r\\n\\\nname: new_name\";\n                        // @ts-ignore private\n                        discover.onSocketMessage(Buffer.from(message), {\n                            address: \"192.168.0.42\",\n                            family: \"IPv4\",\n                            port: 49155,\n                        });\n                    }, 100);\n                    return [4 /*yield*/, discover.start()];\n                case 1:\n                    devices = _a.sent();\n                    chai_1.expect(devices.length).to.eq(1);\n                    chai_1.expect(devices[0].id).to.eq(\"0x000000000af2608f\");\n                    chai_1.expect(devices[0].host).to.eq(\"192.168.0.42\");\n                    chai_1.expect(devices[0].port).to.eq(55443);\n                    discover.destroy();\n                    return [2 /*return*/];\n            }\n        });\n    });",
             "err": {},
             "isRoot": false,
-            "uuid": "7f6e8763-dbf1-421c-83d6-210d17f87a89",
+            "uuid": "962b5d75-0197-4426-9dbb-449813692bae",
             "isHook": false,
             "skipped": false
           }
         ],
         "suites": [],
         "passes": [
-          "7f6e8763-dbf1-421c-83d6-210d17f87a89"
+          "962b5d75-0197-4426-9dbb-449813692bae"
         ],
         "failures": [],
         "pending": [],
         "skipped": [],
-        "duration": 204,
+        "duration": 209,
         "root": false,
         "rootEmpty": false,
         "_timeout": 10000
       },
       {
-        "uuid": "c3819821-994e-4f7e-9258-a0016cf80d74",
+        "uuid": "aaf35b0c-3ffb-475b-9ca7-4a478bd54e7d",
         "title": "Util Test",
         "fullFile": "/home/travis/build/samuraitruong/yeelight/test/util.test.ts",
         "file": "/test/util.test.ts",
@@ -201,7 +201,7 @@
             "title": "parseDeviceInfo() should successful parse valid message",
             "fullTitle": "Util Test parseDeviceInfo() should successful parse valid message",
             "timedOut": false,
-            "duration": 2,
+            "duration": 1,
             "state": "passed",
             "speed": "fast",
             "pass": true,
@@ -210,7 +210,7 @@
             "code": "var message = fs.readFileSync(path.join(__dirname, \"./data/valid-message.txt\"), \"utf8\");\nvar device = utils_1.Utils.parseDeviceInfo(message);\nvar outputExpected = require(\"./data/valid-device.json\");\nchai_1.expect(device).not.eq(null);\nchai_1.expect(device).deep.eq(outputExpected);",
             "err": {},
             "isRoot": false,
-            "uuid": "9581e4a4-4c58-438f-905f-368d5e3125f2",
+            "uuid": "dc36a00b-560c-4f48-b724-0f5c5bffb0f6",
             "isHook": false,
             "skipped": false
           },
@@ -218,7 +218,7 @@
             "title": "getListIpAddress should get the arround ip address first",
             "fullTitle": "Util Test getListIpAddress should get the arround ip address first",
             "timedOut": false,
-            "duration": 0,
+            "duration": 1,
             "state": "passed",
             "speed": "fast",
             "pass": true,
@@ -227,14 +227,14 @@
             "code": "var ip = \"192.168.1.5\";\nvar output = utils_1.Utils.getListIpAddress(ip, 1, 10);\nchai_1.expect(output).to.deep.eq([\n    \"192.168.1.4\",\n    \"192.168.1.6\",\n    \"192.168.1.3\",\n    \"192.168.1.7\",\n    \"192.168.1.2\",\n    \"192.168.1.8\",\n    \"192.168.1.1\",\n    \"192.168.1.9\",\n    \"192.168.1.10\",\n]);",
             "err": {},
             "isRoot": false,
-            "uuid": "08d01625-b29d-4ea0-80ca-b7e1744fb04d",
+            "uuid": "34832b9d-6f63-40b6-8a56-7e526dbeb5ff",
             "isHook": false,
             "skipped": false
           }
         ],
         "suites": [
           {
-            "uuid": "57270392-9fca-48f1-94ff-b0372b91b373",
+            "uuid": "82dca444-22e5-4af9-93f1-c4198a376fc2",
             "title": "hexToNumber() test",
             "fullFile": "/home/travis/build/samuraitruong/yeelight/test/util.test.ts",
             "file": "/test/util.test.ts",
@@ -245,7 +245,7 @@
                 "title": "numberToHex(1) should equal to 1",
                 "fullTitle": "Util Test hexToNumber() test numberToHex(1) should equal to 1",
                 "timedOut": false,
-                "duration": 0,
+                "duration": 1,
                 "state": "passed",
                 "speed": "fast",
                 "pass": true,
@@ -254,7 +254,7 @@
                 "code": "var v = utils_1.Utils.hexToNumber(key);\nchai_1.expect(v).to.eq(json[key]);",
                 "err": {},
                 "isRoot": false,
-                "uuid": "1f4cc7b9-3d31-4a85-a98c-8537b7dfeff1",
+                "uuid": "3b66e9ac-9d24-4d25-a02a-22adf3bcabb0",
                 "isHook": false,
                 "skipped": false
               },
@@ -271,7 +271,7 @@
                 "code": "var v = utils_1.Utils.hexToNumber(key);\nchai_1.expect(v).to.eq(json[key]);",
                 "err": {},
                 "isRoot": false,
-                "uuid": "7f249609-4687-40d6-9308-9873f98e17d0",
+                "uuid": "e3df1ed1-de33-438c-bc6b-45b0d2b60485",
                 "isHook": false,
                 "skipped": false
               },
@@ -288,7 +288,7 @@
                 "code": "var v = utils_1.Utils.hexToNumber(key);\nchai_1.expect(v).to.eq(json[key]);",
                 "err": {},
                 "isRoot": false,
-                "uuid": "f07b33f7-9d36-491e-ba4c-1a535b72dd45",
+                "uuid": "5bd01cc9-0860-49e0-9496-566a1fc57b9e",
                 "isHook": false,
                 "skipped": false
               },
@@ -305,7 +305,7 @@
                 "code": "var v = utils_1.Utils.hexToNumber(key);\nchai_1.expect(v).to.eq(json[key]);",
                 "err": {},
                 "isRoot": false,
-                "uuid": "5fc60f81-0f54-43d0-b3a9-3ca6024ba524",
+                "uuid": "ec39ec42-6585-4269-8b2d-424793d156dd",
                 "isHook": false,
                 "skipped": false
               },
@@ -313,7 +313,7 @@
                 "title": "numberToHex(A) should equal to 10",
                 "fullTitle": "Util Test hexToNumber() test numberToHex(A) should equal to 10",
                 "timedOut": false,
-                "duration": 1,
+                "duration": 0,
                 "state": "passed",
                 "speed": "fast",
                 "pass": true,
@@ -322,7 +322,7 @@
                 "code": "var v = utils_1.Utils.hexToNumber(key);\nchai_1.expect(v).to.eq(json[key]);",
                 "err": {},
                 "isRoot": false,
-                "uuid": "c281d8a4-7ec0-43e9-a06e-22a89ccb55fa",
+                "uuid": "19ba710f-425a-4801-8aeb-c4cd924528c1",
                 "isHook": false,
                 "skipped": false
               },
@@ -339,7 +339,7 @@
                 "code": "var v = utils_1.Utils.hexToNumber(key);\nchai_1.expect(v).to.eq(json[key]);",
                 "err": {},
                 "isRoot": false,
-                "uuid": "80ed2644-29e2-420d-838d-60293c12ae4b",
+                "uuid": "8197d4c6-d109-4ff4-8fda-85c77c5786be",
                 "isHook": false,
                 "skipped": false
               },
@@ -356,7 +356,7 @@
                 "code": "var v = utils_1.Utils.hexToNumber(key);\nchai_1.expect(v).to.eq(json[key]);",
                 "err": {},
                 "isRoot": false,
-                "uuid": "92c34e46-724d-4268-b05d-d1f5aa87f865",
+                "uuid": "63129e7c-680b-4989-a121-89102474ad58",
                 "isHook": false,
                 "skipped": false
               },
@@ -373,7 +373,7 @@
                 "code": "var v = utils_1.Utils.hexToNumber(key);\nchai_1.expect(v).to.eq(json[key]);",
                 "err": {},
                 "isRoot": false,
-                "uuid": "434666e6-8d39-4c53-8357-26d44162a3e2",
+                "uuid": "03e01057-9b2e-42cb-8d42-605aa3137bfb",
                 "isHook": false,
                 "skipped": false
               },
@@ -390,7 +390,7 @@
                 "code": "var v = utils_1.Utils.hexToNumber(key);\nchai_1.expect(v).to.eq(json[key]);",
                 "err": {},
                 "isRoot": false,
-                "uuid": "13ed1e52-88d3-4fe7-9e3f-b2b3d443eea0",
+                "uuid": "09a9add5-8a45-46f0-a9bd-2ec3d95e4d72",
                 "isHook": false,
                 "skipped": false
               },
@@ -407,7 +407,7 @@
                 "code": "var v = utils_1.Utils.hexToNumber(key);\nchai_1.expect(v).to.eq(json[key]);",
                 "err": {},
                 "isRoot": false,
-                "uuid": "704502cf-2d0a-40b4-8a84-2efd996079a9",
+                "uuid": "c464637a-446f-4480-a3b2-4f8dba5b3525",
                 "isHook": false,
                 "skipped": false
               },
@@ -424,7 +424,7 @@
                 "code": "var v = utils_1.Utils.hexToNumber(key);\nchai_1.expect(v).to.eq(json[key]);",
                 "err": {},
                 "isRoot": false,
-                "uuid": "d6b7d311-d8c3-49a2-8c90-97fa6ec0cfce",
+                "uuid": "85c65c0e-ddf5-442c-b1eb-0f4143009d6c",
                 "isHook": false,
                 "skipped": false
               },
@@ -441,7 +441,7 @@
                 "code": "var v = utils_1.Utils.hexToNumber(key);\nchai_1.expect(v).to.eq(json[key]);",
                 "err": {},
                 "isRoot": false,
-                "uuid": "ebcfda13-5a67-4451-992e-9916c13dd861",
+                "uuid": "0e085dd0-4574-4bb9-a9ba-a70e2a734416",
                 "isHook": false,
                 "skipped": false
               },
@@ -449,7 +449,7 @@
                 "title": "numberToHex(abccde) should equal to 11259102",
                 "fullTitle": "Util Test hexToNumber() test numberToHex(abccde) should equal to 11259102",
                 "timedOut": false,
-                "duration": 0,
+                "duration": 1,
                 "state": "passed",
                 "speed": "fast",
                 "pass": true,
@@ -458,39 +458,39 @@
                 "code": "var v = utils_1.Utils.hexToNumber(key);\nchai_1.expect(v).to.eq(json[key]);",
                 "err": {},
                 "isRoot": false,
-                "uuid": "cf88514c-6b7e-45ba-838b-c27a4c8bf8c9",
+                "uuid": "25f7291d-e993-4ba5-8617-43b5a32eba96",
                 "isHook": false,
                 "skipped": false
               }
             ],
             "suites": [],
             "passes": [
-              "1f4cc7b9-3d31-4a85-a98c-8537b7dfeff1",
-              "7f249609-4687-40d6-9308-9873f98e17d0",
-              "f07b33f7-9d36-491e-ba4c-1a535b72dd45",
-              "5fc60f81-0f54-43d0-b3a9-3ca6024ba524",
-              "c281d8a4-7ec0-43e9-a06e-22a89ccb55fa",
-              "80ed2644-29e2-420d-838d-60293c12ae4b",
-              "92c34e46-724d-4268-b05d-d1f5aa87f865",
-              "434666e6-8d39-4c53-8357-26d44162a3e2",
-              "13ed1e52-88d3-4fe7-9e3f-b2b3d443eea0",
-              "704502cf-2d0a-40b4-8a84-2efd996079a9",
-              "d6b7d311-d8c3-49a2-8c90-97fa6ec0cfce",
-              "ebcfda13-5a67-4451-992e-9916c13dd861",
-              "cf88514c-6b7e-45ba-838b-c27a4c8bf8c9"
+              "3b66e9ac-9d24-4d25-a02a-22adf3bcabb0",
+              "e3df1ed1-de33-438c-bc6b-45b0d2b60485",
+              "5bd01cc9-0860-49e0-9496-566a1fc57b9e",
+              "ec39ec42-6585-4269-8b2d-424793d156dd",
+              "19ba710f-425a-4801-8aeb-c4cd924528c1",
+              "8197d4c6-d109-4ff4-8fda-85c77c5786be",
+              "63129e7c-680b-4989-a121-89102474ad58",
+              "03e01057-9b2e-42cb-8d42-605aa3137bfb",
+              "09a9add5-8a45-46f0-a9bd-2ec3d95e4d72",
+              "c464637a-446f-4480-a3b2-4f8dba5b3525",
+              "85c65c0e-ddf5-442c-b1eb-0f4143009d6c",
+              "0e085dd0-4574-4bb9-a9ba-a70e2a734416",
+              "25f7291d-e993-4ba5-8617-43b5a32eba96"
             ],
             "failures": [],
             "pending": [],
             "skipped": [],
-            "duration": 1,
+            "duration": 2,
             "root": false,
             "rootEmpty": false,
             "_timeout": 10000
           }
         ],
         "passes": [
-          "9581e4a4-4c58-438f-905f-368d5e3125f2",
-          "08d01625-b29d-4ea0-80ca-b7e1744fb04d"
+          "dc36a00b-560c-4f48-b724-0f5c5bffb0f6",
+          "34832b9d-6f63-40b6-8a56-7e526dbeb5ff"
         ],
         "failures": [],
         "pending": [],
@@ -501,7 +501,7 @@
         "_timeout": 10000
       },
       {
-        "uuid": "6cb3a646-86ec-4930-910e-adfb8bd398a7",
+        "uuid": "64cceb40-3625-4ba0-8e3c-fd318a5f2db4",
         "title": "Yeelight Class Test",
         "fullFile": "/home/travis/build/samuraitruong/yeelight/test/yeelight.test.ts",
         "file": "/test/yeelight.test.ts",
@@ -510,14 +510,14 @@
             "title": "\"before each\" hook",
             "fullTitle": "Yeelight Class Test \"before each\" hook",
             "timedOut": false,
-            "duration": 0,
+            "duration": 1,
             "pass": false,
             "fail": false,
             "pending": false,
             "code": "var me = TestUtils;\nserver = net_1.createServer(function (s) {\n    socket = s;\n    socket.on(\"data\", function (incomming) {\n        validateFunc(JSON.parse(incomming.toString()));\n        if (data) {\n            socket.write(JSON.stringify(data));\n        }\n    });\n    // socket.pipe(socket);\n});\nserver.on(\"connection\", function (s) { return socket = s; });\n// console.log(\"this.port\", me.port);\nserver.listen(me.port, \"127.0.0.1\", done);\n//done();",
             "err": {},
             "isRoot": false,
-            "uuid": "d1301b62-8bae-4a61-a3eb-8523fd73db0e",
+            "uuid": "2cbda6e5-6880-4ec7-937d-17db30c34c4f",
             "isHook": true,
             "skipped": false
           }
@@ -534,7 +534,7 @@
             "code": "// TestUtils.port++;\nif (socket) {\n    socket.removeAllListeners();\n    socket.end();\n    socket.destroy();\n}\nif (server) {\n    server.removeAllListeners();\n    server.close(done);\n}\nelse {\n    done();\n}",
             "err": {},
             "isRoot": false,
-            "uuid": "81d38035-cdd5-44ab-a417-2e6e8bc5d980",
+            "uuid": "87f7e27e-082d-4c9e-bc97-4b9221563107",
             "isHook": true,
             "skipped": false
           }
@@ -553,14 +553,14 @@
             "code": "return __awaiter(_this, void 0, void 0, function () {\n        var yeelight, y;\n        return __generator(this, function (_a) {\n            switch (_a.label) {\n                case 0:\n                    yeelight = new yeelight_1.Yeelight(options);\n                    return [4 /*yield*/, yeelight.connect()];\n                case 1:\n                    y = _a.sent();\n                    chai_1.expect(y).not.eq(null);\n                    chai_1.expect(y.connected).to.eq(true);\n                    y.disconnect();\n                    return [2 /*return*/];\n            }\n        });\n    });",
             "err": {},
             "isRoot": false,
-            "uuid": "d12156e0-d4a1-4277-bcad-665cb9536b64",
+            "uuid": "64d54ec2-907c-498b-b9d6-2914d88db99a",
             "isHook": false,
             "skipped": false
           }
         ],
         "suites": [
           {
-            "uuid": "582fae79-c60d-47b7-bcdc-781fd9464bb5",
+            "uuid": "e3b111b3-672e-481a-a230-f48257885edc",
             "title": "setName() tests",
             "fullFile": "/home/travis/build/samuraitruong/yeelight/test/yeelight.test.ts",
             "file": "/test/yeelight.test.ts",
@@ -580,7 +580,7 @@
                 "code": "return __awaiter(_this, void 0, void 0, function () {\n            var yeelight, y, result;\n            return __generator(this, function (_a) {\n                switch (_a.label) {\n                    case 0:\n                        options.lightPort = test_util_1.TestUtils.port;\n                        yeelight = new yeelight_1.Yeelight(options);\n                        yeelight.disablePing = true;\n                        return [4 /*yield*/, yeelight.connect()];\n                    case 1:\n                        y = _a.sent();\n                        test_util_1.TestUtils.mockSocket({ id: 1, result: [\"ok\"] }, function (x) {\n                            chai_1.expect(x).to.deep.eq({\n                                id: 1, method: \"set_name\", params: [\"unit_test\"],\n                            });\n                        });\n                        return [4 /*yield*/, y.setName(\"unit_test\")];\n                    case 2:\n                        result = _a.sent();\n                        chai_1.expect(result).to.not.eq(null);\n                        yeelight.disconnect();\n                        return [2 /*return*/];\n                }\n            });\n        });",
                 "err": {},
                 "isRoot": false,
-                "uuid": "2cbbe860-693e-4e0b-9013-3494556d7b30",
+                "uuid": "150cd59a-63f5-444c-8c79-269d04eb7568",
                 "isHook": false,
                 "skipped": false
               },
@@ -588,7 +588,7 @@
                 "title": "setName() should fire commandSuccess, set_name, set_name_sent event",
                 "fullTitle": "Yeelight Class Test setName() tests setName() should fire commandSuccess, set_name, set_name_sent event",
                 "timedOut": false,
-                "duration": 5,
+                "duration": 6,
                 "state": "passed",
                 "speed": "fast",
                 "pass": true,
@@ -597,7 +597,7 @@
                 "code": "return __awaiter(_this, void 0, void 0, function () {\n            var yeelight, y, expectData, spy1, spy2, spy3, result;\n            return __generator(this, function (_a) {\n                switch (_a.label) {\n                    case 0:\n                        yeelight = new yeelight_1.Yeelight(options);\n                        yeelight.disablePing = true;\n                        options.lightPort = test_util_1.TestUtils.port;\n                        return [4 /*yield*/, yeelight.connect()];\n                    case 1:\n                        y = _a.sent();\n                        expectData = {\n                            action: \"set_name\",\n                            command: new models_1.Command(1, models_1.CommandType.SET_NAME, [\"unit_test\"]),\n                            result: { id: 1, result: [\"ok\"] },\n                            success: true,\n                        };\n                        spy1 = sinon_1.spy();\n                        spy2 = sinon_1.spy();\n                        spy3 = sinon_1.spy();\n                        y.once(\"set_name\", spy1);\n                        y.once(\"commandSuccess\", spy2);\n                        y.once(\"set_name_sent\", spy3);\n                        test_util_1.TestUtils.mockSocket({ id: 1, result: [\"ok\"] }, function (x) {\n                            chai_1.expect(x).to.deep.eq({\n                                id: 1, method: \"set_name\", params: [\"unit_test\"],\n                            });\n                        });\n                        return [4 /*yield*/, y.setName(\"unit_test\")];\n                    case 2:\n                        result = _a.sent();\n                        chai_1.expect(__assign({}, result)).to.deep.equal(expectData);\n                        sinon_1.assert.calledWith(spy1, expectData);\n                        sinon_1.assert.calledWith(spy2, expectData);\n                        sinon_1.assert.calledWith(spy3, expectData.command);\n                        yeelight.disconnect();\n                        return [2 /*return*/];\n                }\n            });\n        });",
                 "err": {},
                 "isRoot": false,
-                "uuid": "5bc1a0ec-7ca1-433d-a29e-1b4a160f05d9",
+                "uuid": "e58a73f5-aac7-4110-8945-785f69d14ab9",
                 "isHook": false,
                 "skipped": false
               },
@@ -614,7 +614,7 @@
                 "code": "return __awaiter(_this, void 0, void 0, function () {\n            var yeelight, y, expectData1, spy1, spy2, spy3, result, errResult, error_1;\n            return __generator(this, function (_a) {\n                switch (_a.label) {\n                    case 0:\n                        yeelight = new yeelight_1.Yeelight(options);\n                        yeelight.disablePing = true;\n                        options.lightPort = test_util_1.TestUtils.port;\n                        return [4 /*yield*/, yeelight.connect()];\n                    case 1:\n                        y = _a.sent();\n                        expectData1 = {\n                            action: \"set_name\",\n                            command: new models_1.Command(1, models_1.CommandType.SET_NAME, [\"this is invalid name\"]),\n                            result: { id: 1, error: { code: -1, message: \"General error\" } },\n                            success: false,\n                        };\n                        spy1 = sinon_1.spy();\n                        spy2 = sinon_1.spy();\n                        spy3 = sinon_1.spy();\n                        y.once(\"set_name\", spy1);\n                        y.once(\"commandError\", spy2);\n                        y.once(\"set_name_sent\", spy3);\n                        test_util_1.TestUtils.mockSocket({ id: 1, error: { code: -1, message: \"General error\" } }, function (x) {\n                            chai_1.expect(x).to.deep.eq({\n                                id: 1, method: \"set_name\", params: [\"this is invalid name\"],\n                            });\n                        });\n                        result = null;\n                        _a.label = 2;\n                    case 2:\n                        _a.trys.push([2, 4, , 5]);\n                        return [4 /*yield*/, y.setName(\"this is invalid name\")];\n                    case 3:\n                        result = _a.sent();\n                        return [3 /*break*/, 5];\n                    case 4:\n                        error_1 = _a.sent();\n                        errResult = error_1;\n                        return [3 /*break*/, 5];\n                    case 5:\n                        chai_1.expect(result).to.be.equal(null);\n                        chai_1.expect(__assign({}, errResult)).to.deep.equal(expectData1);\n                        sinon_1.assert.calledWith(spy1, expectData1);\n                        sinon_1.assert.calledWith(spy2, expectData1);\n                        sinon_1.assert.calledWith(spy3, expectData1.command);\n                        yeelight.disconnect();\n                        return [2 /*return*/];\n                }\n            });\n        });",
                 "err": {},
                 "isRoot": false,
-                "uuid": "56322a0f-e5a0-47e6-9356-fb90655d32b3",
+                "uuid": "32cfbb96-3bbf-4bd5-a8a4-f87953823418",
                 "isHook": false,
                 "skipped": false
               },
@@ -622,7 +622,7 @@
                 "title": "setName() should reject promise, raise commandTimedout event when socket not response",
                 "fullTitle": "Yeelight Class Test setName() tests setName() should reject promise, raise commandTimedout event when socket not response",
                 "timedOut": false,
-                "duration": 2002,
+                "duration": 2001,
                 "state": "passed",
                 "speed": "slow",
                 "pass": true,
@@ -631,17 +631,17 @@
                 "code": "return __awaiter(_this, void 0, void 0, function () {\n            var yeelight, y, expectData, spy2, spy3, result, err_1;\n            return __generator(this, function (_a) {\n                switch (_a.label) {\n                    case 0:\n                        yeelight = new yeelight_1.Yeelight(options);\n                        yeelight.disablePing = true;\n                        options.lightPort = test_util_1.TestUtils.port;\n                        return [4 /*yield*/, yeelight.connect()];\n                    case 1:\n                        y = _a.sent();\n                        expectData = {\n                            action: \"set_name\",\n                            command: new models_1.Command(1, models_1.CommandType.SET_NAME, [\"mybulb\"]),\n                            success: false,\n                        };\n                        spy2 = sinon_1.spy();\n                        spy3 = sinon_1.spy();\n                        y.once(\"commandTimedout\", spy2);\n                        y.once(\"set_name_sent\", spy3);\n                        test_util_1.TestUtils.mockSocket(null, function (x) {\n                            chai_1.expect(x).to.deep.eq({\n                                id: 1, method: \"set_name\", params: [\"mybulb\"],\n                            });\n                        });\n                        _a.label = 2;\n                    case 2:\n                        _a.trys.push([2, 4, , 5]);\n                        return [4 /*yield*/, y.setName(\"mybulb\")];\n                    case 3:\n                        result = _a.sent();\n                        return [3 /*break*/, 5];\n                    case 4:\n                        err_1 = _a.sent();\n                        return [3 /*break*/, 5];\n                    case 5:\n                        sinon_1.assert.calledWith(spy2, expectData.command);\n                        sinon_1.assert.calledWith(spy3, expectData.command);\n                        yeelight.disconnect();\n                        return [2 /*return*/];\n                }\n            });\n        });",
                 "err": {},
                 "isRoot": false,
-                "uuid": "2b345050-25bb-4536-957c-5d82c292e190",
+                "uuid": "cfcb933e-735c-43f7-9959-532de4ddb524",
                 "isHook": false,
                 "skipped": false
               }
             ],
             "suites": [],
             "passes": [
-              "2cbbe860-693e-4e0b-9013-3494556d7b30",
-              "5bc1a0ec-7ca1-433d-a29e-1b4a160f05d9",
-              "56322a0f-e5a0-47e6-9356-fb90655d32b3",
-              "2b345050-25bb-4536-957c-5d82c292e190"
+              "150cd59a-63f5-444c-8c79-269d04eb7568",
+              "e58a73f5-aac7-4110-8945-785f69d14ab9",
+              "32cfbb96-3bbf-4bd5-a8a4-f87953823418",
+              "cfcb933e-735c-43f7-9959-532de4ddb524"
             ],
             "failures": [],
             "pending": [],
@@ -652,7 +652,7 @@
             "_timeout": 10000
           },
           {
-            "uuid": "50beb2f0-3be5-4cd8-95ae-c7994101ad59",
+            "uuid": "b9ea28d9-0c7b-4a04-8744-4a3eb87e5074",
             "title": "manipulator methods",
             "fullFile": "/home/travis/build/samuraitruong/yeelight/test/yeelight.test.ts",
             "file": "/test/yeelight.test.ts",
@@ -672,13 +672,30 @@
                 "code": "return __awaiter(_this, void 0, void 0, function () {\n                var yeelight, result, reply;\n                return __generator(this, function (_a) {\n                    switch (_a.label) {\n                        case 0: return [4 /*yield*/, init()];\n                        case 1:\n                            yeelight = _a.sent();\n                            test_util_1.TestUtils.mockSocket(replyData.result, function (x) {\n                                chai_1.expect(x).to.deep.eq(sendData);\n                            });\n                            return [4 /*yield*/, fcn(yeelight)];\n                        case 2:\n                            result = _a.sent();\n                            reply = (verifyReply === undefined ?\n                                replyData :\n                                verifyReply);\n                            if (result) {\n                                result = removeClasses(result);\n                            }\n                            chai_1.expect(result).to.deep.eq(reply);\n                            yeelight.disconnect();\n                            return [2 /*return*/];\n                    }\n                });\n            });",
                 "err": {},
                 "isRoot": false,
-                "uuid": "33e7f462-49a7-4ee9-87a3-a58b1a5e053e",
+                "uuid": "16349df3-9522-4ca3-9a4b-5615746db5fa",
                 "isHook": false,
                 "skipped": false
               },
               {
                 "title": "method cronAdd should work when send valid message",
                 "fullTitle": "Yeelight Class Test manipulator methods method cronAdd should work when send valid message",
+                "timedOut": false,
+                "duration": 2,
+                "state": "passed",
+                "speed": "fast",
+                "pass": true,
+                "fail": false,
+                "pending": false,
+                "code": "return __awaiter(_this, void 0, void 0, function () {\n                var yeelight, result, reply;\n                return __generator(this, function (_a) {\n                    switch (_a.label) {\n                        case 0: return [4 /*yield*/, init()];\n                        case 1:\n                            yeelight = _a.sent();\n                            test_util_1.TestUtils.mockSocket(replyData.result, function (x) {\n                                chai_1.expect(x).to.deep.eq(sendData);\n                            });\n                            return [4 /*yield*/, fcn(yeelight)];\n                        case 2:\n                            result = _a.sent();\n                            reply = (verifyReply === undefined ?\n                                replyData :\n                                verifyReply);\n                            if (result) {\n                                result = removeClasses(result);\n                            }\n                            chai_1.expect(result).to.deep.eq(reply);\n                            yeelight.disconnect();\n                            return [2 /*return*/];\n                    }\n                });\n            });",
+                "err": {},
+                "isRoot": false,
+                "uuid": "37490923-e136-49c5-9feb-07c179097304",
+                "isHook": false,
+                "skipped": false
+              },
+              {
+                "title": "method cronGet should work when send valid message",
+                "fullTitle": "Yeelight Class Test manipulator methods method cronGet should work when send valid message",
                 "timedOut": false,
                 "duration": 1,
                 "state": "passed",
@@ -689,24 +706,7 @@
                 "code": "return __awaiter(_this, void 0, void 0, function () {\n                var yeelight, result, reply;\n                return __generator(this, function (_a) {\n                    switch (_a.label) {\n                        case 0: return [4 /*yield*/, init()];\n                        case 1:\n                            yeelight = _a.sent();\n                            test_util_1.TestUtils.mockSocket(replyData.result, function (x) {\n                                chai_1.expect(x).to.deep.eq(sendData);\n                            });\n                            return [4 /*yield*/, fcn(yeelight)];\n                        case 2:\n                            result = _a.sent();\n                            reply = (verifyReply === undefined ?\n                                replyData :\n                                verifyReply);\n                            if (result) {\n                                result = removeClasses(result);\n                            }\n                            chai_1.expect(result).to.deep.eq(reply);\n                            yeelight.disconnect();\n                            return [2 /*return*/];\n                    }\n                });\n            });",
                 "err": {},
                 "isRoot": false,
-                "uuid": "c4bb8d82-80e2-45f1-a786-831a3e654984",
-                "isHook": false,
-                "skipped": false
-              },
-              {
-                "title": "method cronGet should work when send valid message",
-                "fullTitle": "Yeelight Class Test manipulator methods method cronGet should work when send valid message",
-                "timedOut": false,
-                "duration": 0,
-                "state": "passed",
-                "speed": "fast",
-                "pass": true,
-                "fail": false,
-                "pending": false,
-                "code": "return __awaiter(_this, void 0, void 0, function () {\n                var yeelight, result, reply;\n                return __generator(this, function (_a) {\n                    switch (_a.label) {\n                        case 0: return [4 /*yield*/, init()];\n                        case 1:\n                            yeelight = _a.sent();\n                            test_util_1.TestUtils.mockSocket(replyData.result, function (x) {\n                                chai_1.expect(x).to.deep.eq(sendData);\n                            });\n                            return [4 /*yield*/, fcn(yeelight)];\n                        case 2:\n                            result = _a.sent();\n                            reply = (verifyReply === undefined ?\n                                replyData :\n                                verifyReply);\n                            if (result) {\n                                result = removeClasses(result);\n                            }\n                            chai_1.expect(result).to.deep.eq(reply);\n                            yeelight.disconnect();\n                            return [2 /*return*/];\n                    }\n                });\n            });",
-                "err": {},
-                "isRoot": false,
-                "uuid": "85c9feff-6026-45b2-9df5-927ba1876327",
+                "uuid": "f0bedb7c-c542-4946-aec3-f6063e4aa87a",
                 "isHook": false,
                 "skipped": false
               },
@@ -723,7 +723,7 @@
                 "code": "return __awaiter(_this, void 0, void 0, function () {\n                var yeelight, result, reply;\n                return __generator(this, function (_a) {\n                    switch (_a.label) {\n                        case 0: return [4 /*yield*/, init()];\n                        case 1:\n                            yeelight = _a.sent();\n                            test_util_1.TestUtils.mockSocket(replyData.result, function (x) {\n                                chai_1.expect(x).to.deep.eq(sendData);\n                            });\n                            return [4 /*yield*/, fcn(yeelight)];\n                        case 2:\n                            result = _a.sent();\n                            reply = (verifyReply === undefined ?\n                                replyData :\n                                verifyReply);\n                            if (result) {\n                                result = removeClasses(result);\n                            }\n                            chai_1.expect(result).to.deep.eq(reply);\n                            yeelight.disconnect();\n                            return [2 /*return*/];\n                    }\n                });\n            });",
                 "err": {},
                 "isRoot": false,
-                "uuid": "2004b15b-91aa-4bd6-b7ad-6996e77500ed",
+                "uuid": "dea01e6a-9ab9-476f-a2fd-959f97190a4f",
                 "isHook": false,
                 "skipped": false
               },
@@ -740,7 +740,7 @@
                 "code": "return __awaiter(_this, void 0, void 0, function () {\n                var yeelight, result, reply;\n                return __generator(this, function (_a) {\n                    switch (_a.label) {\n                        case 0: return [4 /*yield*/, init()];\n                        case 1:\n                            yeelight = _a.sent();\n                            test_util_1.TestUtils.mockSocket(replyData.result, function (x) {\n                                chai_1.expect(x).to.deep.eq(sendData);\n                            });\n                            return [4 /*yield*/, fcn(yeelight)];\n                        case 2:\n                            result = _a.sent();\n                            reply = (verifyReply === undefined ?\n                                replyData :\n                                verifyReply);\n                            if (result) {\n                                result = removeClasses(result);\n                            }\n                            chai_1.expect(result).to.deep.eq(reply);\n                            yeelight.disconnect();\n                            return [2 /*return*/];\n                    }\n                });\n            });",
                 "err": {},
                 "isRoot": false,
-                "uuid": "c579a80b-3b1b-41e2-9741-f22eb6ea1cbd",
+                "uuid": "700b0b82-7ee0-4502-beb5-a683ccab5388",
                 "isHook": false,
                 "skipped": false
               },
@@ -748,7 +748,7 @@
                 "title": "method startColorFlow should work when send valid message",
                 "fullTitle": "Yeelight Class Test manipulator methods method startColorFlow should work when send valid message",
                 "timedOut": false,
-                "duration": 1,
+                "duration": 2,
                 "state": "passed",
                 "speed": "fast",
                 "pass": true,
@@ -757,7 +757,7 @@
                 "code": "return __awaiter(_this, void 0, void 0, function () {\n                var yeelight, result, reply;\n                return __generator(this, function (_a) {\n                    switch (_a.label) {\n                        case 0: return [4 /*yield*/, init()];\n                        case 1:\n                            yeelight = _a.sent();\n                            test_util_1.TestUtils.mockSocket(replyData.result, function (x) {\n                                chai_1.expect(x).to.deep.eq(sendData);\n                            });\n                            return [4 /*yield*/, fcn(yeelight)];\n                        case 2:\n                            result = _a.sent();\n                            reply = (verifyReply === undefined ?\n                                replyData :\n                                verifyReply);\n                            if (result) {\n                                result = removeClasses(result);\n                            }\n                            chai_1.expect(result).to.deep.eq(reply);\n                            yeelight.disconnect();\n                            return [2 /*return*/];\n                    }\n                });\n            });",
                 "err": {},
                 "isRoot": false,
-                "uuid": "45903142-7182-4e66-bf2a-238c4967edcc",
+                "uuid": "04f3e353-5630-4de7-89c4-5ea0d561495c",
                 "isHook": false,
                 "skipped": false
               },
@@ -765,7 +765,7 @@
                 "title": "method stopColorFlow should work when send valid message",
                 "fullTitle": "Yeelight Class Test manipulator methods method stopColorFlow should work when send valid message",
                 "timedOut": false,
-                "duration": 1,
+                "duration": 2,
                 "state": "passed",
                 "speed": "fast",
                 "pass": true,
@@ -774,7 +774,7 @@
                 "code": "return __awaiter(_this, void 0, void 0, function () {\n                var yeelight, result, reply;\n                return __generator(this, function (_a) {\n                    switch (_a.label) {\n                        case 0: return [4 /*yield*/, init()];\n                        case 1:\n                            yeelight = _a.sent();\n                            test_util_1.TestUtils.mockSocket(replyData.result, function (x) {\n                                chai_1.expect(x).to.deep.eq(sendData);\n                            });\n                            return [4 /*yield*/, fcn(yeelight)];\n                        case 2:\n                            result = _a.sent();\n                            reply = (verifyReply === undefined ?\n                                replyData :\n                                verifyReply);\n                            if (result) {\n                                result = removeClasses(result);\n                            }\n                            chai_1.expect(result).to.deep.eq(reply);\n                            yeelight.disconnect();\n                            return [2 /*return*/];\n                    }\n                });\n            });",
                 "err": {},
                 "isRoot": false,
-                "uuid": "23dcea68-6fef-4841-9f36-29174160fe9e",
+                "uuid": "d57be7cc-7249-49e2-8495-f98f734974ac",
                 "isHook": false,
                 "skipped": false
               },
@@ -791,7 +791,7 @@
                 "code": "return __awaiter(_this, void 0, void 0, function () {\n                var yeelight, result, reply;\n                return __generator(this, function (_a) {\n                    switch (_a.label) {\n                        case 0: return [4 /*yield*/, init()];\n                        case 1:\n                            yeelight = _a.sent();\n                            test_util_1.TestUtils.mockSocket(replyData.result, function (x) {\n                                chai_1.expect(x).to.deep.eq(sendData);\n                            });\n                            return [4 /*yield*/, fcn(yeelight)];\n                        case 2:\n                            result = _a.sent();\n                            reply = (verifyReply === undefined ?\n                                replyData :\n                                verifyReply);\n                            if (result) {\n                                result = removeClasses(result);\n                            }\n                            chai_1.expect(result).to.deep.eq(reply);\n                            yeelight.disconnect();\n                            return [2 /*return*/];\n                    }\n                });\n            });",
                 "err": {},
                 "isRoot": false,
-                "uuid": "6a40dea5-0322-4a18-bd81-2cbac47e89f6",
+                "uuid": "6ab4c43e-ba54-4293-b081-0116affb9940",
                 "isHook": false,
                 "skipped": false
               },
@@ -799,7 +799,7 @@
                 "title": "method setCtAbx should work when send valid message",
                 "fullTitle": "Yeelight Class Test manipulator methods method setCtAbx should work when send valid message",
                 "timedOut": false,
-                "duration": 1,
+                "duration": 2,
                 "state": "passed",
                 "speed": "fast",
                 "pass": true,
@@ -808,7 +808,7 @@
                 "code": "return __awaiter(_this, void 0, void 0, function () {\n                var yeelight, result, reply;\n                return __generator(this, function (_a) {\n                    switch (_a.label) {\n                        case 0: return [4 /*yield*/, init()];\n                        case 1:\n                            yeelight = _a.sent();\n                            test_util_1.TestUtils.mockSocket(replyData.result, function (x) {\n                                chai_1.expect(x).to.deep.eq(sendData);\n                            });\n                            return [4 /*yield*/, fcn(yeelight)];\n                        case 2:\n                            result = _a.sent();\n                            reply = (verifyReply === undefined ?\n                                replyData :\n                                verifyReply);\n                            if (result) {\n                                result = removeClasses(result);\n                            }\n                            chai_1.expect(result).to.deep.eq(reply);\n                            yeelight.disconnect();\n                            return [2 /*return*/];\n                    }\n                });\n            });",
                 "err": {},
                 "isRoot": false,
-                "uuid": "21b73f9e-50fa-4352-b082-b7853904a3f8",
+                "uuid": "53c40b12-1751-4f10-9c6a-3db15bca709e",
                 "isHook": false,
                 "skipped": false
               },
@@ -825,7 +825,7 @@
                 "code": "return __awaiter(_this, void 0, void 0, function () {\n                var yeelight, result, reply;\n                return __generator(this, function (_a) {\n                    switch (_a.label) {\n                        case 0: return [4 /*yield*/, init()];\n                        case 1:\n                            yeelight = _a.sent();\n                            test_util_1.TestUtils.mockSocket(replyData.result, function (x) {\n                                chai_1.expect(x).to.deep.eq(sendData);\n                            });\n                            return [4 /*yield*/, fcn(yeelight)];\n                        case 2:\n                            result = _a.sent();\n                            reply = (verifyReply === undefined ?\n                                replyData :\n                                verifyReply);\n                            if (result) {\n                                result = removeClasses(result);\n                            }\n                            chai_1.expect(result).to.deep.eq(reply);\n                            yeelight.disconnect();\n                            return [2 /*return*/];\n                    }\n                });\n            });",
                 "err": {},
                 "isRoot": false,
-                "uuid": "3843a72b-af97-4590-8923-d481d2e09620",
+                "uuid": "f2d758b0-46c7-4c07-8fb6-4119cf1a5807",
                 "isHook": false,
                 "skipped": false
               },
@@ -842,7 +842,7 @@
                 "code": "return __awaiter(_this, void 0, void 0, function () {\n                var yeelight, result, reply;\n                return __generator(this, function (_a) {\n                    switch (_a.label) {\n                        case 0: return [4 /*yield*/, init()];\n                        case 1:\n                            yeelight = _a.sent();\n                            test_util_1.TestUtils.mockSocket(replyData.result, function (x) {\n                                chai_1.expect(x).to.deep.eq(sendData);\n                            });\n                            return [4 /*yield*/, fcn(yeelight)];\n                        case 2:\n                            result = _a.sent();\n                            reply = (verifyReply === undefined ?\n                                replyData :\n                                verifyReply);\n                            if (result) {\n                                result = removeClasses(result);\n                            }\n                            chai_1.expect(result).to.deep.eq(reply);\n                            yeelight.disconnect();\n                            return [2 /*return*/];\n                    }\n                });\n            });",
                 "err": {},
                 "isRoot": false,
-                "uuid": "30c8547e-02c7-422d-b3f8-39e6ddf4a568",
+                "uuid": "c39b28e8-add5-4d02-9a12-c2f6f08dc386",
                 "isHook": false,
                 "skipped": false
               },
@@ -859,7 +859,7 @@
                 "code": "return __awaiter(_this, void 0, void 0, function () {\n                var yeelight, result, reply;\n                return __generator(this, function (_a) {\n                    switch (_a.label) {\n                        case 0: return [4 /*yield*/, init()];\n                        case 1:\n                            yeelight = _a.sent();\n                            test_util_1.TestUtils.mockSocket(replyData.result, function (x) {\n                                chai_1.expect(x).to.deep.eq(sendData);\n                            });\n                            return [4 /*yield*/, fcn(yeelight)];\n                        case 2:\n                            result = _a.sent();\n                            reply = (verifyReply === undefined ?\n                                replyData :\n                                verifyReply);\n                            if (result) {\n                                result = removeClasses(result);\n                            }\n                            chai_1.expect(result).to.deep.eq(reply);\n                            yeelight.disconnect();\n                            return [2 /*return*/];\n                    }\n                });\n            });",
                 "err": {},
                 "isRoot": false,
-                "uuid": "d31aebf2-89bd-4847-9e31-ab6a82bcc6ff",
+                "uuid": "49e6cf4f-3c3a-4fc5-86d1-e6f41a445bc1",
                 "isHook": false,
                 "skipped": false
               },
@@ -867,7 +867,7 @@
                 "title": "method setAdjust should work when send valid message",
                 "fullTitle": "Yeelight Class Test manipulator methods method setAdjust should work when send valid message",
                 "timedOut": false,
-                "duration": 0,
+                "duration": 1,
                 "state": "passed",
                 "speed": "fast",
                 "pass": true,
@@ -876,7 +876,7 @@
                 "code": "return __awaiter(_this, void 0, void 0, function () {\n                var yeelight, result, reply;\n                return __generator(this, function (_a) {\n                    switch (_a.label) {\n                        case 0: return [4 /*yield*/, init()];\n                        case 1:\n                            yeelight = _a.sent();\n                            test_util_1.TestUtils.mockSocket(replyData.result, function (x) {\n                                chai_1.expect(x).to.deep.eq(sendData);\n                            });\n                            return [4 /*yield*/, fcn(yeelight)];\n                        case 2:\n                            result = _a.sent();\n                            reply = (verifyReply === undefined ?\n                                replyData :\n                                verifyReply);\n                            if (result) {\n                                result = removeClasses(result);\n                            }\n                            chai_1.expect(result).to.deep.eq(reply);\n                            yeelight.disconnect();\n                            return [2 /*return*/];\n                    }\n                });\n            });",
                 "err": {},
                 "isRoot": false,
-                "uuid": "96f56a58-898b-42dc-b1a6-e8feb70d3272",
+                "uuid": "da4700ea-c1ce-4da4-84a8-9db88749c44a",
                 "isHook": false,
                 "skipped": false
               },
@@ -893,7 +893,7 @@
                 "code": "return __awaiter(_this, void 0, void 0, function () {\n                var yeelight, result, reply;\n                return __generator(this, function (_a) {\n                    switch (_a.label) {\n                        case 0: return [4 /*yield*/, init()];\n                        case 1:\n                            yeelight = _a.sent();\n                            test_util_1.TestUtils.mockSocket(replyData.result, function (x) {\n                                chai_1.expect(x).to.deep.eq(sendData);\n                            });\n                            return [4 /*yield*/, fcn(yeelight)];\n                        case 2:\n                            result = _a.sent();\n                            reply = (verifyReply === undefined ?\n                                replyData :\n                                verifyReply);\n                            if (result) {\n                                result = removeClasses(result);\n                            }\n                            chai_1.expect(result).to.deep.eq(reply);\n                            yeelight.disconnect();\n                            return [2 /*return*/];\n                    }\n                });\n            });",
                 "err": {},
                 "isRoot": false,
-                "uuid": "c1b8c6c7-95a9-4e2d-a5de-cb41ddd1fda8",
+                "uuid": "a18f71e1-627b-4dc5-b9ea-5cf201510876",
                 "isHook": false,
                 "skipped": false
               },
@@ -910,7 +910,7 @@
                 "code": "return __awaiter(_this, void 0, void 0, function () {\n                var yeelight, result, reply;\n                return __generator(this, function (_a) {\n                    switch (_a.label) {\n                        case 0: return [4 /*yield*/, init()];\n                        case 1:\n                            yeelight = _a.sent();\n                            test_util_1.TestUtils.mockSocket(replyData.result, function (x) {\n                                chai_1.expect(x).to.deep.eq(sendData);\n                            });\n                            return [4 /*yield*/, fcn(yeelight)];\n                        case 2:\n                            result = _a.sent();\n                            reply = (verifyReply === undefined ?\n                                replyData :\n                                verifyReply);\n                            if (result) {\n                                result = removeClasses(result);\n                            }\n                            chai_1.expect(result).to.deep.eq(reply);\n                            yeelight.disconnect();\n                            return [2 /*return*/];\n                    }\n                });\n            });",
                 "err": {},
                 "isRoot": false,
-                "uuid": "1ce07b22-ddca-4a45-a58a-818780d34be0",
+                "uuid": "c460c6d3-c365-4290-a726-8764b32b330d",
                 "isHook": false,
                 "skipped": false
               },
@@ -927,7 +927,7 @@
                 "code": "return __awaiter(_this, void 0, void 0, function () {\n                var yeelight, result, reply;\n                return __generator(this, function (_a) {\n                    switch (_a.label) {\n                        case 0: return [4 /*yield*/, init()];\n                        case 1:\n                            yeelight = _a.sent();\n                            test_util_1.TestUtils.mockSocket(replyData.result, function (x) {\n                                chai_1.expect(x).to.deep.eq(sendData);\n                            });\n                            return [4 /*yield*/, fcn(yeelight)];\n                        case 2:\n                            result = _a.sent();\n                            reply = (verifyReply === undefined ?\n                                replyData :\n                                verifyReply);\n                            if (result) {\n                                result = removeClasses(result);\n                            }\n                            chai_1.expect(result).to.deep.eq(reply);\n                            yeelight.disconnect();\n                            return [2 /*return*/];\n                    }\n                });\n            });",
                 "err": {},
                 "isRoot": false,
-                "uuid": "bab68ea8-d365-4708-9668-66ffc23b13da",
+                "uuid": "9a20c53d-0406-4bb2-92aa-a1e9cc8e824a",
                 "isHook": false,
                 "skipped": false
               },
@@ -935,7 +935,7 @@
                 "title": "method setScene should work when send valid message",
                 "fullTitle": "Yeelight Class Test manipulator methods method setScene should work when send valid message",
                 "timedOut": false,
-                "duration": 2,
+                "duration": 1,
                 "state": "passed",
                 "speed": "fast",
                 "pass": true,
@@ -944,42 +944,42 @@
                 "code": "return __awaiter(_this, void 0, void 0, function () {\n                var yeelight, result, reply;\n                return __generator(this, function (_a) {\n                    switch (_a.label) {\n                        case 0: return [4 /*yield*/, init()];\n                        case 1:\n                            yeelight = _a.sent();\n                            test_util_1.TestUtils.mockSocket(replyData.result, function (x) {\n                                chai_1.expect(x).to.deep.eq(sendData);\n                            });\n                            return [4 /*yield*/, fcn(yeelight)];\n                        case 2:\n                            result = _a.sent();\n                            reply = (verifyReply === undefined ?\n                                replyData :\n                                verifyReply);\n                            if (result) {\n                                result = removeClasses(result);\n                            }\n                            chai_1.expect(result).to.deep.eq(reply);\n                            yeelight.disconnect();\n                            return [2 /*return*/];\n                    }\n                });\n            });",
                 "err": {},
                 "isRoot": false,
-                "uuid": "867ef873-6b4f-4c9e-acb2-253ca7d92419",
+                "uuid": "8e46de7d-5b10-4341-b2b5-70ac807a4bd8",
                 "isHook": false,
                 "skipped": false
               }
             ],
             "suites": [],
             "passes": [
-              "33e7f462-49a7-4ee9-87a3-a58b1a5e053e",
-              "c4bb8d82-80e2-45f1-a786-831a3e654984",
-              "85c9feff-6026-45b2-9df5-927ba1876327",
-              "2004b15b-91aa-4bd6-b7ad-6996e77500ed",
-              "c579a80b-3b1b-41e2-9741-f22eb6ea1cbd",
-              "45903142-7182-4e66-bf2a-238c4967edcc",
-              "23dcea68-6fef-4841-9f36-29174160fe9e",
-              "6a40dea5-0322-4a18-bd81-2cbac47e89f6",
-              "21b73f9e-50fa-4352-b082-b7853904a3f8",
-              "3843a72b-af97-4590-8923-d481d2e09620",
-              "30c8547e-02c7-422d-b3f8-39e6ddf4a568",
-              "d31aebf2-89bd-4847-9e31-ab6a82bcc6ff",
-              "96f56a58-898b-42dc-b1a6-e8feb70d3272",
-              "c1b8c6c7-95a9-4e2d-a5de-cb41ddd1fda8",
-              "1ce07b22-ddca-4a45-a58a-818780d34be0",
-              "bab68ea8-d365-4708-9668-66ffc23b13da",
-              "867ef873-6b4f-4c9e-acb2-253ca7d92419"
+              "16349df3-9522-4ca3-9a4b-5615746db5fa",
+              "37490923-e136-49c5-9feb-07c179097304",
+              "f0bedb7c-c542-4946-aec3-f6063e4aa87a",
+              "dea01e6a-9ab9-476f-a2fd-959f97190a4f",
+              "700b0b82-7ee0-4502-beb5-a683ccab5388",
+              "04f3e353-5630-4de7-89c4-5ea0d561495c",
+              "d57be7cc-7249-49e2-8495-f98f734974ac",
+              "6ab4c43e-ba54-4293-b081-0116affb9940",
+              "53c40b12-1751-4f10-9c6a-3db15bca709e",
+              "f2d758b0-46c7-4c07-8fb6-4119cf1a5807",
+              "c39b28e8-add5-4d02-9a12-c2f6f08dc386",
+              "49e6cf4f-3c3a-4fc5-86d1-e6f41a445bc1",
+              "da4700ea-c1ce-4da4-84a8-9db88749c44a",
+              "a18f71e1-627b-4dc5-b9ea-5cf201510876",
+              "c460c6d3-c365-4290-a726-8764b32b330d",
+              "9a20c53d-0406-4bb2-92aa-a1e9cc8e824a",
+              "8e46de7d-5b10-4341-b2b5-70ac807a4bd8"
             ],
             "failures": [],
             "pending": [],
             "skipped": [],
-            "duration": 17,
+            "duration": 22,
             "root": false,
             "rootEmpty": false,
             "_timeout": 10000
           }
         ],
         "passes": [
-          "d12156e0-d4a1-4277-bcad-665cb9536b64"
+          "64d54ec2-907c-498b-b9d6-2914d88db99a"
         ],
         "failures": [],
         "pending": [],
