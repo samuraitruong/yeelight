@@ -30,7 +30,7 @@ deploy:
     skip_cleanup: true
     on:
       tags: false
-      branch: develop
+      branch: master
   - provider: pages
     local-dir: doc
     skip-cleanup: true
