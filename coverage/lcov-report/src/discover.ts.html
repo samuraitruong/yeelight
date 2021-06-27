@@ -1,51 +1,62 @@
+
 <!doctype html>
 <html lang="en">
+
 <head>
     <title>Code coverage report for src/discover.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../prettify.css" />
     <link rel="stylesheet" href="../base.css" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style type='text/css'>
         .coverage-summary .sorter {
             background-image: url(../sort-arrow-sprite.png);
         }
     </style>
 </head>
+    
 <body>
 <div class='wrapper'>
-  <div class='pad1'>
-    <h1>
-      <a href="../index.html">All files</a> / <a href="index.html">src</a> discover.ts
-    </h1>
-    <div class='clearfix'>
-      <div class='fl pad1y space-right2'>
-        <span class="strong">66.67% </span>
-        <span class="quiet">Statements</span>
-        <span class='fraction'>78/117</span>
-      </div>
-      <div class='fl pad1y space-right2'>
-        <span class="strong">39.66% </span>
-        <span class="quiet">Branches</span>
-        <span class='fraction'>23/58</span>
-      </div>
-      <div class='fl pad1y space-right2'>
-        <span class="strong">63.64% </span>
-        <span class="quiet">Functions</span>
-        <span class='fraction'>14/22</span>
-      </div>
-      <div class='fl pad1y space-right2'>
-        <span class="strong">66.67% </span>
-        <span class="quiet">Lines</span>
-        <span class='fraction'>74/111</span>
-      </div>
+    <div class='pad1'>
+        <h1><a href="../index.html">All files</a> / <a href="index.html">src</a> discover.ts</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">67.24% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>78/116</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">39.66% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>23/58</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">63.64% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>14/22</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">66.67% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>74/111</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
     </div>
-    <p class="quiet">
-      Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
-    </p>
-  </div>
-  <div class='status-line medium'></div>
-<pre><table class="coverage">
+    <div class='status-line medium'></div>
+    <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
 <a name='L3'></a><a href='#L3'>3</a>
@@ -281,11 +292,9 @@
 <a name='L233'></a><a href='#L233'>233</a>
 <a name='L234'></a><a href='#L234'>234</a>
 <a name='L235'></a><a href='#L235'>235</a>
-<a name='L236'></a><a href='#L236'>236</a>
-<a name='L237'></a><a href='#L237'>237</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L236'></a><a href='#L236'>236</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -521,7 +530,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { createSocket, Socket } from "dgram";
 import { EventEmitter } from "events";
 import { address, toBuffer } from "ip";
-import * as net from "net";
 import { AddressInfo } from "net";
 import { checkPortStatus } from "portscanner";
 import { defaultLogger } from "./logger";
@@ -548,8 +556,8 @@ export class Discover extends EventEmitter {
         timeout: 10000,
     };
     private client: Socket;
-    private clientBound: boolean = false;
-    private isDestroyed: boolean = false;
+    private clientBound = false;
+    private isDestroyed = false;
     /**
      * @constructor
      * @param {IDiscoverConfig } options discover object include the port and multicast host.
@@ -570,13 +578,13 @@ export class Discover extends EventEmitter {
      * Try to verify if the light on and listening on the know ip address
      * @param ipAddress : know IP Address of the light.
      */
-<span class="fstat-no" title="function not covered" >    public async detectLightIP(</span>ipAddress: string): Promise&lt;IDevice&gt; {
+<span class="fstat-no" title="function not covered" >    public async d</span>etectLightIP(ipAddress: string): Promise&lt;IDevice&gt; {
         const <span class="cstat-no" title="statement not covered" >device: Partial&lt;IDevice&gt; = {</span>
             host: ipAddress,
             port: 55443,
         };
-<span class="cstat-no" title="statement not covered" >        return new Promise&lt;IDevice&gt;(<span class="fstat-no" title="function not covered" >(</span>resolve, reject) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >            checkPortStatus(55443, ipAddress, <span class="fstat-no" title="function not covered" >(</span>err: any, status: any) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >        return new Promise&lt;IDevice&gt;(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >            checkPortStatus(55443, ipAddress, <span class="fstat-no" title="function not covered" >(e</span>rr: any, status: any) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >                if (err || status === "closed") {</span>
 <span class="cstat-no" title="statement not covered" >                    return resolve(null);</span>
                 } else {
@@ -590,12 +598,12 @@ export class Discover extends EventEmitter {
      * Perfrom IP port scan to find an IP with port 55443 open rather than using SSDP discovery method
      * @requires {Promise&lt;IDevice[]&gt;} promise of list of device found
      */
-<span class="fstat-no" title="function not covered" >    public async scanByIp(): Promise&lt;IDevice[]&gt; {</span>
+<span class="fstat-no" title="function not covered" >    public async s</span>canByIp(): Promise&lt;IDevice[]&gt; {
         const <span class="cstat-no" title="statement not covered" >localIp = address();</span>
         const <span class="cstat-no" title="statement not covered" >count = 0;</span>
         const <span class="cstat-no" title="statement not covered" >availabledIps = Utils.getListIpAddress(localIp);</span>
-        const <span class="cstat-no" title="statement not covered" >promises = availabledIps.map(<span class="fstat-no" title="function not covered" >(</span>x) =&gt; <span class="cstat-no" title="statement not covered" >this.detectLightIP(x))</span>;</span>
-<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >        await Promise.all(promises);</span></span>
+        const <span class="cstat-no" title="statement not covered" >promises = availabledIps.map(<span class="fstat-no" title="function not covered" >(x</span>) =&gt; <span class="cstat-no" title="statement not covered" >this.detectLightIP(x));</span></span>
+<span class="cstat-no" title="statement not covered" >        await Promise.all(promises);</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >        return this.devices;</span>
     }
@@ -610,77 +618,77 @@ export class Discover extends EventEmitter {
             try {
                 <span class="missing-if-branch" title="else path not taken" >E</span>if (!this.clientBound) {
                     this.clientBound = true;
-                    this.client.bind(this.options.port, null, resolve);
+                    this.client.bind(this.options.port, null, resolve as any);
                 } else {
                     // Already bound to a port
-<span class="cstat-no" title="statement not covered" >                    resolve();</span>
+<span class="cstat-no" title="statement not covered" >                    resolve(null);</span>
                 }
             } catch (e) {
 <span class="cstat-no" title="statement not covered" >                reject(e);</span>
             }
         })
-        .then(() =&gt; {
+            .then(() =&gt; {
 &nbsp;
-            return new Promise&lt;IDevice[]&gt;((resolve, reject) =&gt; {
-                this.logger.debug("discover options: ", this.options);
+                return new Promise&lt;IDevice[]&gt;((resolve, reject) =&gt; {
+                    this.logger.debug("discover options: ", this.options);
 &nbsp;
-                this.client.setBroadcast(true);
-                this.client.send(this.getMessage(), this.options.port, this.options.multicastHost, (err) =&gt; {
-                    <span class="missing-if-branch" title="if path not taken" >I</span>if (err) {
-<span class="cstat-no" title="statement not covered" >                        this.logger.log("ERROR", err);</span>
-<span class="cstat-no" title="statement not covered" >                        reject(err);</span>
-                    } else {
-                        let ts = 0;
-                        const interval = this.options.scanInterval || 200;
+                    this.client.setBroadcast(true);
+                    this.client.send(this.getMessage(), this.options.port, this.options.multicastHost, (err) =&gt; {
+                        <span class="missing-if-branch" title="if path not taken" >I</span>if (err) {
+<span class="cstat-no" title="statement not covered" >                            this.logger.log("ERROR", err);</span>
+<span class="cstat-no" title="statement not covered" >                            reject(err);</span>
+                        } else {
+                            let ts = 0;
+                            const interval = this.options.scanInterval || 200;
 &nbsp;
-                        let timer: NodeJS.Timer | null = null;
-                        const callback = (error: any, result?: IDevice[]) =&gt; {
-                            <span class="missing-if-branch" title="else path not taken" >E</span>if (timer) {
-                                clearInterval(timer);
-                                timer = null;
-                            }
-                            <span class="missing-if-branch" title="if path not taken" >I</span>if (error) {
-<span class="cstat-no" title="statement not covered" >                                reject(error);</span>
-                            } else {
-                                resolve(result);
-                            }
-                        };
-                        timer = setInterval(() =&gt; {
-                            <span class="missing-if-branch" title="if path not taken" >I</span>if (this.isDestroyed) {
-<span class="cstat-no" title="statement not covered" >                                callback("Discover got destroyed");</span>
-<span class="cstat-no" title="statement not covered" >                                return;</span>
-                            }
-                            ts += interval;
-                            <span class="missing-if-branch" title="else path not taken" >E</span>if (this.options.limit &amp;&amp; this.devices.length &gt;= this.options.limit) {
-                                clearInterval(this.timer);
-                                callback(null, this.devices);
-                                return;
-                            }
-<span class="cstat-no" title="statement not covered" >                            if (this.options.timeout &gt; 0 &amp;&amp; this.options.timeout &lt; ts) {</span>
-<span class="cstat-no" title="statement not covered" >                                if (this.devices.length &gt; 0) {</span>
-<span class="cstat-no" title="statement not covered" >                                    clearInterval(this.timer);</span>
-<span class="cstat-no" title="statement not covered" >                                    callback(null, this.devices);</span>
-<span class="cstat-no" title="statement not covered" >                                    return;</span>
+                            let timer: NodeJS.Timer | null = null;
+                            const callback = (error: any, result?: IDevice[]) =&gt; {
+                                <span class="missing-if-branch" title="else path not taken" >E</span>if (timer) {
+                                    clearInterval(timer);
+                                    timer = null;
+                                }
+                                <span class="missing-if-branch" title="if path not taken" >I</span>if (error) {
+<span class="cstat-no" title="statement not covered" >                                    reject(error);</span>
                                 } else {
-<span class="cstat-no" title="statement not covered" >                                    clearInterval(this.timer);</span>
-<span class="cstat-no" title="statement not covered" >                                    if (!this.options.fallback) {</span>
-<span class="cstat-no" title="statement not covered" >                                        callback("No device found after timeout exceeded : " + ts);</span>
+                                    resolve(result);
+                                }
+                            };
+                            timer = setInterval(() =&gt; {
+                                <span class="missing-if-branch" title="if path not taken" >I</span>if (this.isDestroyed) {
+<span class="cstat-no" title="statement not covered" >                                    callback("Discover got destroyed");</span>
+<span class="cstat-no" title="statement not covered" >                                    return;</span>
+                                }
+                                ts += interval;
+                                <span class="missing-if-branch" title="else path not taken" >E</span>if (this.options.limit &amp;&amp; this.devices.length &gt;= this.options.limit) {
+                                    clearInterval(this.timer);
+                                    callback(null, this.devices);
+                                    return;
+                                }
+<span class="cstat-no" title="statement not covered" >                                if (this.options.timeout &gt; 0 &amp;&amp; this.options.timeout &lt; ts) {</span>
+<span class="cstat-no" title="statement not covered" >                                    if (this.devices.length &gt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >                                        clearInterval(this.timer);</span>
+<span class="cstat-no" title="statement not covered" >                                        callback(null, this.devices);</span>
 <span class="cstat-no" title="statement not covered" >                                        return;</span>
+                                    } else {
+<span class="cstat-no" title="statement not covered" >                                        clearInterval(this.timer);</span>
+<span class="cstat-no" title="statement not covered" >                                        if (!this.options.fallback) {</span>
+<span class="cstat-no" title="statement not covered" >                                            callback("No device found after timeout exceeded : " + ts);</span>
+<span class="cstat-no" title="statement not covered" >                                            return;</span>
+                                        }
                                     }
                                 }
-                            }
-<span class="cstat-no" title="statement not covered" >                            this.client.send(this.getMessage(), this.options.port, this.options.multicastHost);</span>
-<span class="cstat-no" title="statement not covered" >                            if (ts &gt; this.options.timeout &amp;&amp; this.options.fallback) {</span>
-<span class="cstat-no" title="statement not covered" >                                this.scanByIp()</span>
-                                .catch(<span class="fstat-no" title="function not covered" >(</span>error) =&gt; {
-<span class="cstat-no" title="statement not covered" >                                    callback(error);</span>
-                                });
-                            }
-                        }, interval);
-                    }
+<span class="cstat-no" title="statement not covered" >                                this.client.send(this.getMessage(), this.options.port, this.options.multicastHost);</span>
+<span class="cstat-no" title="statement not covered" >                                if (ts &gt; this.options.timeout &amp;&amp; this.options.fallback) {</span>
+<span class="cstat-no" title="statement not covered" >                                    this.scanByIp()</span>
+                                        .catch(<span class="fstat-no" title="function not covered" >(e</span>rror) =&gt; {
+<span class="cstat-no" title="statement not covered" >                                            callback(error);</span>
+                                        });
+                                }
+                            }, interval);
+                        }
+                    });
                 });
             });
-        });
     }
     /**
      * Clean up resource and close all open connection,
@@ -703,7 +711,7 @@ export class Discover extends EventEmitter {
      * Internal function to handle socket error
      * @param error Error details
      */
-<span class="fstat-no" title="function not covered" >    private onError(</span>error: Error) {
+<span class="fstat-no" title="function not covered" >    private o</span>nError(error: Error) {
 <span class="cstat-no" title="statement not covered" >        this.logger.error("Internal Error ", error);</span>
 <span class="cstat-no" title="statement not covered" >        this.emit("error", error);</span>
     }
@@ -740,7 +748,7 @@ export class Discover extends EventEmitter {
             !this.options.filter ||
 <span class="branch-1 cbranch-no" title="branch not covered" >            this.options.filter(device)</span>
         ) {
-            const existDevice = this.devices.findIndex(<span class="fstat-no" title="function not covered" >(</span>x) =&gt; {
+            const existDevice = this.devices.findIndex(<span class="fstat-no" title="function not covered" >(x</span>) =&gt; {
 <span class="cstat-no" title="statement not covered" >                return (</span>
                     x.host &amp;&amp; device.host &amp;&amp; x.host === device.host &amp;&amp;
                     x.port &amp;&amp; device.port &amp;&amp; x.port === device.port
@@ -754,24 +762,24 @@ export class Discover extends EventEmitter {
         }
     }
 }
-&nbsp;</pre></td></tr>
-</table></pre>
-<div class='push'></div><!-- for sticky footer -->
-</div><!-- /wrapper -->
-<div class='footer quiet pad2 space-top1 center small'>
-  Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Apr 12 2021 05:54:43 GMT+0000 (Coordinated Universal Time)
-</div>
-</div>
-<script src="../prettify.js"></script>
-<script>
-window.onload = function () {
-        if (typeof prettyPrint === 'function') {
-            prettyPrint();
-        }
-};
-</script>
-<script src="../sorter.js"></script>
-<script src="../block-navigation.js"></script>
-</body>
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
+                at Sun Jun 27 2021 11:26:24 GMT+0000 (Coordinated Universal Time)
+            </div>
+        </div>
+        <script src="../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../sorter.js"></script>
+        <script src="../block-navigation.js"></script>
+    </body>
 </html>
+    

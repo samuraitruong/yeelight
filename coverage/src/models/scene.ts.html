@@ -1,51 +1,62 @@
+
 <!doctype html>
 <html lang="en">
+
 <head>
     <title>Code coverage report for src/models/scene.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style type='text/css'>
         .coverage-summary .sorter {
             background-image: url(../../sort-arrow-sprite.png);
         }
     </style>
 </head>
+    
 <body>
 <div class='wrapper'>
-  <div class='pad1'>
-    <h1>
-      <a href="../../index.html">All files</a> / <a href="index.html">src/models</a> scene.ts
-    </h1>
-    <div class='clearfix'>
-      <div class='fl pad1y space-right2'>
-        <span class="strong">63.83% </span>
-        <span class="quiet">Statements</span>
-        <span class='fraction'>30/47</span>
-      </div>
-      <div class='fl pad1y space-right2'>
-        <span class="strong">25% </span>
-        <span class="quiet">Branches</span>
-        <span class='fraction'>2/8</span>
-      </div>
-      <div class='fl pad1y space-right2'>
-        <span class="strong">50% </span>
-        <span class="quiet">Functions</span>
-        <span class='fraction'>8/16</span>
-      </div>
-      <div class='fl pad1y space-right2'>
-        <span class="strong">64.52% </span>
-        <span class="quiet">Lines</span>
-        <span class='fraction'>20/31</span>
-      </div>
+    <div class='pad1'>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/models</a> scene.ts</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">63.83% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>30/47</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">25% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>2/8</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">50% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>8/16</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">64.52% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>20/31</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
     </div>
-    <p class="quiet">
-      Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
-    </p>
-  </div>
-  <div class='status-line medium'></div>
-<pre><table class="coverage">
+    <div class='status-line medium'></div>
+    <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
 <a name='L3'></a><a href='#L3'>3</a>
@@ -184,7 +195,7 @@ export class Scene {
     constructor(public type: SceneType) {
 &nbsp;
     }
-<span class="fstat-no" title="function not covered" >    public getData(): any[] {</span>
+<span class="fstat-no" title="function not covered" >    public g</span>etData(): any[] {
 <span class="cstat-no" title="statement not covered" >        return null;</span>
     }
 }
@@ -201,10 +212,10 @@ export class ColorScene extends Scene {
 &nbsp;
 // tslint:disable-next-line:max-classes-per-file
 export class HsvScene extends Scene {
-<span class="fstat-no" title="function not covered" >    constructor(public <span class="cstat-no" title="statement not covered" ></span>hue: number,</span> public <span class="cstat-no" title="statement not covered" >satuation: number,</span> public <span class="cstat-no" title="statement not covered" >brightness: number)</span> {
+<span class="fstat-no" title="function not covered" >    constructor(public <span class="cstat-no" title="statement not covered" >h</span>ue: number,</span> public <span class="cstat-no" title="statement not covered" >satuation: number,</span> public <span class="cstat-no" title="statement not covered" >brightness: number)</span> {
 <span class="cstat-no" title="statement not covered" >        super(SceneType.HSV);</span>
     }
-<span class="fstat-no" title="function not covered" >    public getData() {</span>
+<span class="fstat-no" title="function not covered" >    public g</span>etData() {
 <span class="cstat-no" title="statement not covered" >        return [this.type, this.hue, this.satuation, this.brightness];</span>
     }
 }
@@ -218,10 +229,10 @@ export class CtScene extends Scene {
      * @param temperature : K temperature value
      * @param brightness  max brightness level
      */
-<span class="fstat-no" title="function not covered" >    constructor(public <span class="cstat-no" title="statement not covered" ></span>temperature: number,</span> public <span class="cstat-no" title="statement not covered" >brightness: number)</span> {
+<span class="fstat-no" title="function not covered" >    constructor(public <span class="cstat-no" title="statement not covered" >t</span>emperature: number,</span> public <span class="cstat-no" title="statement not covered" >brightness: number)</span> {
 <span class="cstat-no" title="statement not covered" >        super(SceneType.CT);</span>
     }
-<span class="fstat-no" title="function not covered" >    public getData() {</span>
+<span class="fstat-no" title="function not covered" >    public g</span>etData() {
 <span class="cstat-no" title="statement not covered" >        return [this.type, this.temperature, this.brightness];</span>
     }
 }
@@ -234,31 +245,31 @@ export class CfScene extends Scene {
      * @param states : The set of state changes
      * @param repeat : number of repeas. 0 is infinity
      */
-<span class="fstat-no" title="function not covered" >    constructor(public <span class="cstat-no" title="statement not covered" ></span>flowAction: StartFlowAction,</span> public <span class="cstat-no" title="statement not covered" >states: FlowState[],</span> public <span class="cstat-no" title="statement not covered" >repeat: number)</span> {
+<span class="fstat-no" title="function not covered" >    constructor(public <span class="cstat-no" title="statement not covered" >f</span>lowAction: StartFlowAction,</span> public <span class="cstat-no" title="statement not covered" >states: FlowState[],</span> public <span class="cstat-no" title="statement not covered" >repeat: number)</span> {
 <span class="cstat-no" title="statement not covered" >        super(SceneType.CF);</span>
     }
-<span class="fstat-no" title="function not covered" >    public getData() {</span>
-        const list = <span class="cstat-no" title="statement not covered" >this.states.reduce(<span class="fstat-no" title="function not covered" >(</span>a, b) =&gt; <span class="cstat-no" title="statement not covered" >[...a, ...b.getState()]</span>, []);</span>
+<span class="fstat-no" title="function not covered" >    public g</span>etData() {
+        const list = <span class="cstat-no" title="statement not covered" >this.states.reduce(<span class="fstat-no" title="function not covered" >(a</span>, b) =&gt; <span class="cstat-no" title="statement not covered" >[...a, ...b.getState()],</span> []);</span>
 <span class="cstat-no" title="statement not covered" >        return [this.type, this.repeat, this.flowAction, list.join(",")];</span>
     }
-}</pre></td></tr>
-</table></pre>
-<div class='push'></div><!-- for sticky footer -->
-</div><!-- /wrapper -->
-<div class='footer quiet pad2 space-top1 center small'>
-  Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Apr 12 2021 05:54:43 GMT+0000 (Coordinated Universal Time)
-</div>
-</div>
-<script src="../../prettify.js"></script>
-<script>
-window.onload = function () {
-        if (typeof prettyPrint === 'function') {
-            prettyPrint();
-        }
-};
-</script>
-<script src="../../sorter.js"></script>
-<script src="../../block-navigation.js"></script>
-</body>
+}</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
+                at Sun Jun 27 2021 11:26:24 GMT+0000 (Coordinated Universal Time)
+            </div>
+        </div>
+        <script src="../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../sorter.js"></script>
+        <script src="../../block-navigation.js"></script>
+    </body>
 </html>
+    

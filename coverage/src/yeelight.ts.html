@@ -1,51 +1,62 @@
+
 <!doctype html>
 <html lang="en">
+
 <head>
     <title>Code coverage report for src/yeelight.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../prettify.css" />
     <link rel="stylesheet" href="../base.css" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style type='text/css'>
         .coverage-summary .sorter {
             background-image: url(../sort-arrow-sprite.png);
         }
     </style>
 </head>
+    
 <body>
 <div class='wrapper'>
-  <div class='pad1'>
-    <h1>
-      <a href="../index.html">All files</a> / <a href="index.html">src</a> yeelight.ts
-    </h1>
-    <div class='clearfix'>
-      <div class='fl pad1y space-right2'>
-        <span class="strong">80.97% </span>
-        <span class="quiet">Statements</span>
-        <span class='fraction'>183/226</span>
-      </div>
-      <div class='fl pad1y space-right2'>
-        <span class="strong">55.32% </span>
-        <span class="quiet">Branches</span>
-        <span class='fraction'>52/94</span>
-      </div>
-      <div class='fl pad1y space-right2'>
-        <span class="strong">80.36% </span>
-        <span class="quiet">Functions</span>
-        <span class='fraction'>45/56</span>
-      </div>
-      <div class='fl pad1y space-right2'>
-        <span class="strong">80.48% </span>
-        <span class="quiet">Lines</span>
-        <span class='fraction'>169/210</span>
-      </div>
+    <div class='pad1'>
+        <h1><a href="../index.html">All files</a> / <a href="index.html">src</a> yeelight.ts</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">81.78% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>184/225</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">53.54% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>53/99</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">80.36% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>45/56</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">80.95% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>170/210</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
     </div>
-    <p class="quiet">
-      Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
-    </p>
-  </div>
-  <div class='status-line high'></div>
-<pre><table class="coverage">
+    <div class='status-line high'></div>
+    <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
 <a name='L3'></a><a href='#L3'>3</a>
@@ -594,7 +605,8 @@
 <a name='L546'></a><a href='#L546'>546</a>
 <a name='L547'></a><a href='#L547'>547</a>
 <a name='L548'></a><a href='#L548'>548</a>
-<a name='L549'></a><a href='#L549'>549</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L549'></a><a href='#L549'>549</a>
+<a name='L550'></a><a href='#L550'>550</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -700,7 +712,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">22x</span>
 <span class="cline-any cline-yes">22x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1133,6 +1145,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">22x</span>
 <span class="cline-any cline-yes">22x</span>
@@ -1158,19 +1171,19 @@ const DEFAULT_PORT = 55443;
  */
 export class Yeelight extends EventEmitter {
     public connected: boolean;
-    public autoReconnect: boolean = false;
-    public disablePing: boolean = false;
-    public autoReconnectTime: number = 1000;
-    public connectTimeout: number = 1000;
+    public autoReconnect = false;
+    public disablePing = false;
+    public autoReconnectTime = 1000;
+    public connectTimeout = 1000;
 &nbsp;
     private client: Socket;
-    private commandId: number = 1;
-    private sentCommands: {[commandId: string]: Command} = {};
+    private commandId = 1;
+    private sentCommands: { [commandId: string]: Command } = {};
     private resultCommands: ICommandResult[];
 &nbsp;
-    private isConnecting: boolean = false;
-    private isClosing: boolean = false;
-    private isReconnecting: boolean = false;
+    private isConnecting = false;
+    private isClosing = false;
+    private isReconnecting = false;
     private reconnectTimeout: NodeJS.Timer | null = null;
     private pingTimeout: NodeJS.Timer | null = null;
 &nbsp;
@@ -1234,10 +1247,10 @@ export class Yeelight extends EventEmitter {
         // this.client.destroy();
         this.client.removeAllListeners("data");
         this.isClosing = true;
-        return new Promise((resolve) =&gt; this.client.end(null, resolve))
-        .then(() =&gt; {
-            return this.closeConnection();
-        });
+        return new Promise((resolve) =&gt; this.client.end(resolve as any))
+            .then(() =&gt; {
+                return this.closeConnection();
+            });
     }
     /**
      * establish connection to light,
@@ -1248,17 +1261,17 @@ export class Yeelight extends EventEmitter {
 <span class="cstat-no" title="statement not covered" >            throw new Error("Already connecting");</span>
         }
 &nbsp;
-        if (<span class="cstat-no" title="statement not covered" >this.options.lightIp)</span> {
+        if (<span class="missing-if-branch" title="if path not taken" >I</span>this.options.lightIp) {
             return this.connectToIp(this.options.lightIp, this.options.lightPort);
-        } else if (<span class="cstat-no" title="statement not covered" >this.options.lightId)</span> {
+        } else if (<span class="cstat-no" title="statement not covered" >this.</span>options.lightId) {
             // If only the Id is given, start searching for that id:
             const <span class="cstat-no" title="statement not covered" >discover = new Discover({</span>
-                filter: <span class="fstat-no" title="function not covered" >(</span>d: IDevice) =&gt; <span class="cstat-no" title="statement not covered" >d.id === this.options.lightId,</span>
+                filter: <span class="fstat-no" title="function not covered" >(d</span>: IDevice) =&gt; <span class="cstat-no" title="statement not covered" >d.id === this.options.lightId,</span>
                 limit: 1,
                 timeout: this.connectTimeout,
             });
             const <span class="cstat-no" title="statement not covered" >devices = <span class="cstat-no" title="statement not covered" >await discover.start();</span></span>
-<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >            await discover.destroy();</span></span>
+<span class="cstat-no" title="statement not covered" >            await discover.destroy();</span>
             const <span class="cstat-no" title="statement not covered" >device = devices[0];</span>
 <span class="cstat-no" title="statement not covered" >            if (device) {</span>
 <span class="cstat-no" title="statement not covered" >                return this.connectToIp(device.host, device.port);</span>
@@ -1266,7 +1279,7 @@ export class Yeelight extends EventEmitter {
 <span class="cstat-no" title="statement not covered" >                throw new Error("Unable to connect, no device with id '" + this.options.lightId + "' found");</span>
             }
         } else {
-<span class="cstat-no" title="statement not covered" >            throw new Error("Unable to connect, neither config.lightIp or options.lightId is set");</span>
+<span class="cstat-no" title="statement not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >            throw new Error("Unable to connect, neither config.lightIp or options.lightId is set");</span></span>
         }
     }
     /*
@@ -1281,10 +1294,10 @@ export class Yeelight extends EventEmitter {
      * The minimum support duration is 30 milliseconds.
      * @returns {Promise&lt;IEventResult&gt;} return a promise of IEventResult
     */
-<span class="fstat-no" title="function not covered" >    public setPower(</span>
-<span class="cstat-no" title="statement not covered" >        turnOn: boolean = true,</span>
+<span class="fstat-no" title="function not covered" >    public s</span>etPower(
+<span class="cstat-no" title="statement not covered" >        turnOn = true,</span>
 <span class="cstat-no" title="statement not covered" >        effect: "smooth" | "sudden" = "sudden",</span>
-<span class="cstat-no" title="statement not covered" >        duration: number = 500,</span>
+<span class="cstat-no" title="statement not covered" >        duration = 500,</span>
     ): Promise&lt;IEventResult&gt; {
 <span class="cstat-no" title="statement not covered" >        return this.sendCommand(new Command(1, CommandType.SET_POWER, [(turnOn ? "on" : "off"), effect, duration]));</span>
     }
@@ -1353,7 +1366,7 @@ export class Yeelight extends EventEmitter {
      * @returns {Promise&lt;IEventResult&gt;} return a promise of IEventResult
      */
     public startColorFlow(states: FlowState[], <span class="missing-if-branch" title="else path not taken" >E</span>action: StartFlowAction = StartFlowAction.LED_STAY,
-                          <span class="missing-if-branch" title="else path not taken" >E</span>repeat: number = 0): Promise&lt;IEventResult&gt; {
+        <span class="missing-if-branch" title="else path not taken" >E</span>repeat = 0): Promise&lt;IEventResult&gt; {
         const values = states.reduce((a, b) =&gt; [...a, ...b.getState()], []);
         return this.sendCommand(new Command(1, CommandType.START_COLOR_FLOW,
             [repeat, action, values.join(",")]));
@@ -1400,7 +1413,7 @@ export class Yeelight extends EventEmitter {
     public setCtAbx(
         ct: number,
         <span class="missing-if-branch" title="if path not taken" >I</span>effect: "smooth" | "sudden" = "sudden",
-        <span class="missing-if-branch" title="else path not taken" >E</span>duration: number = 500,
+        <span class="missing-if-branch" title="else path not taken" >E</span>duration = 500,
     ): Promise&lt;IEventResult&gt; {
         return this.sendCommand(new Command(1, CommandType.SET_CT_ABX, [ct, effect, duration]));
     }
@@ -1419,7 +1432,7 @@ export class Yeelight extends EventEmitter {
      * The minimum support duration is 30 milliseconds.
      * @returns {Promise&lt;IEventResult&gt;} return a promise of IEventResult
      */
-    public setRGB(color: Color, effect: "smooth" | "sudden", <span class="missing-if-branch" title="else path not taken" >E</span>duration: number = 500): Promise&lt;IEventResult&gt; {
+    public setRGB(color: Color, effect: "smooth" | "sudden", <span class="missing-if-branch" title="else path not taken" >E</span>duration = 500): Promise&lt;IEventResult&gt; {
         return this.sendCommand(new Command(1, CommandType.SET_RGB, [color.getValue(), effect, duration]));
     }
     /**
@@ -1442,7 +1455,7 @@ export class Yeelight extends EventEmitter {
         hue: number,
         sat: number,
         <span class="missing-if-branch" title="if path not taken" >I</span>effect: "smooth" | "sudden" = "sudden",
-        <span class="missing-if-branch" title="else path not taken" >E</span>duration: number = 500,
+        <span class="missing-if-branch" title="else path not taken" >E</span>duration = 500,
     ): Promise&lt;IEventResult&gt; {
         return this.sendCommand(new Command(1, CommandType.SET_HSV, [hue, sat, effect, duration]));
     }
@@ -1464,7 +1477,7 @@ export class Yeelight extends EventEmitter {
     public setBright(
         brightness: number,
         <span class="missing-if-branch" title="else path not taken" >E</span>effect: "smooth" | "sudden" = "sudden",
-        <span class="missing-if-branch" title="else path not taken" >E</span>duration: number = 500,
+        <span class="missing-if-branch" title="else path not taken" >E</span>duration = 500,
     ): Promise&lt;IEventResult&gt; {
         return this.sendCommand(new Command(1, CommandType.SET_BRIGHT, [brightness, effect, duration]));
     }
@@ -1500,7 +1513,7 @@ export class Yeelight extends EventEmitter {
      * effect. The control device can stop music mode by explicitly send a stop command or just by closing the socket.
      * @returns {Promise&lt;IEventResult&gt;} return a promise of IEventResult
      */
-<span class="fstat-no" title="function not covered" >    public setMusic(</span>action: 0 | 1, host: string, port: number): Promise&lt;IEventResult&gt; {
+<span class="fstat-no" title="function not covered" >    public s</span>etMusic(action: 0 | 1, host: string, port: number): Promise&lt;IEventResult&gt; {
 <span class="cstat-no" title="statement not covered" >        return this.sendCommand(new Command(1, CommandType.SET_MUSIC, [action, host, port]));</span>
     }
 &nbsp;
@@ -1523,7 +1536,7 @@ export class Yeelight extends EventEmitter {
      * @returns {Promise&lt;IEventResult&gt;} return a promise of IEventResult
      */
     public adjust(type: CommandType.ADJUST_BRIGHT | CommandType.ADJUST_COLOR | CommandType.ADJUST_CT,
-                  <span class="missing-if-branch" title="if path not taken" >I</span>percentage: number = 0, <span class="missing-if-branch" title="else path not taken" >E</span>duration: number = 500): Promise&lt;IEventResult&gt; {
+        <span class="missing-if-branch" title="if path not taken" >I</span>percentage = 0, <span class="missing-if-branch" title="else path not taken" >E</span>duration = 500): Promise&lt;IEventResult&gt; {
         return this.sendCommand(new Command(1, type, [percentage, duration]));
     }
     /**
@@ -1531,22 +1544,22 @@ export class Yeelight extends EventEmitter {
      */
     public ping(): Promise&lt;null&gt; {
         return this.sendCommand(new Command(1, CommandType.PING, []))
-        .catch((command: IEventResult) =&gt; {
-            // Expect a response: {"id":6, "error":{"code":-1, "message":"method not supported"}}
-            const result = command.result;
-            if (
-                !result ||
-                !result.error ||
-                result.error.code !== -1 ||
-                !(result.error.message + "").match(/not supported/i)
-            ) {
-                throw command;
-            }
-        })
-        .then(() =&gt; {
-            // do nothing with the response
-            return null;
-        });
+            .catch((command: IEventResult) =&gt; {
+                // Expect a response: {"id":6, "error":{"code":-1, "message":"method not supported"}}
+                const result = command.result;
+                if (
+                    !result ||
+                    !result.error ||
+                    result.error.code !== -1 ||
+                    !(result.error.message + "").match(/not supported/i)
+                ) {
+                    throw command;
+                }
+            })
+            .then(() =&gt; {
+                // do nothing with the response
+                return null;
+            });
     }
     /**
      * Use this function to send any command to the light,
@@ -1605,7 +1618,7 @@ export class Yeelight extends EventEmitter {
             this.client.on("end", <span class="fstat-no" title="function not covered" >() =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >                this.wasDisconnected();</span>
             });
-            this.client.on("error", <span class="fstat-no" title="function not covered" >(</span>err) =&gt; {
+            this.client.on("error", <span class="fstat-no" title="function not covered" >(e</span>rr) =&gt; {
 <span class="cstat-no" title="statement not covered" >                this.emit("error", err);</span>
 <span class="cstat-no" title="statement not covered" >                this.wasDisconnected();</span>
             });
@@ -1616,7 +1629,7 @@ export class Yeelight extends EventEmitter {
                 // me.emit("connected", this);
                 resolve(this);
             });
-            this.client.once("error", <span class="fstat-no" title="function not covered" >(</span>err) =&gt; {
+            this.client.once("error", <span class="fstat-no" title="function not covered" >(e</span>rr) =&gt; {
 <span class="cstat-no" title="statement not covered" >                this.isConnecting = false;</span>
 <span class="cstat-no" title="statement not covered" >                reject(err);</span>
             });
@@ -1652,12 +1665,12 @@ export class Yeelight extends EventEmitter {
 <span class="cstat-no" title="statement not covered" >                    if (!this.connected) {</span>
 <span class="cstat-no" title="statement not covered" >                        if (!this.isConnecting) {</span>
 <span class="cstat-no" title="statement not covered" >                            this.connect()</span>
-                            .catch(<span class="fstat-no" title="function not covered" >(</span>err) =&gt; {
-<span class="cstat-no" title="statement not covered" >                                if (!err.toString().match(/timeout/)) { // ignore connection timeout</span>
-<span class="cstat-no" title="statement not covered" >                                    this.emit("error", "Erorr during reconnect: " + err);</span>
-                                }
-<span class="cstat-no" title="statement not covered" >                                this._recoverNetworkError();</span>
-                            });
+                                .catch(<span class="fstat-no" title="function not covered" >(e</span>rr) =&gt; {
+<span class="cstat-no" title="statement not covered" >                                    if (!err.toString().match(/timeout/)) { // ignore connection timeout</span>
+<span class="cstat-no" title="statement not covered" >                                        this.emit("error", "Erorr during reconnect: " + err);</span>
+                                    }
+<span class="cstat-no" title="statement not covered" >                                    this._recoverNetworkError();</span>
+                                });
                         } else {
 <span class="cstat-no" title="statement not covered" >                            this._recoverNetworkError();</span>
                         }
@@ -1669,16 +1682,17 @@ export class Yeelight extends EventEmitter {
     private triggerPing() {
         if (this.connected &amp;&amp; !this.disablePing) {
             this.ping()
-            .then(<span class="fstat-no" title="function not covered" >() =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >                if (!this.pingTimeout) {</span>
-<span class="cstat-no" title="statement not covered" >                    this.pingTimeout = setTimeout(<span class="fstat-no" title="function not covered" >() =&gt; {</span></span>
-<span class="cstat-no" title="statement not covered" >                        this.pingTimeout = null;</span>
-<span class="cstat-no" title="statement not covered" >                        this.triggerPing();</span>
-                    }, this.connectTimeout);
-                }
-            })
-            .catch((e) =&gt; {
-            });
+                .then(<span class="fstat-no" title="function not covered" >() =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >                    if (!this.pingTimeout) {</span>
+<span class="cstat-no" title="statement not covered" >                        this.pingTimeout = setTimeout(<span class="fstat-no" title="function not covered" >() =&gt; {</span></span>
+<span class="cstat-no" title="statement not covered" >                            this.pingTimeout = null;</span>
+<span class="cstat-no" title="statement not covered" >                            this.triggerPing();</span>
+                        }, this.connectTimeout);
+                    }
+                })
+                .catch(() =&gt; {
+                    // swallow
+                });
         }
     }
     private closeConnection() {
@@ -1690,24 +1704,24 @@ export class Yeelight extends EventEmitter {
     }
 &nbsp;
 }
-&nbsp;</pre></td></tr>
-</table></pre>
-<div class='push'></div><!-- for sticky footer -->
-</div><!-- /wrapper -->
-<div class='footer quiet pad2 space-top1 center small'>
-  Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Apr 12 2021 05:54:43 GMT+0000 (Coordinated Universal Time)
-</div>
-</div>
-<script src="../prettify.js"></script>
-<script>
-window.onload = function () {
-        if (typeof prettyPrint === 'function') {
-            prettyPrint();
-        }
-};
-</script>
-<script src="../sorter.js"></script>
-<script src="../block-navigation.js"></script>
-</body>
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
+                at Sun Jun 27 2021 11:26:24 GMT+0000 (Coordinated Universal Time)
+            </div>
+        </div>
+        <script src="../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../sorter.js"></script>
+        <script src="../block-navigation.js"></script>
+    </body>
 </html>
+    
