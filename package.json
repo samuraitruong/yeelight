@@ -32,6 +32,8 @@
     ],
     "license": "MIT",
     "devDependencies": {
+        "@commitlint/cli": "^12.1.4",
+        "@commitlint/config-conventional": "^12.1.4",
         "@types/chai": "^4.1.4",
         "@types/ip": "0.0.31",
         "@types/mocha": "^5.2.5",
@@ -43,7 +45,7 @@
         "chai": "^4.1.2",
         "eslint": "^7.29.0",
         "gh-pages": "^1.2.0",
-        "husky": "^1.0.0-rc.13",
+        "husky": "^6.0.0",
         "mocha": "^5.2.0",
         "mochawesome": "^3.0.3",
         "nyc": "^13.0.1",
