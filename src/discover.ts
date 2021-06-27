@@ -1,7 +1,6 @@
 import { createSocket, Socket } from "dgram";
 import { EventEmitter } from "events";
 import { address, toBuffer } from "ip";
-import * as net from "net";
 import { AddressInfo } from "net";
 import { checkPortStatus } from "portscanner";
 import { defaultLogger } from "./logger";
@@ -28,8 +27,8 @@ export class Discover extends EventEmitter {
         timeout: 10000,
     };
     private client: Socket;
-    private clientBound: boolean = false;
-    private isDestroyed: boolean = false;
+    private clientBound = false;
+    private isDestroyed = false;
     /**
      * @constructor
      * @param {IDiscoverConfig } options discover object include the port and multicast host.
@@ -90,77 +89,77 @@ export class Discover extends EventEmitter {
             try {
                 if (!this.clientBound) {
                     this.clientBound = true;
-                    this.client.bind(this.options.port, null, resolve);
+                    this.client.bind(this.options.port, null, resolve as any);
                 } else {
                     // Already bound to a port
-                    resolve();
+                    resolve(null);
                 }
             } catch (e) {
                 reject(e);
             }
         })
-        .then(() => {
+            .then(() => {
 
-            return new Promise<IDevice[]>((resolve, reject) => {
-                this.logger.debug("discover options: ", this.options);
+                return new Promise<IDevice[]>((resolve, reject) => {
+                    this.logger.debug("discover options: ", this.options);
 
-                this.client.setBroadcast(true);
-                this.client.send(this.getMessage(), this.options.port, this.options.multicastHost, (err) => {
-                    if (err) {
-                        this.logger.log("ERROR", err);
-                        reject(err);
-                    } else {
-                        let ts = 0;
-                        const interval = this.options.scanInterval || 200;
+                    this.client.setBroadcast(true);
+                    this.client.send(this.getMessage(), this.options.port, this.options.multicastHost, (err) => {
+                        if (err) {
+                            this.logger.log("ERROR", err);
+                            reject(err);
+                        } else {
+                            let ts = 0;
+                            const interval = this.options.scanInterval || 200;
 
-                        let timer: NodeJS.Timer | null = null;
-                        const callback = (error: any, result?: IDevice[]) => {
-                            if (timer) {
-                                clearInterval(timer);
-                                timer = null;
-                            }
-                            if (error) {
-                                reject(error);
-                            } else {
-                                resolve(result);
-                            }
-                        };
-                        timer = setInterval(() => {
-                            if (this.isDestroyed) {
-                                callback("Discover got destroyed");
-                                return;
-                            }
-                            ts += interval;
-                            if (this.options.limit && this.devices.length >= this.options.limit) {
-                                clearInterval(this.timer);
-                                callback(null, this.devices);
-                                return;
-                            }
-                            if (this.options.timeout > 0 && this.options.timeout < ts) {
-                                if (this.devices.length > 0) {
+                            let timer: NodeJS.Timer | null = null;
+                            const callback = (error: any, result?: IDevice[]) => {
+                                if (timer) {
+                                    clearInterval(timer);
+                                    timer = null;
+                                }
+                                if (error) {
+                                    reject(error);
+                                } else {
+                                    resolve(result);
+                                }
+                            };
+                            timer = setInterval(() => {
+                                if (this.isDestroyed) {
+                                    callback("Discover got destroyed");
+                                    return;
+                                }
+                                ts += interval;
+                                if (this.options.limit && this.devices.length >= this.options.limit) {
                                     clearInterval(this.timer);
                                     callback(null, this.devices);
                                     return;
-                                } else {
-                                    clearInterval(this.timer);
-                                    if (!this.options.fallback) {
-                                        callback("No device found after timeout exceeded : " + ts);
+                                }
+                                if (this.options.timeout > 0 && this.options.timeout < ts) {
+                                    if (this.devices.length > 0) {
+                                        clearInterval(this.timer);
+                                        callback(null, this.devices);
                                         return;
+                                    } else {
+                                        clearInterval(this.timer);
+                                        if (!this.options.fallback) {
+                                            callback("No device found after timeout exceeded : " + ts);
+                                            return;
+                                        }
                                     }
                                 }
-                            }
-                            this.client.send(this.getMessage(), this.options.port, this.options.multicastHost);
-                            if (ts > this.options.timeout && this.options.fallback) {
-                                this.scanByIp()
-                                .catch((error) => {
-                                    callback(error);
-                                });
-                            }
-                        }, interval);
-                    }
+                                this.client.send(this.getMessage(), this.options.port, this.options.multicastHost);
+                                if (ts > this.options.timeout && this.options.fallback) {
+                                    this.scanByIp()
+                                        .catch((error) => {
+                                            callback(error);
+                                        });
+                                }
+                            }, interval);
+                        }
+                    });
                 });
             });
-        });
     }
     /**
      * Clean up resource and close all open connection,

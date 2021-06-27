@@ -14,19 +14,19 @@ const DEFAULT_PORT = 55443;
  */
 export class Yeelight extends EventEmitter {
     public connected: boolean;
-    public autoReconnect: boolean = false;
-    public disablePing: boolean = false;
-    public autoReconnectTime: number = 1000;
-    public connectTimeout: number = 1000;
+    public autoReconnect = false;
+    public disablePing = false;
+    public autoReconnectTime = 1000;
+    public connectTimeout = 1000;
 
     private client: Socket;
-    private commandId: number = 1;
-    private sentCommands: {[commandId: string]: Command} = {};
+    private commandId = 1;
+    private sentCommands: { [commandId: string]: Command } = {};
     private resultCommands: ICommandResult[];
 
-    private isConnecting: boolean = false;
-    private isClosing: boolean = false;
-    private isReconnecting: boolean = false;
+    private isConnecting = false;
+    private isClosing = false;
+    private isReconnecting = false;
     private reconnectTimeout: NodeJS.Timer | null = null;
     private pingTimeout: NodeJS.Timer | null = null;
 
@@ -91,9 +91,9 @@ export class Yeelight extends EventEmitter {
         this.client.removeAllListeners("data");
         this.isClosing = true;
         return new Promise((resolve) => this.client.end(null, resolve))
-        .then(() => {
-            return this.closeConnection();
-        });
+            .then(() => {
+                return this.closeConnection();
+            });
     }
     /**
      * establish connection to light,
@@ -138,9 +138,9 @@ export class Yeelight extends EventEmitter {
      * @returns {Promise<IEventResult>} return a promise of IEventResult
     */
     public setPower(
-        turnOn: boolean = true,
+        turnOn = true,
         effect: "smooth" | "sudden" = "sudden",
-        duration: number = 500,
+        duration = 500,
     ): Promise<IEventResult> {
         return this.sendCommand(new Command(1, CommandType.SET_POWER, [(turnOn ? "on" : "off"), effect, duration]));
     }
@@ -209,7 +209,7 @@ export class Yeelight extends EventEmitter {
      * @returns {Promise<IEventResult>} return a promise of IEventResult
      */
     public startColorFlow(states: FlowState[], action: StartFlowAction = StartFlowAction.LED_STAY,
-                          repeat: number = 0): Promise<IEventResult> {
+        repeat = 0): Promise<IEventResult> {
         const values = states.reduce((a, b) => [...a, ...b.getState()], []);
         return this.sendCommand(new Command(1, CommandType.START_COLOR_FLOW,
             [repeat, action, values.join(",")]));
@@ -256,7 +256,7 @@ export class Yeelight extends EventEmitter {
     public setCtAbx(
         ct: number,
         effect: "smooth" | "sudden" = "sudden",
-        duration: number = 500,
+        duration = 500,
     ): Promise<IEventResult> {
         return this.sendCommand(new Command(1, CommandType.SET_CT_ABX, [ct, effect, duration]));
     }
@@ -275,7 +275,7 @@ export class Yeelight extends EventEmitter {
      * The minimum support duration is 30 milliseconds.
      * @returns {Promise<IEventResult>} return a promise of IEventResult
      */
-    public setRGB(color: Color, effect: "smooth" | "sudden", duration: number = 500): Promise<IEventResult> {
+    public setRGB(color: Color, effect: "smooth" | "sudden", duration = 500): Promise<IEventResult> {
         return this.sendCommand(new Command(1, CommandType.SET_RGB, [color.getValue(), effect, duration]));
     }
     /**
@@ -298,7 +298,7 @@ export class Yeelight extends EventEmitter {
         hue: number,
         sat: number,
         effect: "smooth" | "sudden" = "sudden",
-        duration: number = 500,
+        duration = 500,
     ): Promise<IEventResult> {
         return this.sendCommand(new Command(1, CommandType.SET_HSV, [hue, sat, effect, duration]));
     }
@@ -320,7 +320,7 @@ export class Yeelight extends EventEmitter {
     public setBright(
         brightness: number,
         effect: "smooth" | "sudden" = "sudden",
-        duration: number = 500,
+        duration = 500,
     ): Promise<IEventResult> {
         return this.sendCommand(new Command(1, CommandType.SET_BRIGHT, [brightness, effect, duration]));
     }
@@ -379,7 +379,7 @@ export class Yeelight extends EventEmitter {
      * @returns {Promise<IEventResult>} return a promise of IEventResult
      */
     public adjust(type: CommandType.ADJUST_BRIGHT | CommandType.ADJUST_COLOR | CommandType.ADJUST_CT,
-                  percentage: number = 0, duration: number = 500): Promise<IEventResult> {
+        percentage = 0, duration = 500): Promise<IEventResult> {
         return this.sendCommand(new Command(1, type, [percentage, duration]));
     }
     /**
@@ -387,22 +387,22 @@ export class Yeelight extends EventEmitter {
      */
     public ping(): Promise<null> {
         return this.sendCommand(new Command(1, CommandType.PING, []))
-        .catch((command: IEventResult) => {
-            // Expect a response: {"id":6, "error":{"code":-1, "message":"method not supported"}}
-            const result = command.result;
-            if (
-                !result ||
-                !result.error ||
-                result.error.code !== -1 ||
-                !(result.error.message + "").match(/not supported/i)
-            ) {
-                throw command;
-            }
-        })
-        .then(() => {
-            // do nothing with the response
-            return null;
-        });
+            .catch((command: IEventResult) => {
+                // Expect a response: {"id":6, "error":{"code":-1, "message":"method not supported"}}
+                const result = command.result;
+                if (
+                    !result ||
+                    !result.error ||
+                    result.error.code !== -1 ||
+                    !(result.error.message + "").match(/not supported/i)
+                ) {
+                    throw command;
+                }
+            })
+            .then(() => {
+                // do nothing with the response
+                return null;
+            });
     }
     /**
      * Use this function to send any command to the light,
@@ -508,12 +508,12 @@ export class Yeelight extends EventEmitter {
                     if (!this.connected) {
                         if (!this.isConnecting) {
                             this.connect()
-                            .catch((err) => {
-                                if (!err.toString().match(/timeout/)) { // ignore connection timeout
-                                    this.emit("error", "Erorr during reconnect: " + err);
-                                }
-                                this._recoverNetworkError();
-                            });
+                                .catch((err) => {
+                                    if (!err.toString().match(/timeout/)) { // ignore connection timeout
+                                        this.emit("error", "Erorr during reconnect: " + err);
+                                    }
+                                    this._recoverNetworkError();
+                                });
                         } else {
                             this._recoverNetworkError();
                         }
@@ -525,16 +525,17 @@ export class Yeelight extends EventEmitter {
     private triggerPing() {
         if (this.connected && !this.disablePing) {
             this.ping()
-            .then(() => {
-                if (!this.pingTimeout) {
-                    this.pingTimeout = setTimeout(() => {
-                        this.pingTimeout = null;
-                        this.triggerPing();
-                    }, this.connectTimeout);
-                }
-            })
-            .catch((e) => {
-            });
+                .then(() => {
+                    if (!this.pingTimeout) {
+                        this.pingTimeout = setTimeout(() => {
+                            this.pingTimeout = null;
+                            this.triggerPing();
+                        }, this.connectTimeout);
+                    }
+                })
+                .catch(() => {
+                    // swallow
+                });
         }
     }
     private closeConnection() {

@@ -12,7 +12,7 @@ export function parseDeviceInfo(message: string): IDevice {
         message.indexOf("yeelight://") < 0) {
         return null;
     }
-    const getString = (key: string, defaultValue: string = "") => {
+    const getString = (key: string, defaultValue = "") => {
         const regex = new RegExp(`${key}: ([^\r\n]*)`);
         const m = message.match(regex);
         if (m && m.length > 0) {
@@ -57,7 +57,7 @@ export function hexToNumber(hex: string): number {
     }
     return result;
 }
-export function getListIpAddress(currentIp: string, from: number = 1, to: number = 254): string[] {
+export function getListIpAddress(currentIp: string, from = 1, to = 254): string[] {
     const startNumber = parseInt(currentIp.split(".")[3], 10);
     const results: string[] = [];
     let before = startNumber;
