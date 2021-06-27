@@ -90,7 +90,7 @@ export class Yeelight extends EventEmitter {
         // this.client.destroy();
         this.client.removeAllListeners("data");
         this.isClosing = true;
-        return new Promise((resolve) => this.client.end(null, resolve))
+        return new Promise((resolve) => this.client.end(resolve as any))
             .then(() => {
                 return this.closeConnection();
             });
