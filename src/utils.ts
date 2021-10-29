@@ -28,6 +28,7 @@ export function parseDeviceInfo(message: string): IDevice {
         device.version = getString("fw_ver");
         device.capabilities = getString("support").split(" ");
         device.status = getString("power") as DeviceStatus;
+        device.ct = parseInt(getString('ct'))
         device.bright = parseInt(getString("bright", "0"), 10);
         device.hue = parseInt(getString("hue", "0"), 10);
         device.rgb = parseInt(getString("rgb", "0"), 10);
