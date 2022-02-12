@@ -496,10 +496,10 @@
   resolved "https://registry.yarnpkg.com/@types/parse-json/-/parse-json-4.0.0.tgz#2f8bb441434d163b35fb8ffdccd7138927ffb8c0"
   integrity sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==
 
-"@types/portscanner@^2.1.0":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@types/portscanner/-/portscanner-2.1.0.tgz#a9b39e98ccbcb49c335e284eca64df4756d6f49a"
-  integrity sha512-II0FA05TSt4r7PBUvYTqub+yrXTRu7L/PQnTtjcJYzAeBts6xHM/OA2MKyeQ80sFxX7p+0BTo68Nh1P3N6Oj/g==
+"@types/portscanner@^2.1.1":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@types/portscanner/-/portscanner-2.1.1.tgz#89d5094e16f3d941f20f3889dfa5d3a164b3dd3b"
+  integrity sha512-1NsVIbgBKvrqxwtMN0V6CLji1ERwKSI/RWz0J3y++CzSwYNGBStCfpIFgxV3ZwxsDR5PoZqoUWhwraDm+Ztn0Q==
 
 "@types/sinon@^10.0.2":
   version "10.0.2"
