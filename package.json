@@ -60,7 +60,7 @@
     },
     "dependencies": {
         "@types/portscanner": "^2.1.0",
-        "ip": "^1.1.5",
+        "ip": "^1.1.6",
         "portscanner": "^2.2.0"
     },
     "repository": {
