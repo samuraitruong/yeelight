@@ -59,7 +59,7 @@
         "winston": "^3.3.3"
     },
     "dependencies": {
-        "@types/portscanner": "^2.1.0",
+        "@types/portscanner": "^2.1.1",
         "ip": "^1.1.6",
         "portscanner": "^2.2.0"
     },
