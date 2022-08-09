@@ -9,6 +9,6 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "yeelight-awesome": "^1.0.3"
+        "yeelight-awesome": "^1.1.0"
     }
 }
