@@ -2,7 +2,9 @@
 
 The node api to control yeelight devices using wifi network TCP/UDP
 [![npm version](https://badge.fury.io/js/yeelight-awesome.svg)](https://badge.fury.io/js/yeelight-awesome)
+
 [![CI](https://github.com/samuraitruong/yeelight/actions/workflows/main.yml/badge.svg)](https://github.com/samuraitruong/yeelight/actions/workflows/main.yml)
+
 [![Package Quality](http://npm.packagequality.com/badge/yeelight-awesome.png)](http://packagequality.com/#?package=yeelight-awesome)
 [Mocha Test Report](https://samuraitruong.github.io/yeelight/mochawesome-report/mochawesome.html)
 
@@ -36,6 +38,7 @@ const discover = new Discover({ port: 1982, debug: true }, logger);
 discover.once('deviceAdded', (device: IDevice) => {
   // using device action
 });
+
 // make sure you call this
 discover.start();
 ```
@@ -47,6 +50,7 @@ const discover = new y.Discover({
   port: 1982,
   debug: true,
 });
+
 discover.once('deviceAdded', (device) => {
   const yeelight = new y.Yeelight({
     lightIp: device.host,
