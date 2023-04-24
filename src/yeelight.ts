@@ -59,6 +59,9 @@ export class Yeelight extends EventEmitter {
         const commandId = "" + result.id;
         const originalCommand = this.sentCommands[commandId];
         if (!originalCommand) {
+            if (result.method === 'props') {
+                this.emit('props', result.params);
+            }
             return;
         }
         const eventData: IEventResult = {
